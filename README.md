@@ -31,7 +31,7 @@ $ env FLASK_APP=edc_ogc/app.py flask run
 ```
 
 ### Run with docker
-`docker run -p 80:5000 -e SH_CLIENT_ID=<oauthclientid> -e SH_CLIENT_SECRET=<oauth_clientsecret> <image>`
+`docker run -p 80:5000 -e SH_CLIENT_ID=<oauthclientid> -e SH_CLIENT_SECRET=<oauth_clientsecret> eurodatacube/ogc-edc`
 
 ### Try out
 `http://localhost:5000/?service=WMS&version=1.1.0&request=GetMap&layers=AGRICULTURE&styles=&srs=EPSG:4326&bbox=14.043549,46.580095,14.167831,46.652688&width=512&height=512&format=image/png`
