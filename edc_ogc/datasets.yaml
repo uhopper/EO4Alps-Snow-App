@@ -1,0 +1,49 @@
+
+
+# Sentinel-2 L1C	B01, B02, B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12
+# Sentinel-2 L2A	B01, B02, B03, B04, B05, B06, B07, B08, B8A, B09, B11, B12, SCL*, SNW**, CLD**
+# Sentinel-1 GRD	VV, VH, HH, HV
+# Sentinel-3 OLCI***	
+# B01, B02, B03, B04, B05, B06, B07, B08, B09, B10, B11, B12, B13, B14, B15, B16, B17, B18, B19, B20, B21
+
+# Sentinel-5P***	
+# O3, NO2, SO3, CO, CH4, HCHO, AER_AI_340_380, AER_AI_354_388, CLOUD_FRACTION, CLOUD_BASE_HEIGHT, CLOUD_BASE_PRESSURE, CLOUD_OPTICAL_THICKNESS, CLOUD_TOP_HEIGHT, CLOUD_TOP_PRESSURE
+
+# Landsat 8 L1C	B01, B02, B03, B04, B05, B06, B07, B08, B09, B10, B11, BQA
+# MODIS	B01, B02, B03, B04, B05, B06, B07
+# DEM	DEM
+
+
+- id: S1GRD
+  '@id': https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD
+  title: Sentinel-1 GRD
+  bands: [VV, VH, HH, HV]
+  extent: [-180, -90, 180, 90]
+  resolution: [8.983152841100729e-05, 8.983152841100729e-05]
+  timeextent: [2014-04-03, null]
+- id: S2L1C
+  '@id': https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C
+  title: Sentinel-2 L1C
+  bands: [B01, B02, B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12]
+  wavelengths: [442.7, 492.4, 559.8, 664.6, 704.1, 740.5, 782.8, 832.8, 864.7, 945.1, 1373.5, 1613.7, 2202.4]
+  extent: [-180, -90, 180, 90]
+  resolution: [8.983152841100729e-05, 8.983152841100729e-05]
+  timeextent: [2015-06-23, null]
+- id: S2L2A
+  '@id': https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A
+  title: Sentinel-2 L2A
+  bands: [B01, B02, B03, B04, B05, B06, B07, B08, B8A, B09, B11, B12, SCL, SNW, CLD]
+  wavelengths: [442.7, 492.4, 559.8, 664.6, 704.1, 740.5, 782.8, 832.8, 864.7, 945.1, 1613.7, 2202.4]
+  extent: [-180, -90, 180, 90]
+  resolution: [8.983152841100729e-05, 8.983152841100729e-05]
+  timeextent: [2015-06-23, null]
+- id: S3OLCI
+  '@id': https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI
+  mdi_url: https://creodias.sentinel-hub.com/api/v1/
+  title: Sentinel-3 OLCI
+  bands: [B01, B02, B03, B04, B05, B06, B07, B08, B09, B10, B11, B12, B13, B14, B15, B16, B17, B18, B19, B20, B21]
+  extent: [-180, -90, 180, 90]
+  resolution: [0.002694945852330219, 0.002694945852330219]
+  timeextent: [2016-02-16, null]
+# TODO: More
+# "S2L1C" "S2L2A" "L8L1C" "PLANET_L1C" "DEM" "MODIS" "S1GRD" "S2GM" "S3OLCI" "S3SLSTR" "S5PL2" "PLEIADES" "CUSTOM"

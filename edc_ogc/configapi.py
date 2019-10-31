@@ -1,0 +1,212 @@
+import json
+from os.path import dirname, join
+import textwrap
+from urllib.parse import urlparse
+
+import yaml
+import requests
+
+
+DEFAULT_API_URL = "https://services.sentinel-hub.com/configuration/v1"
+
+
+class ConfigAPIBase:
+    """ Base class for config APIs. Defines the interface and the `get_evalscript_and_defaults`
+        method.
+    """
+    def __init__(self, datasets_path=None):
+        datasets_path = datasets_path or join(dirname(__file__), 'datasets.yaml')
+        if urlparse(datasets_path).scheme in ('http', 'https'):
+            self.datasets = yaml.load(requests.get(datasets_path).content)
+        else:
+            self.datasets = yaml.load(open(datasets_path))
+
+    def get_datasets(self):
+        return self.datasets
+
+    def get_dataset(self, name):
+        for dataset in self.get_datasets():
+            if dataset['id'] == name:
+                return dataset
+        raise Exception(f'No such dataset {name}')
+
+    def get_layers(self, dataset=None):
+        raise NotImplementedError
+
+    def get_layer(self, name):
+        raise NotImplementedError
+
+    def get_dataproduct(self, dataset=None, identifier=None, url=None):
+        raise NotImplementedError
+
+    def get_evalscript_and_defaults(self, layer_name, style_name=None,
+                                    bands=None, wavelengths=None, transparent=False, visual=True):
+        try:
+            dataset = self.get_dataset(layer_name)
+        except:
+            pass
+        else:
+            return self._get_evalscript_and_defaults_from_dataset(
+                dataset, bands, wavelengths, transparent, visual
+            )
+
+        layer_config = self.get_layer(layer_name)
+        return self._get_evalscript_and_defaults_from_layer(layer_config, style_name)
+
+    def _get_evalscript_and_defaults_from_dataset(self, dataset, bands, wavelengths, transparent, visual):
+        if wavelengths:
+            if "wavelengths" not in dataset:
+                raise Exception(
+                    f"Dataset {dataset['id']} does not provide wavelengths"
+                )
+
+            def get_wavelength_index(wavelengths, wavelength):
+                for i, provided_wavelength in enumerate(wavelengths):
+                    if abs(provided_wavelength - wavelength) < 0.2:
+                        return i
+
+                raise Exception(f"No such wavelength '{wavelength}'")
+
+            bands = [
+                dataset['bands'][
+                    get_wavelength_index(dataset['wavelengths'], float(wavelength))
+                ]
+                for wavelength in wavelengths
+            ]
+
+        elif bands:
+            # TODO check bands
+            for band in bands:
+                assert band in dataset['bands']
+        
+        # TODO: polarizations?
+        else:
+            # TODO: use default bands?
+            pass
+
+        bandlist = ', '.join(f'"{band}"' for band in bands)
+        if visual:
+            pixellist = ', '.join(f'2.5 * sample.{band}' for band in bands)
+        else:
+            pixellist = ', '.join(f'sample.{band}' for band in bands)
+
+        evalscript = textwrap.dedent(f"""//VERSION=3
+            function setup() {{
+                return {{
+                    input: [{bandlist}{', "dataMask"' if transparent else ''}],
+                    output: {{ bands: {4 if transparent else 3} }}
+                }};
+            }}
+
+            function evaluatePixel(sample) {{
+                return [{pixellist}{', sample.dataMask' if transparent else ''}];
+            }}
+        """)
+
+        defaults = {
+            "type": dataset['id'],
+            "upsampling": "BICUBIC",
+            "mosaickingOrder": "mostRecent",
+            "maxCloudCoverage": 20,
+            "temporal": False,
+            "previewMode": "PREVIEW"
+        }
+
+        return evalscript, defaults
+
+    def _get_evalscript_and_defaults_from_layer(self, layer_config, style_name):
+        # use 'default' as default style name
+        # fetch the config for that style name
+        style_name = style_name or 'default'
+        for style_config in layer_config['styles']:
+            if style_config['name'] == style_name:
+                break
+        else:
+            raise Exception(f'No such style {style_name}')
+
+        # either the evalscript is directly embedded in the style config or
+        # must be retrieved by the referenced dataproduct
+        if 'dataProduct' in style_config:
+            dataproduct = self.get_dataproduct(url=style_config['dataProduct']['@id'])
+            evalscript = dataproduct['evalScript']
+        else:
+            evalscript = style_config['evalScript']
+        
+        return evalscript, layer_config['datasourceDefaults']
+
+
+class ConfigAPI(ConfigAPIBase):
+    """ Interface class for the actual configuration API. Performs requests to retrieve
+        the config objects.
+    """
+    def __init__(self, session, instance_id, api_url=DEFAULT_API_URL):
+        super().__init__()
+        self.session = session
+        self.instance_id = instance_id
+        self.api_url = api_url
+
+    def _get(self, url):
+        response = self.session.get(url)
+        print (response)
+        return response.json()
+
+    def get_layers(self, dataset=None):
+        url = f"{self.api_url}/wms/instances/{self.instance_id}/layers/"
+        return self._get(url)
+
+    def get_layer(self, name):
+        url = f"{self.api_url}/wms/instances/{self.instance_id}/layers/{name}"
+        return self._get(url)
+
+    def get_dataproduct(self, dataset=None, identifier=None, url=None):
+        if not url:
+            assert(dataset and identifier)
+            url = f"{self.api_url}/datasets/{dataset}/dataproducts/{identifier}"
+
+        return self._get(url)
+
+
+class ConfigAPIMock(ConfigAPIBase):
+    """ Mocked configuration API interface. Uses static JSON definitions for
+        layers and dataproducts.
+    """
+    def __init__(self, session, instance_id, api_url=DEFAULT_API_URL,
+                 datasets_path=None, layers_path=None, dataproducts_path=None):
+        super().__init__(datasets_path)
+
+        layers_path = layers_path or join(dirname(__file__), 'layers.json')
+        if urlparse(layers_path).scheme in ('http', 'https'):
+            self.layers = requests.get(layers_path).json()
+        else:
+            self.layers = json.load(open(layers_path))
+
+        dataproducts_path = dataproducts_path or join(dirname(__file__), 'dataproducts.json')
+        if urlparse(layers_path).scheme in ('http', 'https'):
+            self.dataproducts = requests.get(dataproducts_path).json()
+        else:
+            self.dataproducts = json.load(open(dataproducts_path))
+
+    def get_layers(self, dataset=None):
+        if dataset:
+            return [
+                layer
+                for layer in self.layers
+                if layer['dataset']['@id'] == dataset['@id']
+            ]
+        return self.layers
+
+    def get_layer(self, name):
+        for layer in self.layers:
+            if layer['id'] == name:
+                return layer
+        
+        raise Exception(f'No such layer {name}')
+
+    def get_dataproduct(self, dataset=None, identifier=None, url=None):
+        for dataproduct in self.dataproducts:
+            if url and url == dataproduct['@id']:
+                return dataproduct
+            elif identifier and identifier == dataproduct['id']:
+                return dataproduct
+
+        raise Exception(f'No such dataproduct')

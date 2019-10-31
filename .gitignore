@@ -1,0 +1,4 @@
+*.tar
+*.py[cod]
+__pcache__/
+.pytest_cache/

@@ -1,0 +1,1386 @@
+
+
+[
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/65e18a3d-c2ba-47a1-86d0-7ee2047d2de0/layers/LANDSAT-COPY-RGB",
+    "id": "LANDSAT-COPY-RGB",
+    "title": "landsat-copy-rgb-v3",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "evalScript": "let minVal = 0.0;\nlet maxVal = 18000;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = [samples.B5, samples.B4, samples.B3];\n    return val.map((v,i) => viz.process(v,i));\n}\n\nfunction setup(ds) {\n    return {\n      input: ['B3', 'B4', 'B5'],\n      output: {\n        bands: 3\n      },\n    };\n}"
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/65e18a3d-c2ba-47a1-86d0-7ee2047d2de0"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/CUSTOM"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/CUSTOM/sources/10"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "CUSTOM",
+      "collectionId": "9d643c7d-5df5-4425-9e5f-d5b9e2385bb0",
+      "mosaickingOrder": "mostRecent"
+    },
+    "userData": {}
+  },
+
+
+
+
+
+
+
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb/layers/IW_VV",
+    "id": "IW_VV",
+    "title": "IW - VV [linear gamma0]",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/dataproducts/430"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/sources/3"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S1GRD",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 20.0,
+      "temporal": false,
+      "resolution": "HIGH",
+      "acquisitionMode": "IW",
+      "polarization": "DV"
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb/layers/IW_VV_DB",
+    "id": "IW_VV_DB",
+    "title": "IW - VV [dB gamma0]",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/dataproducts/434"
+        }
+      }
+    ],
+    "orderHint": 1,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/sources/3"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S1GRD",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 20.0,
+      "temporal": false,
+      "resolution": "HIGH",
+      "acquisitionMode": "IW",
+      "polarization": "DV"
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb/layers/IW_VH",
+    "id": "IW_VH",
+    "title": "IW - VH [linear gamma0]",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/dataproducts/432"
+        }
+      }
+    ],
+    "orderHint": 2,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/sources/3"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S1GRD",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 20.0,
+      "temporal": false,
+      "resolution": "HIGH",
+      "acquisitionMode": "IW",
+      "polarization": "DV"
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb/layers/IW-VH-DB",
+    "id": "IW-VH-DB",
+    "title": "IW - VH [dB gamma0]",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/dataproducts/436"
+        }
+      }
+    ],
+    "orderHint": 3,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/sources/3"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S1GRD",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 20.0,
+      "temporal": false,
+      "resolution": "HIGH",
+      "acquisitionMode": "IW",
+      "polarization": "DV"
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb/layers/EW_HH",
+    "id": "EW_HH",
+    "title": "EW - HH [linear gamma0]",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/dataproducts/431"
+        }
+      }
+    ],
+    "orderHint": 4,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/sources/3"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S1GRD",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 20.0,
+      "temporal": false,
+      "resolution": "MEDIUM",
+      "acquisitionMode": "EW",
+      "polarization": "DH"
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb/layers/EW_HH_DB",
+    "id": "EW_HH_DB",
+    "title": "EW - HH [dB gamma0]",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/dataproducts/435"
+        }
+      }
+    ],
+    "orderHint": 5,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/sources/3"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S1GRD",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 20.0,
+      "temporal": false,
+      "resolution": "MEDIUM",
+      "acquisitionMode": "EW",
+      "polarization": "DH"
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb/layers/EW_HV",
+    "id": "EW_HV",
+    "title": "EW - HV [linear gamma0]",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/dataproducts/433"
+        }
+      }
+    ],
+    "orderHint": 6,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/sources/3"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S1GRD",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 20.0,
+      "temporal": false,
+      "resolution": "MEDIUM",
+      "acquisitionMode": "EW",
+      "polarization": "DH"
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb/layers/EW_HV_DB",
+    "id": "EW_HV_DB",
+    "title": "EW - HV [dB gamma0]",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/dataproducts/437"
+        }
+      }
+    ],
+    "orderHint": 7,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/sources/3"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S1GRD",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 20.0,
+      "temporal": false,
+      "resolution": "MEDIUM",
+      "acquisitionMode": "EW",
+      "polarization": "DH"
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8/layers/AGRICULTURE",
+    "id": "AGRICULTURE",
+    "title": "Agriculture",
+    "description": "Based on bands 11, 8A and 2",
+    "styles": [
+      {
+        "name": "default",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/dataproducts/326"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/sources/1"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S2L1C",
+      "upsampling": "BICUBIC",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 20,
+      "temporal": false,
+      "previewMode": "PREVIEW"
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8/layers/FALSE_COLOR",
+    "id": "FALSE_COLOR",
+    "title": "False color (vegetation)",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/dataproducts/6"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/sources/1"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S2L1C",
+      "upsampling": "BICUBIC",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 20,
+      "temporal": false,
+      "previewMode": "PREVIEW"
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8/layers/FALSE_COLOR_URBAN",
+    "id": "FALSE_COLOR_URBAN",
+    "title": "False color (urban)",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/dataproducts/420"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/sources/1"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S2L1C",
+      "upsampling": "BICUBIC",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 20,
+      "temporal": false,
+      "previewMode": "PREVIEW"
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8/layers/NDVI",
+    "id": "NDVI",
+    "title": "NDVI",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/dataproducts/256"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/sources/1"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S2L1C",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 20,
+      "temporal": false,
+      "previewMode": "PREVIEW"
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8/layers/BATHYMETRIC",
+    "id": "BATHYMETRIC",
+    "title": "Bathymetric",
+    "description": "Based on bands 4,3,1",
+    "styles": [
+      {
+        "name": "default",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/dataproducts/284"
+        }
+      }
+    ],
+    "orderHint": 2,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/sources/1"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S2L1C",
+      "upsampling": "BICUBIC",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 20,
+      "temporal": false,
+      "previewMode": "PREVIEW"
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8/layers/GEOLOGY",
+    "id": "GEOLOGY",
+    "title": "Geology",
+    "description": "Based on bands 12,4,2",
+    "styles": [
+      {
+        "name": "default",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/dataproducts/422"
+        }
+      }
+    ],
+    "orderHint": 5,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/sources/1"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S2L1C",
+      "upsampling": "BICUBIC",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 20,
+      "temporal": false,
+      "previewMode": "PREVIEW"
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8/layers/MOISTURE_INDEX",
+    "id": "MOISTURE_INDEX",
+    "title": "Moisture Index",
+    "description": "Based on combination of bands (B8A - B11)/(B8A + B11)",
+    "styles": [
+      {
+        "name": "default",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/dataproducts/425"
+        }
+      }
+    ],
+    "orderHint": 6,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/sources/1"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S2L1C",
+      "upsampling": "BICUBIC",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 20,
+      "temporal": false,
+      "previewMode": "PREVIEW"
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8/layers/SWIR",
+    "id": "SWIR",
+    "title": "SWIR",
+    "description": "Based on bands 12,11,4",
+    "styles": [
+      {
+        "name": "default",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/dataproducts/426"
+        }
+      }
+    ],
+    "orderHint": 7,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/sources/1"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S2L1C",
+      "upsampling": "BICUBIC",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 20,
+      "temporal": false,
+      "previewMode": "PREVIEW"
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8/layers/TRUE_COLOR",
+    "id": "TRUE_COLOR",
+    "title": "Natural color (true color)",
+    "description": "Based on bands 4,3,2",
+    "styles": [
+      {
+        "name": "default",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/dataproducts/84"
+        }
+      }
+    ],
+    "orderHint": 8,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/sources/1"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S2L1C",
+      "upsampling": "BICUBIC",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 20,
+      "temporal": false,
+      "previewMode": "PREVIEW"
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B01",
+    "id": "S3OLCI-B01",
+    "title": "S3OLCI-B01",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/598"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S3OLCI",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 50.0,
+      "temporal": false
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B02",
+    "id": "S3OLCI-B02",
+    "title": "S3OLCI-B02",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/599"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S3OLCI",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 50.0,
+      "temporal": false
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B03",
+    "id": "S3OLCI-B03",
+    "title": "S3OLCI-B03",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/600"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S3OLCI",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 50.0,
+      "temporal": false
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B04",
+    "id": "S3OLCI-B04",
+    "title": "S3OLCI-B04",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/602"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S3OLCI",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 50.0,
+      "temporal": false
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B05",
+    "id": "S3OLCI-B05",
+    "title": "S3OLCI-B05",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/603"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S3OLCI",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 50.0,
+      "temporal": false
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B06",
+    "id": "S3OLCI-B06",
+    "title": "S3OLCI-B06",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/604"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S3OLCI",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 50.0,
+      "temporal": false
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B07",
+    "id": "S3OLCI-B07",
+    "title": "S3OLCI-B07",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/605"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S3OLCI",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 50.0,
+      "temporal": false
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B08",
+    "id": "S3OLCI-B08",
+    "title": "S3OLCI-B08",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/606"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S3OLCI",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 50.0,
+      "temporal": false
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B09",
+    "id": "S3OLCI-B09",
+    "title": "S3OLCI-B09",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/607"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S3OLCI",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 50.0,
+      "temporal": false
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B10",
+    "id": "S3OLCI-B10",
+    "title": "S3OLCI-B10",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/608"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S3OLCI",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 50.0,
+      "temporal": false
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B11",
+    "id": "S3OLCI-B11",
+    "title": "S3OLCI-B11",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/609"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S3OLCI",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 50.0,
+      "temporal": false
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B12",
+    "id": "S3OLCI-B12",
+    "title": "S3OLCI-B12",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/610"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S3OLCI",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 50.0,
+      "temporal": false
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B13",
+    "id": "S3OLCI-B13",
+    "title": "S3OLCI-B13",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/611"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S3OLCI",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 50.0,
+      "temporal": false
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B14",
+    "id": "S3OLCI-B14",
+    "title": "S3OLCI-B14",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/612"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S3OLCI",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 50.0,
+      "temporal": false
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B15",
+    "id": "S3OLCI-B15",
+    "title": "S3OLCI-B15",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/613"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S3OLCI",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 50.0,
+      "temporal": false
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B16",
+    "id": "S3OLCI-B16",
+    "title": "S3OLCI-B16",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/614"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S3OLCI",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 50.0,
+      "temporal": false
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B17",
+    "id": "S3OLCI-B17",
+    "title": "S3OLCI-B17",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/615"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S3OLCI",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 50.0,
+      "temporal": false
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B18",
+    "id": "S3OLCI-B18",
+    "title": "S3OLCI-B18",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/616"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S3OLCI",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 50.0,
+      "temporal": false
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B19",
+    "id": "S3OLCI-B19",
+    "title": "S3OLCI-B19",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/617"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S3OLCI",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 50.0,
+      "temporal": false
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B20",
+    "id": "S3OLCI-B20",
+    "title": "S3OLCI-B20",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/618"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S3OLCI",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 50.0,
+      "temporal": false
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B21",
+    "id": "S3OLCI-B21",
+    "title": "S3OLCI-B21",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/619"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S3OLCI",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 50.0,
+      "temporal": false
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-OTCI",
+    "id": "S3OLCI-OTCI",
+    "title": "S3OLCI-OTCI",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "evalScript": "var OTCI = (B12-B11)/(B11-B10);\nreturn colorBlend   \n    (OTCI,\t            \n        [ 0, 1, 1.8, 2.5, 4, 4.5, 5], \n        [     \n            [0, 0, 0.5],\n            [0, 0.3, 0.8],\n            [1, 0.2, 0.2],\n            [1, 0.9, 0],\n            [0, 0.8, 0.1],\n            [0, 0.6,0.2],\n            [1, 1, 1],\n      ]);\n"
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S3OLCI",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 50.0,
+      "temporal": false
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-TRISTIMULUS",
+    "id": "S3OLCI-TRISTIMULUS",
+    "title": "S3OLCI-Tristimulus",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/597"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S3OLCI",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 50.0,
+      "temporal": false
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-TRUE-COLOR",
+    "id": "S3OLCI-TRUE-COLOR",
+    "title": "S3OLCI-True color",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "dataProduct": {
+          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/578"
+        }
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "type": "S3OLCI",
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 50.0,
+      "temporal": false
+    }
+  }
+]
