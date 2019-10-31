@@ -1,4 +1,0 @@
-[submodule "eoxserver"]
-	path = eoxserver
-	url = https://github.com/EOxServer/eoxserver.git
-	branch = packaged-coverage-registration
