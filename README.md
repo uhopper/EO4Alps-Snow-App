@@ -1,6 +1,6 @@
 # OGC
 
-OGC services using MDI process API of DCFS project
+OGC services using MDI process API of eurodatacube project
 
 ## Development
 
