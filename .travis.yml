@@ -15,4 +15,4 @@ script:
 
 deploy:
   provider: script
-  script: bash travis_deploy.sh
+  script: bash -x travis_deploy.sh
