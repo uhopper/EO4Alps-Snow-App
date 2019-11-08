@@ -1,5 +1,5 @@
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from eoxserver.services.ows.decoders import (
     OWSCommonKVPDecoder, OWSCommonXMLDecoder
@@ -18,7 +18,7 @@ class OGCRequest:
     method: str = None
     body: str = None
     query: str = None
-    headers: dict = None
+    headers: dict = field(default_factory=dict)
 
 
 class OGCClient:
@@ -66,6 +66,6 @@ class OGCClient:
                 raise Exception(f'Version {version} not supported')
 
             return dispatch_wms_get_map(self.mdi_client, self.config_client, wms_request)
-    
+
     def dispatch_wcs(self, ows_decoder, request, ows_url):
         return dispatch_wcs(ows_decoder, request, ows_url, self.config_client, self.mdi_client)

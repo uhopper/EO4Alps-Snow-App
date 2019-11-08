@@ -137,7 +137,6 @@ class MdiTest(unittest.TestCase):
         response, _ = client.dispatch(OGCRequest(
             method='GET',
             query='service=WMS&version=1.3.0&request=GetMap&layers=TRUE_COLOR&styles=&crs=EPSG:3857&bbox=1500000,1500000,1600000,1600000&width=512&height=512&format=image/png',
-            headers={},
             base_url='http://testserver.org/',
         ))
 
@@ -148,7 +147,6 @@ class MdiTest(unittest.TestCase):
         response, _ = client.dispatch(OGCRequest(
             method='GET',
             query='service=WMS&version=1.1.0&request=GetMap&layers=AGRICULTURE&styles=&srs=EPSG:4326&bbox=14.043549,46.580095,14.167831,46.652688&width=512&height=512&format=image/png',
-            headers={},
             base_url='http://testserver.org/',
         ))
 
@@ -159,7 +157,6 @@ class MdiTest(unittest.TestCase):
         response, _ = client.dispatch(OGCRequest(
             method='GET',
             query='service=WMS&version=1.1.0&request=GetCapabilities',
-            headers={},
             base_url='http://testserver.org/',
         ))
 
