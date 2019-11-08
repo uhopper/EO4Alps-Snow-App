@@ -1,0 +1,6 @@
+FROM eurodatacube/ogc-edc:test
+
+RUN pip3 install pytest
+ADD test /home/ogc/test
+
+CMD pytest test/

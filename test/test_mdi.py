@@ -16,7 +16,7 @@ HAS_SH_CREDENTIALS = 'SH_CLIENT_ID' in os.environ and 'SH_CLIENT_SECRET' in os.e
 REQUIRE_SH_CREDENTIALS = 'requires SH credentials'
 
 
-logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)   
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
 TEST_EVALSCRIPT = """//VERSION=3
 function setup() {
@@ -49,18 +49,14 @@ class MdiTest(unittest.TestCase):
         client_secret = os.environ.get('SH_CLIENT_SECRET')
         # instance_id = os.environ.get("SH_INSTANCE_ID")
 
-
         client = oauthlib.oauth2.BackendApplicationClient(client_id=client_id)
         session = requests_oauthlib.OAuth2Session(client=client)
 
-
-        session.fetch_token(
-            token_url='https://services.sentinel-hub.com/oauth' + '/token',
+        mdi = Mdi(
+            session=session,
             client_id=client_id,
             client_secret=client_secret
         )
-
-        mdi = Mdi(session=session)
         return mdi
 
     # @unittest.skipUnless(HAS_SH_CREDENTIALS, REQUIRE_SH_CREDENTIALS)
@@ -141,6 +137,7 @@ class MdiTest(unittest.TestCase):
         response, _ = client.dispatch(OGCRequest(
             method='GET',
             query='service=WMS&version=1.3.0&request=GetMap&layers=TRUE_COLOR&styles=&crs=EPSG:3857&bbox=1500000,1500000,1600000,1600000&width=512&height=512&format=image/png',
+            headers={},
         ))
 
         with open('out.png', 'wb') as f:
@@ -150,6 +147,7 @@ class MdiTest(unittest.TestCase):
         response, _ = client.dispatch(OGCRequest(
             method='GET',
             query='service=WMS&version=1.1.0&request=GetMap&layers=AGRICULTURE&styles=&srs=EPSG:4326&bbox=14.043549,46.580095,14.167831,46.652688&width=512&height=512&format=image/png',
+            headers={},
         ))
 
         with open('out2.png', 'wb') as f:
@@ -159,6 +157,7 @@ class MdiTest(unittest.TestCase):
         response, _ = client.dispatch(OGCRequest(
             method='GET',
             query='service=WMS&version=1.1.0&request=GetCapabilities',
+            headers={},
         ))
 
         with open('out.xml', 'wb') as f:
@@ -224,7 +223,7 @@ class MdiTest(unittest.TestCase):
 #         token = session.fetch_token(token_url=oauth2_url + '/token',
 #                                                 client_id=client_id,
 #                                                 client_secret=client_secret)
-                                                  
+
 
 
 #         print(token)

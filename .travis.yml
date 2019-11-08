@@ -8,10 +8,11 @@ services:
 
 install:
   - docker pull "$REGISTRY_IMAGE:latest" || true
-  - docker build --cache-from "$REGISTRY_IMAGE:latest" -t "$REGISTRY_IMAGE:tmp_build" .
+  - docker build --cache-from "$REGISTRY_IMAGE:latest" -t "$REGISTRY_IMAGE:tmp_build" -t "$REGISTRY_IMAGE:test" .
+  - docker build -t eurodatacube/ogc-edc-test -f ./Dockerfile.test .
 
 script:
-  - true
+  - docker run -it -e SH_CLIENT_ID="$SH_CLIENT_ID" -e SH_CLIENT_SECRET="$SH_CLIENT_SECRET" eurodatacube/ogc-edc-test
 
 deploy:
   provider: script
