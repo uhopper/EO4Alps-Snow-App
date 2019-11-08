@@ -1,10 +1,11 @@
 # OGC
 
-OGC services using MDI process API of eurodatacube project
+OGC service layer sitting on top of [Euro Data Cube](https://eurodatacube.com) APIs. Click [here](https://ogc-edc.32d57c6d-8350-401a-b783-30e8e803cd09.hub.eox.at) for a demonstration.
 
 ## Development
 
 ### Setup
+
 ```
 $ git clone https://github.com/eurodatacube/ogc-edc.git
 $ cd ogc-edc
@@ -15,11 +16,13 @@ $ pip install requirements.txt
 ```
 
 ### Test
+
 ```
 $ pytest --capture=no
 ```
 
 ### Run locally
+
 ```
 $ env FLASK_APP=edc_ogc/app.py flask run
  * Serving Flask app "edc_ogc/app.py"
@@ -31,11 +34,13 @@ $ env FLASK_APP=edc_ogc/app.py flask run
 ```
 
 ### Run with docker
+
 `docker run -p 80:5000 -e SH_CLIENT_ID=<oauthclientid> -e SH_CLIENT_SECRET=<oauth_clientsecret> eurodatacube/ogc-edc`
 
 ### Try out
+
 `http://localhost:5000/?service=WMS&version=1.1.0&request=GetMap&layers=AGRICULTURE&styles=&srs=EPSG:4326&bbox=14.043549,46.580095,14.167831,46.652688&width=512&height=512&format=image/png`
  
 ## Deployment
 
-Travis-CI will automatically build and push docker image on checkin which will be pushed to docker hub.
+[Travis-CI](https://travis-ci.org/eurodatacube/ogc-edc) [![Build Status](https://travis-ci.org/eurodatacube/ogc-edc.svg?branch=master)](https://travis-ci.org/eurodatacube/ogc-edc) will automatically build docker images on checkin which will be pushed to [docker hub](https://hub.docker.com/r/eurodatacube/ogc-edc).
