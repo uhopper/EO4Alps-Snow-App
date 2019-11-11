@@ -134,15 +134,10 @@
               "version": "1.3.0",
               "opacity": 0.9,
               "minZoom": 9,
-              "replace": {
-                "target": "display.extraParameters.LAYERS",
-                "value": "S2L2A" 
-              },
               "options": [
               //   { TODO - needs implementation on server
               //   "name": "Predefined display style",
               //   "target": "display.extraParameters.LAYERS",
-              //   "selectOne": true,
               //   "values": [{
               //       "label": "Natural Color",
               //       "value": "TRUE_COLOR",
@@ -176,109 +171,93 @@
                   "name": "Band Combination (RGB)",
                   "target": "display.extraParameters.dim_bands",
                   "selectThree" : true,
+                  "replace": [{
+                    "target": "display.extraParameters.LAYERS",
+                    "value": "S2L2A"
+                  }],
                   "values":[{
-                      "label": "",
-                      "value": ""
-                  },{
-                      "label": "B01",
                       "value": "B01",
                   },{
-                      "label": "B02",
                       "value": "B02",
                   },{
-                      "label": "B03",
                       "value": "B03",
                   },{
-                      "label": "B04",
                       "value": "B04",
                   },{
-                      "label": "B05",
                       "value": "B05",
                   },{
-                      "label": "B06",
                       "value": "B06",
                   },{
-                      "label": "B07",
                       "value": "B07",
                   },{
-                      "label": "B08",
                       "value": "B08",
                   },{
-                      "label": "B8A",
                       "value": "B8A",
                   },{
-                      "label": "B09",
                       "value": "B09",
                   },{
-                      "label": "B11",
                       "value": "B11",
                   },{
-                      "label": "B12",
                       "value": "B12",
+                  },{
+                      "label": "Scene Classification",
+                      "value": "SCL",
+                  },{
+                      "label": "Cloud mask",
+                      "value": "CLD",
+                  },{
+                      "label": "Snow/Ice mask",
+                      "value": "SNW",
                   }],
               }, {
                   "name": "Wavelength Combination (RGB)",
                   "target": "display.extraParameters.dim_wavelengths",
                   "selectThree" : true,
+                  "replace": [{
+                    "target": "display.extraParameters.LAYERS",
+                    "value": "S2L2A"
+                  }],
                   "values":[{
-                      "label": "",
-                      "value": ""
-                  },{
-                      "label": "442.7",
                       "value": "442.7",
                   },{
-                      "label": "492.4",
                       "value": "492.4",
                   },{
-                      "label": "559.8",
                       "value": "559.8",
                   },{
-                      "label": "664.6",
                       "value": "664.6",
                   },{
-                      "label": "704.1",
                       "value": "704.1",
                   },{
-                      "label": "740.5",
                       "value": "740.5",
                   },{
-                      "label": "782.8",
                       "value": "782.8",
                   },{
-                      "label": "832.8",
                       "value": "832.8",
                   },{
-                      "label": "864.7",
                       "value": "864.7",
                   },{
-                      "label": "945.1",
                       "value": "945.1",
                   },{
-                      "label": "1613.7",
                       "value": "1613.7",
                   },{
-                      "label": "2202.4",
                       "value": "2202.4",
                   }],
               },
-              {
-                 "name": "Single bands",
-                 "selectOne": true,
-                 "target": "display.extraParameters.dim_bands",
-                 "values":[{
-                     "label": "",
-                     "value": ""
-                 },{
-                     "label": "Scene Classification SCL",
-                     "value": "SCL",
-                 },{
-                     "label": "Cloud mask CLD",
-                     "value": "CLD",
-                 },{
-                     "label": "Snow/Ice mask SNW",
-                     "value": "SNW",
-                 }]
-             },
+              // needs implementation on server
+             //  {
+             //     "name": "Single bands",
+             //     "target": "display.extraParameters.dim_bands",
+             //     "values":[{
+             //         "label": "Scene Classification SCL",
+             //         "value": "SCL",
+             //     },{
+             //         "label": "Cloud mask CLD",
+             //         "value": "CLD",
+             //     },{
+             //         "label": "Snow/Ice mask SNW",
+             //         "value": "SNW",
+             //     }]
+             // },
             ],
           },
           "fullResolution": {
@@ -293,61 +272,46 @@
                   'lat'
               ],
               "fields": [{
-                "name": "B01",
                 "identifier": "B01"
               }, {
-                "name": "B02",
                 "identifier": "B02"
               }, {
-                "name": "B03",
                 "identifier": "B03"
               }, {
-                "name": "B04",
                 "identifier": "B04"
               }, {
-                "name": "B05",
                 "identifier": "B05"
               }, {
-                "name": "B06",
                 "identifier": "B06"
               }, {
-                "name": "B07",
                 "identifier": "B07"
               }, {
-                "name": "B08",
                 "identifier": "B08"
               }, {
-                "name": "B8A",
                 "identifier": "B8A"
               }, {
-                "name": "B09",
                 "identifier": "B09"
               }, {
-                "name": "B11",
                 "identifier": "B11"
               }, {
-                "name": "B12",
                 "identifier": "B12"
               }, {
-                "name": "SCL",
                 "identifier": "SCL"
               }, {
-                "name": "SNw",
                 "identifier": "SNW"
               }, {
-                "name": "CLD",
                 "identifier": "CLD"
               }],
-              "interpolations": [{
-                "name": "Nearest-Neighbor",
-                "identifier": "//www.opengis.net/def/interpolation/OGC/1/nearest-neighbor"
-              }, {
-                "name": "Linear",
-                "identifier": "//www.opengis.net/def/interpolation/OGC/1/linear"
-              }, {
-                "name": "Cubic",
-                "identifier": "//www.opengis.net/def/interpolation/OGC/1/cubic"
-              }]
+              "interpolations": [
+                  {
+                    "name": "Bilinear",
+                    "identifier": "http://www.opengis.net/def/interpolation/OGC/1/bilinear"
+                  },
+                  {
+                      "name": "Bicubic",
+                      "identifier": "http://www.opengis.net/def/interpolation/OGC/1/bicubic"
+                  }
+              ]
           },
       },
         {
@@ -375,14 +339,9 @@
                 "version": "1.3.0",
                 "opacity": 0.9,
                 "minZoom": 9,
-                "replace": {
-                  "target": "display.extraParameters.LAYERS",
-                  "value": "S2L1C" 
-                },
                 "options": [{
                   "name": "Predefined display style",
                   "target": "display.extraParameters.LAYERS",
-                  "selectOne": true,
                   "values": [{
                       "label": "Natural Color",
                       "value": "TRUE_COLOR",
@@ -415,94 +374,70 @@
                     "name": "Band Combination (RGB)",
                     "target": "display.extraParameters.dim_bands",
                     "selectThree" : true,
+                    "replace": [{
+                      "target": "display.extraParameters.LAYERS",
+                      "value": "S2L1C"
+                    }],
                     "values":[{
-                        "label": "",
-                        "value": ""
-                    },{
-                        "label": "B01",
                         "value": "B01",
                     },{
-                        "label": "B02",
                         "value": "B02",
                     },{
-                        "label": "B03",
                         "value": "B03",
                     },{
-                        "label": "B04",
                         "value": "B04",
                     },{
-                        "label": "B05",
                         "value": "B05",
                     },{
-                        "label": "B06",
                         "value": "B06",
                     },{
-                        "label": "B07",
                         "value": "B07",
                     },{
-                        "label": "B08",
                         "value": "B08",
                     },{
-                        "label": "B8A",
                         "value": "B8A",
                     },{
-                        "label": "B09",
                         "value": "B09",
                     },{
-                        "label": "B10",
                         "value": "B10",
                     },{
-                        "label": "B11",
                         "value": "B11",
                     },{
-                        "label": "B12",
                         "value": "B12",
                     }],
                 }, {
                     "name": "Wavelength Combination (RGB)",
                     "target": "display.extraParameters.dim_wavelengths",
                     "selectThree" : true,
+                    "replace": [{
+                      "target": "display.extraParameters.LAYERS",
+                      "value": "S2L1C"
+                    }],
                     "values":[{
-                        "label": "",
-                        "value": ""
-                    },{
-                        "label": "442.7",
                         "value": "442.7",
                     },{
-                        "label": "492.4",
                         "value": "492.4",
                     },{
-                        "label": "559.8",
                         "value": "559.8",
                     },{
-                        "label": "664.6",
                         "value": "664.6",
                     },{
-                        "label": "704.1",
                         "value": "704.1",
                     },{
-                        "label": "740.5",
                         "value": "740.5",
                     },{
-                        "label": "782.8",
                         "value": "782.8",
                     },{
-                        "label": "832.8",
                         "value": "832.8",
                     },{
-                        "label": "864.7",
                         "value": "864.7",
                     },{
-                        "label": "945.1",
                         "value": "945.1",
                     },{
-                        "label": "1373.5",
                         "value": "1373.5",
                     },{
-                        "label": "1613.7",
                         "value": "1613.7",
                     },{
-                        "label": "2202.4",
                         "value": "2202.4",
                     }],
                 }, 
@@ -524,55 +459,42 @@
                     'lat'
                 ],
                 "fields": [{
-                  "name": "B01",
                   "identifier": "B01"
                 }, {
-                  "name": "B02",
                   "identifier": "B02"
                 }, {
-                  "name": "B03",
                   "identifier": "B03"
                 }, {
-                  "name": "B04",
                   "identifier": "B04"
                 }, {
-                  "name": "B05",
                   "identifier": "B05"
                 }, {
-                  "name": "B06",
                   "identifier": "B06"
                 }, {
-                  "name": "B07",
                   "identifier": "B07"
                 }, {
-                  "name": "B08",
                   "identifier": "B08"
                 }, {
-                  "name": "B8A",
                   "identifier": "B8A"
                 }, {
-                  "name": "B09",
                   "identifier": "B09"
                 }, {
-                  "name": "B10",
                   "identifier": "B10"
                 }, {
-                  "name": "B11",
                   "identifier": "B11"
                 }, {
-                  "name": "B12",
                   "identifier": "B12"
                 }],
-                "interpolations": [{
-                  "name": "Nearest-Neighbor",
-                  "identifier": "//www.opengis.net/def/interpolation/OGC/1/nearest-neighbor"
-                }, {
-                  "name": "Linear",
-                  "identifier": "//www.opengis.net/def/interpolation/OGC/1/linear"
-                }, {
-                  "name": "Cubic",
-                  "identifier": "//www.opengis.net/def/interpolation/OGC/1/cubic"
-                }]
+                "interpolations": [
+                    {
+                      "name": "Bilinear",
+                      "identifier": "http://www.opengis.net/def/interpolation/OGC/1/bilinear"
+                    },
+                    {
+                        "name": "Bicubic",
+                        "identifier": "http://www.opengis.net/def/interpolation/OGC/1/bicubic"
+                    }
+                ]
             },
         },
         {
@@ -600,14 +522,9 @@
                 "version": "1.3.0",
                 "opacity": 0.9,
                 "minZoom": 9,
-                "replace": {
-                  "target": "display.extraParameters.LAYERS",
-                  "value": "S3OLCI" 
-                },
                 "options": [{
                   "name": "Predefined display style",
                   "target": "display.extraParameters.LAYERS",
-                  "selectOne": true,
                   "values": [{
                       "label": "S3OLCI True Color",
                       "value": "S3OLCI-TRUE-COLOR",
@@ -618,138 +535,97 @@
                       "label": "S3OLCI OTCI",
                       "value": "S3OLCI-OTCI",
                   }, {
-                      "label": "S3OLCI-B01",
                       "value": "S3OLCI-B01",
                   }, {
-                      "label": "S3OLCI-B02",
                       "value": "S3OLCI-B02",
                   }, {
-                      "label": "S3OLCI-B03",
                       "value": "S3OLCI-B03",
                   }, {
-                      "label": "S3OLCI-B04",
                       "value": "S3OLCI-B04",
                   }, {
-                      "label": "S3OLCI-B05",
                       "value": "S3OLCI-B05",
                   }, {
-                      "label": "S3OLCI-B06",
                       "value": "S3OLCI-B06",
                   }, {
-                      "label": "S3OLCI-B07",
                       "value": "S3OLCI-B07",
                   }, {
-                      "label": "S3OLCI-B08",
                       "value": "S3OLCI-B08",
                   }, {
-                      "label": "S3OLCI-B09",
                       "value": "S3OLCI-B09",
                   }, {
-                      "label": "S3OLCI-B10",
                       "value": "S3OLCI-B10",
                   }, {
-                      "label": "S3OLCI-B11",
                       "value": "S3OLCI-B11",
                   }, {
-                      "label": "S3OLCI-B12",
                       "value": "S3OLCI-B12",
                   }, {
-                      "label": "S3OLCI-B13",
                       "value": "S3OLCI-B13",
                   }, {
-                      "label": "S3OLCI-B14",
                       "value": "S3OLCI-B14",
                   }, {
-                      "label": "S3OLCI-B15",
                       "value": "S3OLCI-B15",
                   }, {
-                      "label": "S3OLCI-B16",
                       "value": "S3OLCI-B16",
                   }, {
-                      "label": "S3OLCI-B17",
                       "value": "S3OLCI-B17",
                   }, {
-                      "label": "S3OLCI-B18",
                       "value": "S3OLCI-B18",
                   }, {
-                      "label": "S3OLCI-B19",
                       "value": "S3OLCI-B19",
                   }, {
-                      "label": "S3OLCI-B20",
                       "value": "S3OLCI-B20",
                   }, {
-                      "label": "S3OLCI-B21",
                       "value": "S3OLCI-B21",
                   }]
                 }, {
                     "name": "Band Combination (RGB)",
                     "target": "display.extraParameters.dim_bands",
                     "selectThree" : true,
+                    "replace": [{
+                      "target": "display.extraParameters.LAYERS",
+                      "value": "S3OLCI"
+                    }],
                     "values":[{
-                        "label": "",
-                        "value": ""
-                    },{
-                        "label": "B01",
                         "value": "B01",
                     },{
-                        "label": "B02",
                         "value": "B02",
                     },{
-                        "label": "B03",
                         "value": "B03",
                     },{
-                        "label": "B04",
                         "value": "B04",
                     },{
-                        "label": "B05",
                         "value": "B05",
                     },{
-                        "label": "B06",
                         "value": "B06",
                     },{
-                        "label": "B07",
                         "value": "B07",
                     },{
-                        "label": "B08",
                         "value": "B08",
                     },{
-                        "label": "B09",
                         "value": "B09",
                     },{
-                        "label": "B10",
                         "value": "B10",
                     },{
-                        "label": "B11",
                         "value": "B11",
                     },{
-                        "label": "B12",
                         "value": "B12",
                     },{
-                        "label": "B13",
                         "value": "B13",
                     },{
-                        "label": "B14",
                         "value": "B14",
                     },{
-                        "label": "B15",
                         "value": "B15",
                     },{
-                        "label": "B16",
                         "value": "B16",
                     },{
-                        "label": "B17",
                         "value": "B17",
                     },{
-                        "label": "B18",
                         "value": "B18",
                     },{
-                        "label": "B19",
                         "value": "B19",
                     },{
-                        "label": "B20",
                         "value": "B20",
                     },{
-                        "label": "B21",
                         "value": "B21",
                     }],
                 },
@@ -768,79 +644,58 @@
                     'lat'
                 ],
                 "fields": [{
-                  "name": "B01",
                   "identifier": "B01"
                 }, {
-                  "name": "B02",
                   "identifier": "B02"
                 }, {
-                  "name": "B03",
                   "identifier": "B03"
                 }, {
-                  "name": "B04",
                   "identifier": "B04"
                 }, {
-                  "name": "B05",
                   "identifier": "B05"
                 }, {
-                  "name": "B06",
                   "identifier": "B06"
                 }, {
-                  "name": "B07",
                   "identifier": "B07"
                 }, {
-                  "name": "B08",
                   "identifier": "B08"
                 }, {
-                  "name": "B09",
                   "identifier": "B09"
                 }, {
-                  "name": "B10",
                   "identifier": "B10"
                 }, {
-                  "name": "B11",
                   "identifier": "B11"
                 }, {
-                  "name": "B12",
                   "identifier": "B12"
                 }, {
-                  "name": "B13",
                   "identifier": "B13",
                 }, {
-                  "name": "B14",
                   "identifier": "B14",
                 }, {
-                  "name": "B15",
                   "identifier": "B15",
                 }, {
-                  "name": "B16",
                   "identifier": "B16",
                 }, {
-                  "name": "B17",
                   "identifier": "B17",
                 }, {
-                  "name": "B18",
                   "identifier": "B18",
                 }, {
-                  "name": "B19",
                   "identifier": "B19",
                 }, {
-                  "name": "B20",
                   "identifier": "B20",
                 }, {
-                  "name": "B21",
                   "identifier": "B21",
                 }],
-                "interpolations": [{
-                  "name": "Nearest-Neighbor",
-                  "identifier": "//www.opengis.net/def/interpolation/OGC/1/nearest-neighbor"
-                }, {
-                  "name": "Linear",
-                  "identifier": "//www.opengis.net/def/interpolation/OGC/1/linear"
-                }, {
-                  "name": "Cubic",
-                  "identifier": "//www.opengis.net/def/interpolation/OGC/1/cubic"
-                }]
+                "interpolations": [
+                    {
+                      "name": "Bilinear",
+                      "identifier": "http://www.opengis.net/def/interpolation/OGC/1/bilinear"
+                    },
+                    {
+                        "name": "Bicubic",
+                        "identifier": "http://www.opengis.net/def/interpolation/OGC/1/bicubic"
+                    }
+                ]
             },
         },
         {
@@ -868,14 +723,9 @@
                 "version": "1.3.0",
                 "opacity": 0.9,
                 "minZoom": 9,
-                "replace": {
-                  "target": "display.extraParameters.LAYERS",
-                  "value": "S1GRD" 
-                },
                 "options": [{
                   "name": "Predefined display style",
                   "target": "display.extraParameters.LAYERS",
-                  "selectOne": true,
                   "values": [{
                       "label": "IW VV linear gamma0",
                       "value": "IW_VV",
@@ -905,20 +755,17 @@
                     "name": "Band Combination (RGB)",
                     "target": "display.extraParameters.dim_bands",
                     "selectThree" : true,
+                    "replace": [{
+                      "target": "display.extraParameters.LAYERS",
+                      "value": "S1GRD"
+                    }],
                     "values":[{
-                        "label": "",
-                        "value": ""
-                    },{
-                        "label": "VV",
                         "value": "VV",
                     },{
-                        "label": "VH",
                         "value": "VH",
                     },{
-                        "label": "HH",
                         "value": "HH",
                     },{
-                        "label": "HV",
                         "value": "HV",
                     }],
                 }
@@ -936,28 +783,24 @@
                     'lat'
                 ],
                 "fields": [{
-                  "name": "VV",
                   "identifier": "VV"
                 }, {
-                  "name": "VH",
                   "identifier": "VH"
                 }, {
-                  "name": "HH",
                   "identifier": "HH"
                 }, {
-                  "name": "HV",
                   "identifier": "HV"
                 }],
-                "interpolations": [{
-                  "name": "Nearest-Neighbor",
-                  "identifier": "//www.opengis.net/def/interpolation/OGC/1/nearest-neighbor"
-                }, {
-                  "name": "Linear",
-                  "identifier": "//www.opengis.net/def/interpolation/OGC/1/linear"
-                }, {
-                  "name": "Cubic",
-                  "identifier": "//www.opengis.net/def/interpolation/OGC/1/cubic"
-                }]
+                "interpolations": [
+                    {
+                      "name": "Bilinear",
+                      "identifier": "http://www.opengis.net/def/interpolation/OGC/1/bilinear"
+                    },
+                    {
+                        "name": "Bicubic",
+                        "identifier": "http://www.opengis.net/def/interpolation/OGC/1/bicubic"
+                    }
+                ]
             },
         },
     ],
