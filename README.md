@@ -1,6 +1,6 @@
-# OGC
+# OGC on top of Euro Data Cube (ogc-edc)
 
-OGC service layer sitting on top of [Euro Data Cube](https://eurodatacube.com) APIs. Click [here](https://ogc-edc.32d57c6d-8350-401a-b783-30e8e803cd09.hub.eox.at) for a demonstration.
+OGC layer including [EOxC browser](https://github.com/eoxc/eoxc) connected to Euro Data Cube's Sentinel-Hub service.
 
 ## Development
 
@@ -35,7 +35,7 @@ $ env FLASK_APP=edc_ogc/app.py flask run
 
 ### Run with docker
 
-`docker run -p 80:5000 -e SH_CLIENT_ID=<oauthclientid> -e SH_CLIENT_SECRET=<oauth_clientsecret> eurodatacube/ogc-edc`
+`docker run -p 5000:5000 -e SH_CLIENT_ID=<oauth_clientid> -e SH_CLIENT_SECRET=<oauth_clientsecret> eurodatacube/ogc-edc`
 
 ### Try out
 
