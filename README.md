@@ -2,6 +2,9 @@
 
 OGC layer including [EOxC browser](https://github.com/eoxc/eoxc) connected to Euro Data Cube's Sentinel-Hub service.
 
+## Live Demo
+[**Demonstrator deployed on EOxHub**](https://ogc-0652eab6-e5d0-11e9-a359-2a2ae2dbcce4.edc.hub.eox.at) 
+
 ## Development
 
 ### Setup
