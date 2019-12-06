@@ -170,10 +170,14 @@ SUPPORTED_CRSS = {
 
 SUPPORTED_CRSS_SET = set(SUPPORTED_CRSS)
 
+TRANSLATE_CRS = {
+    "CRS:84": "EPSG:4326"
+}
+
 # TODO: copied from EOxServer, use reference instead
-EPSG_AXES_REVERSED = set([ 
-    # GEOGRAPHIC COORDINATE SYSTEMS 
-    # NOTE: Tested to be consistent with GDAL 
+EPSG_AXES_REVERSED = set([
+    # GEOGRAPHIC COORDINATE SYSTEMS
+    # NOTE: Tested to be consistent with GDAL
     #       OGRSpatialReference::EPSGTreatsAsNorthingEasting()
     3819, 3821, 3824, 3889, 3906, 4001, 4002, 4003, 4004, 4005, 4006, 4007,
     4008, 4009, 4010, 4011, 4012, 4013, 4014, 4015, 4016, 4018, 4019, 4020,
@@ -214,11 +218,11 @@ EPSG_AXES_REVERSED = set([
     4823, 4824, 4901, 4902, 4903, 4904, 5013, 5132, 5228, 5229, 5233, 5246,
     5252, 5264, 5324, 5340, 5354, 5360, 5365, 5371, 5373, 5381, 5393, 5451,
     5464, 5467, 5489, 5524, 5527, 5546,
-    # PROJECTED COORDINATE SYSTEMS 
+    # PROJECTED COORDINATE SYSTEMS
     #TODO: verify with OGRSpatialReference::EPSGTreatsAsNorthingEasting()
     #      (avaiable only in GDAL 1.10.0 C/C++ API but not in Python)
     # SOUTH,WEST pointing projected coordinate systems:
-    # NOTE: These are probably inconsistent with 
+    # NOTE: These are probably inconsistent with
     #       OGRSpatialReference::EPSGTreatsAsNorthingEasting()
     #       as this fucntion check NORTH pointing coordinates only.
     2065, 5513,

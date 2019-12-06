@@ -8,7 +8,8 @@ from eoxserver.services.ows.wms.v11.encoders import WMS11Encoder
 from eoxserver.services.ows.wms.v13.encoders import WMS13Encoder
 
 from edc_ogc.ogc.supported import (
-    SUPPORTED_CRSS, SUPPORTED_FORMATS, EPSG_AXES_REVERSED
+    SUPPORTED_CRSS, SUPPORTED_FORMATS, EPSG_AXES_REVERSED,
+    TRANSLATE_CRS
 )
 
 def dispatch_wms_get_capabilities(config_client, ows_url, version=None):
@@ -81,6 +82,9 @@ def dispatch_wms_get_map(mdi_client, config_client, wms_request):
     crs = wms_request.crs
     if crs not in SUPPORTED_CRSS:
         raise Exception(f'CRS {crs} is not supported')
+
+    # Maybe translate CRS identifier
+    crs = TRANSLATE_CRS.get(crs, crs)
 
     # Translate CRS identifier from short form to URL form
     crs_org, crs_code = crs.split(':', 1)
