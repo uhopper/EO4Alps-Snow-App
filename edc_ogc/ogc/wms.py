@@ -48,20 +48,26 @@ def dispatch_wms_get_capabilities(config_client, ows_url, version=None):
             formats=[Format(frmt) for frmt in SUPPORTED_FORMATS],
             info_formats=[],
             layer_descriptions=[
-                LayerDescription(dataset['id'], dataset['title'], [], get_band_dimensions(dataset), [
-                    LayerDescription(
-                        layer['id'],
-                        layer['description'],
-                        [style['name'] for style in layer['styles']], {
-                            'time': {
-                                'min': dataset['timeextent'][0].isoformat(),
-                                'max': date.today().isoformat(),
-                                'step': 'P1D',
-                                'units': 'ISO8601'
+                LayerDescription(
+                    dataset['id'],
+                    dataset['title'] or dataset['id'],
+                    [],
+                    get_band_dimensions(dataset),
+                    [
+                        LayerDescription(
+                            layer['id'],
+                            layer['description'] or layer['id'],
+                            [style['name'] for style in layer['styles']], {
+                                'time': {
+                                    'min': dataset['timeextent'][0].isoformat(),
+                                    'max': date.today().isoformat(),
+                                    'step': 'P1D',
+                                    'units': 'ISO8601'
+                                }
                             }
-                        }
-                    ) for layer in config_client.get_layers(dataset)
-                ]) for dataset in config_client.get_datasets()
+                        ) for layer in config_client.get_layers(dataset)
+                    ]
+                ) for dataset in config_client.get_datasets()
             ]
         )
     ), 'text/xml'
