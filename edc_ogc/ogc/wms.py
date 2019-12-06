@@ -19,7 +19,8 @@ def dispatch_wms_get_capabilities(config_client, ows_url, version=None):
         encoder = WMS13Encoder()
 
     class DummyConfig:
-        def __getattribute__(self, name):
+        title = 'OGC EDC'
+        def __getattr__(self, name):
             return ""
 
 
@@ -30,12 +31,13 @@ def dispatch_wms_get_capabilities(config_client, ows_url, version=None):
     class LayerDescription:
         queryable = True
         bbox = None
-        def __init__(self, name, styles, dimensions=None, sub_layers=None):
+        def __init__(self, name, title, styles, dimensions=None, sub_layers=None):
             self.name = name
+            self.title = title
             self.styles = styles
             self.dimensions = dimensions or {}
             self.sub_layers = sub_layers or []
-    
+
     # config, ows_url, srss, formats, info_formats, layer_descriptions
 
     return encoder.serialize(
@@ -46,9 +48,10 @@ def dispatch_wms_get_capabilities(config_client, ows_url, version=None):
             formats=[Format(frmt) for frmt in SUPPORTED_FORMATS],
             info_formats=[],
             layer_descriptions=[
-                LayerDescription(dataset['id'], [], get_band_dimensions(dataset), [
+                LayerDescription(dataset['id'], dataset['title'], [], get_band_dimensions(dataset), [
                     LayerDescription(
                         layer['id'],
+                        layer['description'],
                         [style['name'] for style in layer['styles']], {
                             'time': {
                                 'min': dataset['timeextent'][0].isoformat(),
