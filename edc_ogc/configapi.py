@@ -78,11 +78,10 @@ class ConfigAPIBase:
             # TODO check bands
             for band in bands:
                 assert band in dataset['bands']
-        
+
         # TODO: polarizations?
-        else:
-            # TODO: use default bands?
-            pass
+        elif 'defaultbands' in dataset:
+            bands = dataset['defaultbands']
 
         bandlist = ', '.join(f'"{band}"' for band in bands)
         if visual:
@@ -131,7 +130,7 @@ class ConfigAPIBase:
             evalscript = dataproduct['evalScript']
         else:
             evalscript = style_config['evalScript']
-        
+
         return evalscript, layer_config['datasourceDefaults']
 
 
@@ -199,7 +198,7 @@ class ConfigAPIMock(ConfigAPIBase):
         for layer in self.layers:
             if layer['id'] == name:
                 return layer
-        
+
         raise Exception(f'No such layer {name}')
 
     def get_dataproduct(self, dataset=None, identifier=None, url=None):
