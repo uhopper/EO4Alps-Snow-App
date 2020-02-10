@@ -127,6 +127,11 @@ class Mdi:
 
     def process_image(self, sources, bbox, crs, width, height, format, evalscript,
                       time=None, upsample=None, downsample=None, api_url=None):
+
+        # prepend the version information if not already included
+        if not evalscript.startswith('//VERSION=3'):
+            evalscript = f'//VERSION=3\n{evalscript}'
+
         request_body = {
             'input': {
                 'bounds': {
