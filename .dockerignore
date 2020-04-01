@@ -1,5 +1,3 @@
 .git
 .*
-eoxserver/autotest
-eoxserver/documentation
-eoxserver/schemas
+eoxserver
