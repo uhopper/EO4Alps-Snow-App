@@ -26,17 +26,17 @@ class Mdi(ApiBase):
         self.api_url = api_url
 
     def send_process_request(self, session, request: Dict, accept_header: str, api_url=None) -> Tuple[str, Any]:
-                logger.debug(f'Sending process request {json.dumps(request)}')
-                start = time()
+        logger.debug(f'Sending process request {json.dumps(request)}')
+        start = time()
         resp = session.post(
-                    (api_url or self.api_url) + '/process',
-                    json=request,
-                    headers={
-                        'Accept': accept_header,
-                        'cache-control': 'no-cache'
-                    }
-                )
-                logger.info(f'Process request took {time() - start} seconds to complete')
+            (api_url or self.api_url) + '/process',
+            json=request,
+            headers={
+                'Accept': accept_header,
+                'cache-control': 'no-cache'
+            }
+        )
+        logger.info(f'Process request took {time() - start} seconds to complete')
 
         if not resp.ok:
             raise MdiError.from_response(resp)
@@ -72,7 +72,10 @@ class Mdi(ApiBase):
 
         # prepend the version information if not already included
         if not evalscript.startswith('//VERSION=3'):
-            evalscript = f'//VERSION=3\n{evalscript}'
+            # evalscript = f'//VERSION=3\n{evalscript}'
+            evalscript = self.with_retry(
+                self.translate_evalscript_to_v3, evalscript, sources[0]['type']
+            )
 
         request_body = {
             'input': {
@@ -99,7 +102,18 @@ class Mdi(ApiBase):
             },
             'evalscript': evalscript,
         }
-        return self.send_process_request(request_body, format, api_url)
+        return self.with_retry(self.send_process_request, request_body, format, api_url)
+
+    def translate_evalscript_to_v3(self, session, evalscript, dataset_type):
+        resp = session.post(
+            f'https://services.sentinel-hub.com/api/v1/process/convertscript?datasetType={dataset_type}',
+            data=evalscript,
+        )
+
+        if not resp.ok:
+            raise MdiError.from_response(resp)
+
+        return resp.content.decode('utf-8')
 
 
 class MdiError(Exception):
