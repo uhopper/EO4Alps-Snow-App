@@ -3,7 +3,7 @@
 OGC layer including [EOxC browser](https://github.com/eoxc/eoxc) connected to Euro Data Cube's Sentinel-Hub service.
 
 ## Live Demo
-[**Demonstrator deployed on EOxHub**](https://ogc-0652eab6-e5d0-11e9-a359-2a2ae2dbcce4.edc.hub.eox.at) 
+[**Demonstrator deployed on EOxHub**](https://ogc-0652eab6-e5d0-11e9-a359-2a2ae2dbcce4.edc.hub.eox.at)
 
 ## Development
 
@@ -38,12 +38,20 @@ $ env FLASK_APP=edc_ogc/app.py flask run
 
 ### Run with docker
 
-`docker run -p 5000:5000 -e SH_CLIENT_ID=<oauth_clientid> -e SH_CLIENT_SECRET=<oauth_clientsecret> eurodatacube/ogc-edc`
+```
+docker run -p 5000:5000 -e SH_CLIENT_ID=<oauth_clientid> -e SH_CLIENT_SECRET=<oauth_clientsecret> eurodatacube/ogc-edc
+```
+
+Using development setup, with autoreload:
+
+```
+docker run -it -e SH_CLIENT_ID=<oauth_clientid> -e SH_CLIENT_SECRET=<oauth_clientsecret> -v `pwd`/edc_ogc:/home/ogc/edc_ogc -p 5000:5000 eurodatacube/ogc-edc flask run --host=0.0.0.0 --reload
+```
 
 ### Try out
 
 `http://localhost:5000/?service=WMS&version=1.1.0&request=GetMap&layers=AGRICULTURE&styles=&srs=EPSG:4326&bbox=14.043549,46.580095,14.167831,46.652688&width=512&height=512&format=image/png`
- 
+
 ## Deployment
 
 [Travis-CI](https://travis-ci.org/eurodatacube/ogc-edc) [![Build Status](https://travis-ci.org/eurodatacube/ogc-edc.svg?branch=master)](https://travis-ci.org/eurodatacube/ogc-edc) will automatically build docker images on checkin which will be pushed to [docker hub](https://hub.docker.com/r/eurodatacube/ogc-edc).
