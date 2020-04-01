@@ -6,6 +6,8 @@ from urllib.parse import urlparse
 import yaml
 import requests
 
+from .apibase import ApiBase
+
 
 DEFAULT_API_URL = "https://services.sentinel-hub.com/configuration/v1"
 
@@ -131,23 +133,48 @@ class ConfigAPIBase:
         else:
             evalscript = style_config['evalScript']
 
-        return evalscript, layer_config['datasourceDefaults']
+        datasource_defaults = layer_config['datasourceDefaults']
+        return evalscript, datasource_defaults
 
 
-class ConfigAPI(ConfigAPIBase):
+class ConfigAPI(ApiBase, ConfigAPIBase):
     """ Interface class for the actual configuration API. Performs requests to retrieve
         the config objects.
     """
-    def __init__(self, session, instance_id, api_url=DEFAULT_API_URL):
-        super().__init__()
-        self.session = session
+    def __init__(self, client_id, client_secret, instance_id, api_url=DEFAULT_API_URL):
+        ApiBase.__init__(self, client_id, client_secret)
+        ConfigAPIBase.__init__(self)
+
         self.instance_id = instance_id
         self.api_url = api_url
 
     def _get(self, url):
-        response = self.session.get(url)
-        print (response)
-        return response.json()
+        def get_inner(session):
+            resp = session.get(url)
+
+            if not resp.ok:
+                reason = resp.reason
+                status_code = resp.status_code
+                content = resp.content
+                code = None
+                message = None
+                try:
+                    values = json.loads(resp.content)['error']
+                    message = values['message']
+                    code = values['code']
+                except:
+                    pass
+
+                raise ConfigAPIError(
+                    reason,
+                    status_code=status_code,
+                    message=message,
+                    content=content,
+                    code=code,
+                )
+            return resp.json()
+
+        return self.with_retry(get_inner)
 
     def get_layers(self, dataset=None):
         url = f"{self.api_url}/wms/instances/{self.instance_id}/layers/"
@@ -169,8 +196,7 @@ class ConfigAPIMock(ConfigAPIBase):
     """ Mocked configuration API interface. Uses static JSON definitions for
         layers and dataproducts.
     """
-    def __init__(self, session, instance_id, api_url=DEFAULT_API_URL,
-                 datasets_path=None, layers_path=None, dataproducts_path=None):
+    def __init__(self, datasets_path=None, layers_path=None, dataproducts_path=None):
         super().__init__(datasets_path)
 
         layers_path = layers_path or join(dirname(__file__), 'layers.json')
@@ -209,3 +235,22 @@ class ConfigAPIMock(ConfigAPIBase):
                 return dataproduct
 
         raise Exception(f'No such dataproduct')
+
+
+class ConfigAPIError(Exception):
+    def __init__(self, reason, status_code, message, content=None, code=None):
+        super().__init__(reason)
+        self.reason = reason
+        self.status_code = status_code
+        self.message = message
+        self.content = content
+        self.code = code
+
+    def __repr__(self) -> str:
+        return f'ConfigAPIError({self.reason}, {self.status_code}, details={self.content!r})'
+
+    def __str__(self) -> str:
+        text = f'{self.reason}, status code {self.status_code}'
+        if self.content:
+            text += f':\n{self.content}\n'
+        return text

@@ -10,57 +10,25 @@ import requests
 from eoxserver.core.util.timetools import isoformat
 
 
-DEFAULT_OAUTH2_URL = 'https://services.sentinel-hub.com/oauth'
+from .apibase import ApiBase, DEFAULT_OAUTH2_URL
+
 DEFAULT_API_URL = 'https://services.sentinel-hub.com/api/v1'
 
 
 logger = logging.getLogger(__name__)
 
 
-class Mdi:
+class Mdi(ApiBase):
     def __init__(self, client_id, client_secret, session=None,
                  api_url=DEFAULT_API_URL,
                  oauth2_url=DEFAULT_OAUTH2_URL):
+        super().__init__(client_id, client_secret, oauth2_url)
         self.api_url = api_url
-        self.oauth2_url = oauth2_url
-        self.client_id = client_id or os.environ.get('SH_CLIENT_ID')
-        self.client_secret = client_secret or os.environ.get('SH_CLIENT_SECRET')
-        self.token = None
 
-        if session is None:
-            client = oauthlib.oauth2.BackendApplicationClient(client_id=client_id)
-            self.session = requests_oauthlib.OAuth2Session(client=client)
-        else:
-            self.session = session
-
-    def close(self):
-        self.session.close()
-
-    @property
-    def token_info(self) -> Dict[str, Any]:
-        resp = self.session.get(self.oauth2_url + '/tokeninfo')
-        return json.loads(resp.content)
-
-    def refresh_token(self):
-        token_url = self.oauth2_url + '/token'
-        logger.info(f'Fetching new access token from {token_url}')
-        self.token = self.session.fetch_token(
-            token_url=token_url,
-            client_id=self.client_id,
-            client_secret=self.client_secret
-        )
-        return self.token
-
-    def send_process_request(self, request: Dict, accept_header: str, api_url=None) -> Tuple[str, Any]:
-        if not self.token:
-            self.refresh_token()
-
-        retried = False
-        while True:
-            try:
+    def send_process_request(self, session, request: Dict, accept_header: str, api_url=None) -> Tuple[str, Any]:
                 logger.debug(f'Sending process request {json.dumps(request)}')
                 start = time()
-                resp = self.session.post(
+        resp = session.post(
                     (api_url or self.api_url) + '/process',
                     json=request,
                     headers={
@@ -69,35 +37,9 @@ class Mdi:
                     }
                 )
                 logger.info(f'Process request took {time() - start} seconds to complete')
-                break
-            except oauthlib.oauth2.TokenExpiredError:
-                if retried:
-                    raise
-
-                logger.info('Token expired')
-                self.refresh_token()
-                retried = True
 
         if not resp.ok:
-            reason = resp.reason
-            status_code = resp.status_code
-            content = resp.content
-            code = None
-            message = None
-            try:
-                values = json.loads(resp.content)['error']
-                message = values['message']
-                code = values['code']
-            except:
-                pass
-
-            raise MdiError(
-                reason,
-                status_code=status_code,
-                message=message,
-                content=content,
-                code=code,
-            )
+            raise MdiError.from_response(resp)
 
         return resp.content
 
@@ -177,3 +119,25 @@ class MdiError(Exception):
         if self.content:
             text += f':\n{self.content}\n'
         return text
+
+    @classmethod
+    def from_response(cls, response):
+        reason = response.reason
+        status_code = response.status_code
+        content = response.content
+        code = None
+        message = None
+        try:
+            values = json.loads(response.content)['error']
+            message = values['message']
+            code = values['code']
+        except:
+            pass
+
+        raise cls(
+            reason,
+            status_code=status_code,
+            message=message,
+            content=content,
+            code=code,
+        )

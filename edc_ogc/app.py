@@ -63,10 +63,18 @@ logging.config.dictConfig({
     }
 })
 
+
+def create_session():
+    client_id = os.environ.get('SH_CLIENT_ID')
+    client_secret = os.environ.get('SH_CLIENT_SECRET')
+
+    client = oauthlib.oauth2.BackendApplicationClient(client_id=client_id)
+    session = requests_oauthlib.OAuth2Session(client=client)
+    return session, client_id, client_secret
+
 def get_mdi() -> Mdi:
     client_id = os.environ.get('SH_CLIENT_ID')
     client_secret = os.environ.get('SH_CLIENT_SECRET')
-    # instance_id = os.environ.get("SH_INSTANCE_ID")
 
     client = oauthlib.oauth2.BackendApplicationClient(client_id=client_id)
     session = requests_oauthlib.OAuth2Session(client=client)
@@ -78,25 +86,34 @@ def get_mdi() -> Mdi:
     )
     return mdi
 
-CLIENT = None
+CLIENTS = {}
 
-def get_client():
-    global CLIENT
-    if CLIENT is None:
+def get_client(instance_id=None):
+    if instance_id not in CLIENTS:
         datasets_path = os.environ.get('DATASETS_PATH')
         layers_path = os.environ.get('LAYERS_PATH')
         dataproducts_path = os.environ.get('DATAPRODUCTS_PATH')
-        CLIENT = OGCClient(
-            get_mdi(),
-            ConfigAPIMock(
-                None, None,
+        client_id = os.environ.get('SH_CLIENT_ID')
+        client_secret = os.environ.get('SH_CLIENT_SECRET')
+
+        if instance_id is None:
+            config_api = ConfigAPIMock(
                 datasets_path=datasets_path,
                 layers_path=layers_path,
                 dataproducts_path=dataproducts_path
-            ),
+            )
+        else:
+            config_api = ConfigAPI(
+                client_id, client_secret, instance_id
+            )
+
+        CLIENTS[instance_id] = OGCClient(
+            get_mdi(),
+            config_api,
             'None'
         )
-    return CLIENT
+
+    return CLIENTS[instance_id]
 
 @app.route('/version')
 def version():
@@ -112,6 +129,36 @@ def ows():
         return app.send_static_file('index.html')
     try:
         client = get_client()
+        ogc_request = OGCRequest(
+            base_url=request.base_url,
+            method=request.method,
+            query=request.query_string.decode('ascii'),
+            headers=request.headers,
+        )
+        result = client.dispatch(ogc_request)
+        if len(result) == 2:
+            response, mimetype = result
+            status = 200
+        elif len(result) == 3:
+            response, mimetype, status = result
+
+        return Response(response=response, mimetype=mimetype, status=status, headers={
+            'Access-Control-Allow-Origin': '*'
+        })
+    except Exception as e:
+        logger.exception(e)
+        return Response(response=f'an error occured: {e}', status=400)
+
+
+@app.route('/<instance_id>')
+def ows_instance(instance_id):
+
+
+
+    if not request.query_string.decode('ascii'):
+        return app.send_static_file('index.html')
+    try:
+        client = get_client(instance_id)
         ogc_request = OGCRequest(
             base_url=request.base_url,
             method=request.method,
