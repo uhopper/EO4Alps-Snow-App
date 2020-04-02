@@ -100,7 +100,7 @@
     "id": 326,
     "name": "RGB_11_8_2.RGB",
     "description": "Agriculture - RGB visualization. - Based on bands: [B11, B08, B02]",
-    "evalScript": "\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = [samples.B11, samples.B08, samples.B02, samples.dataMask];\n    return val.map(v => viz.process(v));\n}\n\nfunction setup() {\n  return {\n    input: [\"B11\", \"B08\", \"B02\", \"dataMask\"],\n    output: { bands: 4 }\n  };\n}\n",
+    "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = [samples.B11, samples.B08, samples.B02, samples.dataMask];\n    return val.map(v => viz.process(v));\n}\n\nfunction setup() {\n  return {\n    input: [\"B11\", \"B08\", \"B02\", \"dataMask\"],\n    output: { bands: 4 }\n  };\n}\n",
     "dataset": {
       "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C"
     },
@@ -196,7 +196,7 @@
     "id": 84,
     "name": "TRUE_COLOR.RGB",
     "description": "TRUE COLOR - True color image by mapping the red, green and blue input bands. Value = B04,B03,B02 - RGB visualization.",
-    "evalScript": "\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = [samples.B04, samples.B03, samples.B02, samples.dataMask];\n    return val.map((v, i) => viz.process(v, i));\n}\n\nfunction setup() {\n  return {\n    input: [\"B02\", \"B03\", \"B04\", \"dataMask\"],\n    output: { bands: 4 }\n  };\n}\n",
+    "evalScript": "//VERSION=3\nlet minVal = 0.0;\nlet maxVal = 0.4;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = [samples.B04, samples.B03, samples.B02, samples.dataMask];\n    return val.map((v, i) => viz.process(v, i));\n}\n\nfunction setup() {\n  return {\n    input: [\"B02\", \"B03\", \"B04\", \"dataMask\"],\n    output: { bands: 4 }\n  };\n}\n",
     "dataset": {
       "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C"
     },
