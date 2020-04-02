@@ -7,6 +7,7 @@ import yaml
 import requests
 
 from .apibase import ApiBase
+from .mdi import get_mdi
 
 
 DEFAULT_API_URL = "https://services.sentinel-hub.com/configuration/v1"
@@ -16,12 +17,19 @@ class ConfigAPIBase:
     """ Base class for config APIs. Defines the interface and the `get_evalscript_and_defaults`
         method.
     """
-    def __init__(self, datasets_path=None):
+    def __init__(self, client_id, client_secret, datasets_path=None):
         datasets_path = datasets_path or join(dirname(__file__), 'datasets.yaml')
         if urlparse(datasets_path).scheme in ('http', 'https'):
             self.datasets = yaml.load(requests.get(datasets_path).content)
         else:
             self.datasets = yaml.load(open(datasets_path))
+
+        self.client_id = client_id
+        self.client_secret = client_secret
+
+    def get_mdi(self, dataset_name):
+        dataset = self.get_dataset(dataset_name)
+        return get_mdi(dataset.get('api_endpoint'), self.client_id, self.client_secret)
 
     def get_datasets(self):
         return self.datasets
@@ -143,7 +151,7 @@ class ConfigAPI(ApiBase, ConfigAPIBase):
     """
     def __init__(self, client_id, client_secret, instance_id, api_url=DEFAULT_API_URL):
         ApiBase.__init__(self, client_id, client_secret)
-        ConfigAPIBase.__init__(self)
+        ConfigAPIBase.__init__(self, client_id, client_secret)
 
         self.instance_id = instance_id
         self.api_url = api_url
@@ -192,12 +200,13 @@ class ConfigAPI(ApiBase, ConfigAPIBase):
         return self._get(url)
 
 
-class ConfigAPIMock(ConfigAPIBase):
+class ConfigAPIDefaultLayers(ConfigAPIBase):
     """ Mocked configuration API interface. Uses static JSON definitions for
         layers and dataproducts.
     """
-    def __init__(self, datasets_path=None, layers_path=None, dataproducts_path=None):
-        super().__init__(datasets_path)
+    def __init__(self, client_id, client_secret, datasets_path=None,
+                 layers_path=None, dataproducts_path=None):
+        super().__init__(client_id, client_secret, datasets_path)
 
         layers_path = layers_path or join(dirname(__file__), 'layers.json')
         if urlparse(layers_path).scheme in ('http', 'https'):

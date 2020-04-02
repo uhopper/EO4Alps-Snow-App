@@ -22,8 +22,7 @@ class OGCRequest:
 
 
 class OGCClient:
-    def __init__(self, mdi_client, config_client, instance_id):
-        self.mdi_client = mdi_client
+    def __init__(self, config_client, instance_id):
         self.config_client = config_client
         self.instance_id = instance_id
 
@@ -65,7 +64,7 @@ class OGCClient:
             else:
                 raise Exception(f'Version {version} not supported')
 
-            return dispatch_wms_get_map(self.mdi_client, self.config_client, wms_request)
+            return dispatch_wms_get_map(self.config_client, wms_request)
 
     def dispatch_wcs(self, ows_decoder, request, ows_url):
-        return dispatch_wcs(ows_decoder, request, ows_url, self.config_client, self.mdi_client)
+        return dispatch_wcs(ows_decoder, request, ows_url, self.config_client)

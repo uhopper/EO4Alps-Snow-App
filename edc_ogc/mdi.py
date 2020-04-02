@@ -18,18 +18,27 @@ DEFAULT_API_URL = 'https://services.sentinel-hub.com/api/v1'
 logger = logging.getLogger(__name__)
 
 
+MDIS = {}
+
+def get_mdi(api_url, client_id, client_secret, oauth2_url=DEFAULT_OAUTH2_URL):
+    api_url = api_url or DEFAULT_API_URL
+    if api_url not in MDIS:
+        MDIS[api_url] = Mdi(client_id, client_secret, api_url, oauth2_url)
+    return MDIS[api_url]
+
+
 class Mdi(ApiBase):
-    def __init__(self, client_id, client_secret, session=None,
+    def __init__(self, client_id, client_secret,
                  api_url=DEFAULT_API_URL,
                  oauth2_url=DEFAULT_OAUTH2_URL):
         super().__init__(client_id, client_secret, oauth2_url)
         self.api_url = api_url
 
-    def send_process_request(self, session, request: Dict, accept_header: str, api_url=None) -> Tuple[str, Any]:
-        logger.debug(f'Sending process request {json.dumps(request)}')
+    def send_process_request(self, session, request: Dict, accept_header: str) -> Tuple[str, Any]:
+        logger.debug(f'Sending process request to {self.api_url} {json.dumps(request)}')
         start = time()
         resp = session.post(
-            (api_url or self.api_url) + '/process',
+            f'{self.api_url}/process',
             json=request,
             headers={
                 'Accept': accept_header,
@@ -68,7 +77,7 @@ class Mdi(ApiBase):
         }
 
     def process_image(self, sources, bbox, crs, width, height, format, evalscript,
-                      time=None, upsample=None, downsample=None, api_url=None):
+                      time=None, upsample=None, downsample=None):
 
         # prepend the version information if not already included
         if not evalscript.startswith('//VERSION=3'):
@@ -102,11 +111,11 @@ class Mdi(ApiBase):
             },
             'evalscript': evalscript,
         }
-        return self.with_retry(self.send_process_request, request_body, format, api_url)
+        return self.with_retry(self.send_process_request, request_body, format)
 
     def translate_evalscript_to_v3(self, session, evalscript, dataset_type):
         resp = session.post(
-            f'https://services.sentinel-hub.com/api/v1/process/convertscript?datasetType={dataset_type}',
+            f'{self.api_url}/process/convertscript?datasetType={dataset_type}',
             data=evalscript,
         )
 

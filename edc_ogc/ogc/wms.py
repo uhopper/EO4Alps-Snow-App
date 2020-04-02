@@ -74,7 +74,7 @@ def dispatch_wms_get_capabilities(config_client, ows_url, version=None):
     ), 'text/xml'
 
 
-def dispatch_wms_get_map(mdi_client, config_client, wms_request):
+def dispatch_wms_get_map(config_client, wms_request):
     if len(wms_request.layers) > 1:
         raise Exception('more than one layer is not supported')
 
@@ -111,6 +111,8 @@ def dispatch_wms_get_map(mdi_client, config_client, wms_request):
         raise Exception(f'Format {wms_request.format} is not supported')
 
     # send a process request to the MDI
+    mdi_client = config_client.get_mdi(dataset['id'])
+
     return mdi_client.process_image(
         sources=[datasource],
         bbox=bbox,
@@ -120,7 +122,6 @@ def dispatch_wms_get_map(mdi_client, config_client, wms_request):
         format=wms_request.format,
         evalscript=evalscript,
         time=wms_request.time,
-        api_url=dataset.get('mdi_url'),
     ), wms_request.format
 
 

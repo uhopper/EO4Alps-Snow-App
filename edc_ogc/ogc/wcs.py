@@ -39,7 +39,7 @@ logger = logging.getLogger(__name__)
 DEFAULT_CRS = 'http://www.opengis.net/def/crs/EPSG/0/4326'
 
 
-def dispatch_wcs(ows_decoder, request, ows_url, config_client, mdi_client):
+def dispatch_wcs(ows_decoder, request, ows_url, config_client):
     ows_request = ows_decoder.request
     version = ows_decoder.version
 
@@ -54,7 +54,7 @@ def dispatch_wcs(ows_decoder, request, ows_url, config_client, mdi_client):
         elif ows_request == 'DESCRIBEEOCOVERAGESET':
             return dispatch_wcs_describe_eo_coverage_set(request, config_client)
         elif ows_request == 'GETCOVERAGE':
-            return dispatch_wcs_get_coverage(request, config_client, mdi_client)
+            return dispatch_wcs_get_coverage(request, config_client)
         else:
             raise Exception(f"Request '{ows_request}' is not supported.")
 
@@ -148,7 +148,7 @@ def get_coverage(config_client, coverage_id, dataset_name, datestr):
     except:
         # TODO catch exact exception
         raise Exception(f'No such coverage {coverage_id}')
-    
+
     grid, origin, size = get_grid(dataset)
 
     return Coverage(
@@ -251,6 +251,7 @@ def dispatch_wcs_describe_coverage(request, config_client):
         encoder.encode_coverage_descriptions(coverages)
     ), 'application/xml'
 
+
 def dispatch_wcs_describe_eo_coverage_set(request, config_client):
     if request.method == 'GET':
         decoder = WCS20DescribeEOCoverageSetKVPDecoder(request.query)
@@ -301,7 +302,7 @@ def dispatch_wcs_describe_eo_coverage_set(request, config_client):
     ), 'application/xml'
 
 
-def dispatch_wcs_get_coverage(request, config_client, mdi_client):
+def dispatch_wcs_get_coverage(request, config_client):
     if request.method == 'GET':
         decoder = WCS20GetCoverageKVPDecoder(request.query)
     else:
@@ -332,19 +333,19 @@ def dispatch_wcs_get_coverage(request, config_client, mdi_client):
         raise Exception('No subset for X dimension provided')
     if not subsets.has_y:
         raise Exception('No subset for Y dimension provided')
-    
-    
+
+
     for subset in subsets:
         if hasattr(subset, 'value'):
             raise Exception('Slicing is not supported')
 
-        if subset.is_x:            
+        if subset.is_x:
             x_bounds = (
                 subset.low if subset.low is not None else crs_bounds[0],
                 subset.high if subset.high is not None else crs_bounds[2]
             )
 
-        if subset.is_y:            
+        if subset.is_y:
             y_bounds = (
                 subset.low if subset.low is not None else crs_bounds[1],
                 subset.high if subset.high is not None else crs_bounds[3]
@@ -430,6 +431,8 @@ def dispatch_wcs_get_coverage(request, config_client, mdi_client):
         raise Exception(f'Format {frmt} is not supported')
 
     # send a process request to the MDI
+    mdi_client = config_client.get_mdi(dataset_name)
+
     return mdi_client.process_image(
         sources=[datasource],
         bbox=bbox,

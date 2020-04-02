@@ -9,7 +9,7 @@ import requests_oauthlib
 
 from edc_ogc import VERSION
 from edc_ogc.ogc.client import OGCClient, OGCRequest
-from edc_ogc.configapi import ConfigAPIMock, ConfigAPI
+from edc_ogc.configapi import ConfigAPIDefaultLayers, ConfigAPI
 from edc_ogc.mdi import Mdi, MdiError
 from prometheus_flask_exporter import PrometheusMetrics
 
@@ -77,19 +77,6 @@ def create_session():
     session = requests_oauthlib.OAuth2Session(client=client)
     return session, client_id, client_secret
 
-def get_mdi() -> Mdi:
-    client_id = os.environ.get('SH_CLIENT_ID')
-    client_secret = os.environ.get('SH_CLIENT_SECRET')
-
-    client = oauthlib.oauth2.BackendApplicationClient(client_id=client_id)
-    session = requests_oauthlib.OAuth2Session(client=client)
-
-    mdi = Mdi(
-        session=session,
-        client_id=client_id,
-        client_secret=client_secret
-    )
-    return mdi
 
 CLIENTS = {}
 
@@ -102,7 +89,9 @@ def get_client(instance_id=None):
         client_secret = os.environ.get('SH_CLIENT_SECRET')
 
         if instance_id is None:
-            config_api = ConfigAPIMock(
+            config_api = ConfigAPIDefaultLayers(
+                client_id,
+                client_secret,
                 datasets_path=datasets_path,
                 layers_path=layers_path,
                 dataproducts_path=dataproducts_path
@@ -113,7 +102,6 @@ def get_client(instance_id=None):
             )
 
         CLIENTS[instance_id] = OGCClient(
-            get_mdi(),
             config_api,
             'None'
         )
