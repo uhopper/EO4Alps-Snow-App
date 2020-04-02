@@ -3,7 +3,7 @@ import logging
 import logging.config
 
 
-from flask import Flask, request, Response, jsonify
+from flask import Flask, request, Response, jsonify, send_from_directory
 import oauthlib.oauth2
 import requests_oauthlib
 
@@ -13,11 +13,15 @@ from edc_ogc.configapi import ConfigAPIMock, ConfigAPI
 from edc_ogc.mdi import Mdi, MdiError
 from prometheus_flask_exporter import PrometheusMetrics
 
-app = Flask(__name__, static_url_path='')
+# -------------- App setup --------------
+app = Flask(__name__, static_url_path='/static')
 
 metrics = PrometheusMetrics(app)
 
 metrics.info('app_info', 'Application info', version=VERSION)
+
+
+# -------------- Logging setup --------------
 
 logger = logging.getLogger(__name__)
 
@@ -63,6 +67,7 @@ logging.config.dictConfig({
     }
 })
 
+# -------------- Utilities --------------
 
 def create_session():
     client_id = os.environ.get('SH_CLIENT_ID')
@@ -115,13 +120,18 @@ def get_client(instance_id=None):
 
     return CLIENTS[instance_id]
 
+
+# -------------- Routes --------------
+
 @app.route('/version')
 def version():
     return Response(response=f"{VERSION}")
 
+
 @app.route('/headers')
 def headers():
     return jsonify(dict(request.headers))
+
 
 @app.route('/')
 def ows():
@@ -152,9 +162,6 @@ def ows():
 
 @app.route('/<instance_id>')
 def ows_instance(instance_id):
-
-
-
     if not request.query_string.decode('ascii'):
         return app.send_static_file('index.html')
     try:
