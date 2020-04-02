@@ -13,7 +13,23 @@
 # MODIS	B01, B02, B03, B04, B05, B06, B07
 # DEM	DEM
 
-
+- id: DEM
+  '@id': https://services.sentinel-hub.com/configuration/v1/datasets/DEM
+  title: Mapzen DEM
+  bands: [DEM]
+  defaultbands: [DEM]
+  extent: [-180, -90, 180, 90]
+  # resolution:
+- id: L8L1C
+  '@id': https://services.sentinel-hub.com/configuration/v1/datasets/L8L1C
+  title: Landsat 8 - Level-1
+  bands: [B01, B02, B03, B04, B05, B06, B07, B08, B09, B10, B11, BQA]
+  defaultbands: [B04, B03, B02]
+  wavelengths: [442.96, 482.04, 561.41, 654.59, 864.67, 1608.86, 2200.73, 589.50, 1373.43, 10090, 12000]
+  extent: [-180, -90, 180, 90]
+  resolution: [1.3474729261651094e-04, 1.3474729261651094e-04]
+  timeextent: [2013-02-11, null]
+  api_endpoint: https://services-uswest2.sentinel-hub.com/api/v1
 - id: S1GRD
   '@id': https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD
   title: Sentinel-1 GRD
@@ -49,5 +65,26 @@
   extent: [-180, -90, 180, 90]
   resolution: [0.002694945852330219, 0.002694945852330219]
   timeextent: [2016-02-16, null]
+  api_endpoint: https://creodias.sentinel-hub.com/api/v1
+- id: S3SLSTR
+  '@id': https://services.sentinel-hub.com/configuration/v1/datasets/S3SLSTR
+  mdi_url: https://creodias.sentinel-hub.com/api/v1/
+  title: Sentinel-3 SLSTR
+  bands: [S1, S2, S3, S4, S5, S6, S7, S8, S9, F1, F2]
+  defaultbands: [S6, S5, S4]
+  extent: [-180, -90, 180, 90]
+  resolution: [0.002694945852330219, 0.002694945852330219]
+  timeextent: [2016-02-16, null]
+  api_endpoint: https://creodias.sentinel-hub.com/api/v1
+- id: S5PL2
+  '@id': https://services.sentinel-hub.com/configuration/v1/datasets/S5PL2
+  mdi_url: https://creodias.sentinel-hub.com/api/v1/
+  title: Sentinel 5P
+  bands: [O3, NO2, SO3, CO, CH4, HCHO, AER_AI_340_380, AER_AI_354_388, CLOUD_FRACTION, CLOUD_BASE_HEIGHT, CLOUD_BASE_PRESSURE, CLOUD_OPTICAL_THICKNESS, CLOUD_TOP_HEIGHT, CLOUD_TOP_PRESSURE]
+  # defaultbands: # TODO
+  extent: [-180, -90, 180, 90]
+  resolution: [0.002694945852330219, 0.002694945852330219] # TODO
+  timeextent: [2016-02-16, null] # TODO
+  api_endpoint: https://creodias.sentinel-hub.com/api/v1
 # TODO: More
-# "S2L1C" "S2L2A" "L8L1C" "PLANET_L1C" "DEM" "MODIS" "S1GRD" "S2GM" "S3OLCI" "S3SLSTR" "S5PL2" "PLEIADES" "CUSTOM"
+# "PLANET_L1C" "MODIS" "S2GM" "PLEIADES" "CUSTOM"

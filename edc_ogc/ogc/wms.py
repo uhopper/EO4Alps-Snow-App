@@ -65,7 +65,7 @@ def dispatch_wms_get_capabilities(config_client, ows_url, version=None):
                                     'step': 'P1D',
                                     'units': 'ISO8601'
                                 }
-                            }
+                            } if 'timeextent' in dataset else {}
                         ) for layer in config_client.get_layers(dataset)
                     ]
                 ) for dataset in config_client.get_datasets()

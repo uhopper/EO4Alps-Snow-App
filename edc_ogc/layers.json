@@ -1,200 +1,198 @@
-
-
 [
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/65e18a3d-c2ba-47a1-86d0-7ee2047d2de0/layers/LANDSAT-COPY-RGB",
-    "id": "LANDSAT-COPY-RGB",
-    "title": "landsat-copy-rgb-v3",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/DEM__SENTINEL-HUB__COLORSCALE",
+    "id": "DEM__SENTINEL-HUB__COLORSCALE",
+    "title": "DEM Sentinel-Hub Colorscale",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "evalScript": "let minVal = 0.0;\nlet maxVal = 18000;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = [samples.B5, samples.B4, samples.B3];\n    return val.map((v,i) => viz.process(v,i));\n}\n\nfunction setup(ds) {\n    return {\n      input: ['B3', 'B4', 'B5'],\n      output: {\n        bands: 3\n      },\n    };\n}"
+        "evalScript": "return colorBlend(DEM, [-12000,-9000,-6000,-1000,-500,-200,-50,-20,-10,0,10,30,50,200,300,400,500,1000,3000,5000,7000,9000],\n[[0.000, 0.000, 0.157],\n[0.118, 0.000, 0.353],\n[0.118, 0.118, 0.471],\n[0.157, 0.196, 0.706],\n[0.235, 0.235, 0.902],\n[0.235, 0.314, 0.961],\n[0.353, 0.333, 0.980],\n[0.471, 0.471, 0.922],\n[0.627, 0.627, 1.000],\n[0.784, 0.784, 0.784],\n[0.392, 0.220, 0.235],\n[0.471, 0.180, 0.157],\n[0.549, 0.298, 0.157],\n[0.667, 0.376, 0.000],\n[0.471, 0.220, 0.353],\n[0.824, 0.573, 0.706],\n[0.549, 0.431, 0.000],\n[0.471, 0.549, 0.706],\n[0.627, 0.667, 0.941],\n[0.745, 0.784, 0.980],\n[0.863, 0.941, 1.000],\n[1.000, 1.000, 1.000]])"
       }
     ],
     "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/65e18a3d-c2ba-47a1-86d0-7ee2047d2de0"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/CUSTOM"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/DEM"
     },
     "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/CUSTOM/sources/10"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/DEM/sources/4"
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "CUSTOM",
-      "collectionId": "9d643c7d-5df5-4425-9e5f-d5b9e2385bb0",
-      "mosaickingOrder": "mostRecent"
-    },
-    "userData": {}
+      "EGM": false,
+      "clampNegative": false,
+      "type": "DEM"
+    }
   },
-
-
-
-
-
-
-
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb/layers/IW_VV",
-    "id": "IW_VV",
-    "title": "IW - VV [linear gamma0]",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/L8-L1C__NDVI__EOXCOLORSCALE",
+    "id": "L8-L1C__NDVI__EOXCOLORSCALE",
+    "title": "L8 L1C NDVI EOxColorscale",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/dataproducts/430"
-        }
+        "evalScript": "ndvi = (B05-B04)/(B05+B04)\n\nif (ndvi<-1.0) return [1.0,1.0,1.0]\n    else if (ndvi<-0.4) return [1.0,1.0,1.0]\n    else if (ndvi<-0.3) return [0.9,0.9,0.9]\n    else if (ndvi<-0.15) return [0.4,0.6,1.0]\n    else if (ndvi<0.2) return [0.9,0.85,0.75]\n    else if (ndvi<0.4) return [0.6,0.5,0.2]\n    else if (ndvi<0.6) return [0.6,0.8,0.5]\n    else if (ndvi<0.8) return [0.35,0.75,0.1]\n    else if (ndvi<1.0) return [0.2,0.5,0.1]\n    else if (ndvi>1.0) return [1.0,1.0,1.0]\n    else return [1.0,1.0,1.0];"
       }
     ],
     "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/L8L1C"
     },
     "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/sources/3"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/L8L1C/sources/6"
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S1GRD",
       "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 20.0,
+      "maxCloudCoverage": 40.0,
       "temporal": false,
-      "resolution": "HIGH",
-      "acquisitionMode": "IW",
-      "polarization": "DV"
+      "type": "L8L1C"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb/layers/IW_VV_DB",
-    "id": "IW_VV_DB",
-    "title": "IW - VV [dB gamma0]",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/L8-L1C__NDWI__EOXCOLORSCALE",
+    "id": "L8-L1C__NDWI__EOXCOLORSCALE",
+    "title": "L8-L1C NDWI EOxColorscale",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/dataproducts/434"
-        }
+        "evalScript": "ndwi = (B03-B05)/(B05+B03)\n\nif (ndwi<-1.0) return [1.0,1.0,1.0]\n    else if (ndwi<-0.7) return [1.0,1.0,1.0]\n\telse if (ndwi<-0.2) return [0.9,0.85,0.75]\n    else if (ndwi<0.1) return [0.6,0.5,0.2]\n    else if (ndwi<0.4) return [0.4,0.6,1.0]\n    else if (ndwi<0.8) return [0.1,0.4,1.0]\n    else if (ndwi<1.0) return [0.2,0.2,0.7]\n    else return [1.0,1.0,1.0];"
       }
     ],
-    "orderHint": 1,
+    "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/L8L1C"
     },
     "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/sources/3"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/L8L1C/sources/6"
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S1GRD",
       "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 20.0,
+      "maxCloudCoverage": 40.0,
       "temporal": false,
-      "resolution": "HIGH",
-      "acquisitionMode": "IW",
-      "polarization": "DV"
+      "type": "L8L1C"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb/layers/IW_VH",
-    "id": "IW_VH",
-    "title": "IW - VH [linear gamma0]",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/L8-L1C__NIR-FALSECOLOR__RGB",
+    "id": "L8-L1C__NIR-FALSECOLOR__RGB",
+    "title": "L8 L1C NIR-FalseColor RGB",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/dataproducts/432"
-        }
+        "evalScript": "var red = B05-0.05*(1/(0.55-0.05));\nvar green = B04-0.01*(1/(0.25-0.01));\nvar blue = B03-0.01*(1/(0.25-0.01));\n\nreturn[red*2, 3.5*green, 4*blue];"
       }
     ],
-    "orderHint": 2,
+    "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/L8L1C"
     },
     "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/sources/3"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/L8L1C/sources/6"
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S1GRD",
       "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 20.0,
+      "maxCloudCoverage": 40.0,
       "temporal": false,
-      "resolution": "HIGH",
-      "acquisitionMode": "IW",
-      "polarization": "DV"
+      "type": "L8L1C"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb/layers/IW-VH-DB",
-    "id": "IW-VH-DB",
-    "title": "IW - VH [dB gamma0]",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/L8-L1C__THERMAL__SENTINEL-HUB__COLORSCALE",
+    "id": "L8-L1C__THERMAL__SENTINEL-HUB__COLORSCALE",
+    "title": "L8 L1C Thermal Sentinel-Hub Colorscale",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/dataproducts/436"
-        }
+        "evalScript": "let minVal = 220;\nlet maxVal = 340;\n\nlet viz = ColorGradientVisualizer.createBlueRed(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = samples[0].B10;\n    return viz.process(val);\n}\n\nfunction setup(ds) {\n    setInputComponents([ds.B10]);\n    setOutputComponentCount(3);\n}\n"
       }
     ],
-    "orderHint": 3,
+    "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/L8L1C"
     },
     "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/sources/3"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/L8L1C/sources/6"
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S1GRD",
       "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 20.0,
+      "maxCloudCoverage": 40.0,
       "temporal": false,
-      "resolution": "HIGH",
-      "acquisitionMode": "IW",
-      "polarization": "DV"
+      "type": "L8L1C"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb/layers/EW_HH",
-    "id": "EW_HH",
-    "title": "EW - HH [linear gamma0]",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/L8-L1C__TRUECOLOR__RGB",
+    "id": "L8-L1C__TRUECOLOR__RGB",
+    "title": "L8 L1C TrueColor RGB",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/dataproducts/431"
-        }
+        "evalScript": "\nlet minVal = 0.05;\nlet maxVal = 0.25;\n\nlet viz = new DefaultVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = [samples[0].B04, samples[0].B03, samples[0].B02];\n    return val.map((v,i) => viz.process(v,i));\n}\n\nfunction setup(ds) {\n    setInputComponents([ds.B02, ds.B03, ds.B04]);\n    setOutputComponentCount(3);\n}\n"
       }
     ],
-    "orderHint": 4,
+    "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/L8L1C"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/L8L1C/sources/6"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 40.0,
+      "temporal": false,
+      "type": "L8L1C"
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S1-EW__HHHV__DUALPOL__GAMMA0-GTC__RGB",
+    "id": "S1-EW__HHHV__DUALPOL__GAMMA0-GTC__RGB",
+    "title": "S1 EW HH,HV DualPol Gamma0-GTC RGB",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "evalScript": "// SAR RGB False Color Render by EOX\n// red HH[dB] (-20 to 0 [dB]stretch)\n// green HV[dB] (-25 to -5 [dB]stretch)\n// blue HH[dB]-HV[dB] (0 to 15 [dB]stretch)\n\nvar hh_eox_db = 10*Math.log10(HH);\nvar hv_eox_db = 10*Math.log10(HV);\n\nvar red = Math.max(0, (hh_eox_db + 20) / 20);\nvar green = Math.max(0, (hv_eox_db + 25) / 20);\nvar blue = Math.max(0, (hh_eox_db-hv_eox_db) / 15);\n\nreturn[red, green, blue];"
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
       "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD"
@@ -204,32 +202,32 @@
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S1GRD",
       "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 20.0,
+      "maxCloudCoverage": 100.0,
       "temporal": false,
       "resolution": "MEDIUM",
       "acquisitionMode": "EW",
-      "polarization": "DH"
+      "polarization": "DH",
+      "backCoeff": "GAMMA0_ELLIPSOID",
+      "orthorectify": true,
+      "type": "S1GRD"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb/layers/EW_HH_DB",
-    "id": "EW_HH_DB",
-    "title": "EW - HH [dB gamma0]",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S1-EW__HH__SINGLEPOL__GAMMA0-GTC__GREYSCALE",
+    "id": "S1-EW__HH__SINGLEPOL__GAMMA0-GTC__GREYSCALE",
+    "title": "S1 EW HH SinglePol Gamma0-GTC Greyscale",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/dataproducts/435"
-        }
+        "evalScript": "// EOX Sentinel-1 HH Greyscale image\n// HH[dB] (-20 to 0 [dB] stretch)\n\nvar hh_db = 10*Math.log10(HH)\nreturn[Math.max(0, (hh_db+20)/20)];"
       }
     ],
-    "orderHint": 5,
+    "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
       "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD"
@@ -239,32 +237,32 @@
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S1GRD",
       "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 20.0,
+      "maxCloudCoverage": 100.0,
       "temporal": false,
       "resolution": "MEDIUM",
       "acquisitionMode": "EW",
-      "polarization": "DH"
+      "polarization": "DH",
+      "backCoeff": "GAMMA0_ELLIPSOID",
+      "orthorectify": true,
+      "type": "S1GRD"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb/layers/EW_HV",
-    "id": "EW_HV",
-    "title": "EW - HV [linear gamma0]",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S1-EW__HV__SINGLEPOL__GAMMA0-GTC__GREYSCALE",
+    "id": "S1-EW__HV__SINGLEPOL__GAMMA0-GTC__GREYSCALE",
+    "title": "S1 EW HV SinglePol Gamma0-GTC Greyscale",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/dataproducts/433"
-        }
+        "evalScript": "// EOX Sentinel-1 HV Greyscale image\n// HV[dB] (-25 to 5 [dB] stretch)\n\nvar hv_db = 10*Math.log10(HV)\nreturn[Math.max(0, (hv_db+25)/20)];"
       }
     ],
-    "orderHint": 6,
+    "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
       "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD"
@@ -274,32 +272,32 @@
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S1GRD",
       "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 20.0,
+      "maxCloudCoverage": 100.0,
       "temporal": false,
       "resolution": "MEDIUM",
       "acquisitionMode": "EW",
-      "polarization": "DH"
+      "polarization": "DH",
+      "backCoeff": "GAMMA0_ELLIPSOID",
+      "orthorectify": true,
+      "type": "S1GRD"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb/layers/EW_HV_DB",
-    "id": "EW_HV_DB",
-    "title": "EW - HV [dB gamma0]",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S1-IW__VHVV__DUALPOL__GAMMA0-GTC__RGB",
+    "id": "S1-IW__VHVV__DUALPOL__GAMMA0-GTC__RGB",
+    "title": "S1 IW VH,VV DualPol Gamma0-GTC RGB",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/dataproducts/437"
-        }
+        "evalScript": "// SAR RGB False Color Render by EOX\n// red VV_db (-20 to 0 [db]stretch)\n// green VH_db (-25 to -5 [db]stretch)\n// blue VV_db-VH_db (0 to 15 [db]stretch)\n\nvar vv_eox_db = 10*Math.log10(VV);\nvar vh_eox_db = 10*Math.log10(VH);\n\nvar red = Math.max(0, (vv_eox_db + 20) / 20);\nvar green = Math.max(0, (vh_eox_db + 25) / 20);\nvar blue = Math.max(0, (vv_eox_db-vh_eox_db) / 15);\n\nreturn[red, green, blue];"
       }
     ],
-    "orderHint": 7,
+    "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/2a409e99-8cf9-4ba0-9c82-71a6d46df9cb"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
       "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD"
@@ -309,31 +307,110 @@
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S1GRD",
+      "timeRange": {
+        "startTime": {
+          "type": "ABSOLUTE"
+        },
+        "endTime": {
+          "type": "ABSOLUTE"
+        }
+      },
       "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 20.0,
+      "maxCloudCoverage": 100.0,
       "temporal": false,
-      "resolution": "MEDIUM",
-      "acquisitionMode": "EW",
-      "polarization": "DH"
+      "resolution": "HIGH",
+      "acquisitionMode": "IW",
+      "polarization": "DV",
+      "backCoeff": "GAMMA0_ELLIPSOID",
+      "orthorectify": true,
+      "type": "S1GRD"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8/layers/AGRICULTURE",
-    "id": "AGRICULTURE",
-    "title": "Agriculture",
-    "description": "Based on bands 11, 8A and 2",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S1-IW__VH__SINGLEPOL__GAMMA0-GTC__GREYSCALE",
+    "id": "S1-IW__VH__SINGLEPOL__GAMMA0-GTC__GREYSCALE",
+    "title": "S1 IW VH SinglePol Gamma0-GTC Greyscale",
+    "description": "",
     "styles": [
       {
         "name": "default",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/dataproducts/326"
-        }
+        "description": "Default layer style",
+        "evalScript": "// EOX Sentinel-1 VH Greyscale image\n// VH[dB] (-25 to 5 [dB] stretch)\n\nvar vh_db = 10*Math.log10(VH)\nreturn[Math.max(0, (vh_db+25)/20)];"
       }
     ],
     "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/sources/3"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 100.0,
+      "temporal": false,
+      "resolution": "HIGH",
+      "acquisitionMode": "IW",
+      "polarization": "DV",
+      "backCoeff": "GAMMA0_ELLIPSOID",
+      "orthorectify": true,
+      "type": "S1GRD"
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S1-IW__VV__SINGLEPOL__GAMMA0-GTC__GREYSCALE",
+    "id": "S1-IW__VV__SINGLEPOL__GAMMA0-GTC__GREYSCALE",
+    "title": "S1 IW VV SinglePol Gamma0-GTC Greyscale",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "evalScript": "// EOX Sentinel-1 VV Greyscale image\n// VH[dB] (-20 to 0 [dB] stretch)\n\nvar vv_db = 10*Math.log10(VH)\nreturn[Math.max(0, (vv_db+20)/20)];"
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/sources/3"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 100.0,
+      "temporal": false,
+      "resolution": "HIGH",
+      "acquisitionMode": "IW",
+      "polarization": "DV",
+      "backCoeff": "GAMMA0_ELLIPSOID",
+      "orthorectify": true,
+      "type": "S1GRD"
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S2-L1C__NDVI__EOXCOLORSCALE",
+    "id": "S2-L1C__NDVI__EOXCOLORSCALE",
+    "title": "S2 L1C NDVI EOxColorscale",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "evalScript": "ndvi = (B08-B04)/(B08+B04)\n\nif (ndvi<-1.0) return [1.0,1.0,1.0]\n    else if (ndvi<-0.4) return [1.0,1.0,1.0]\n    else if (ndvi<-0.3) return [0.9,0.9,0.9]\n    else if (ndvi<-0.15) return [0.4,0.6,1.0]\n    else if (ndvi<0.2) return [0.9,0.85,0.75]\n    else if (ndvi<0.4) return [0.6,0.5,0.2]\n    else if (ndvi<0.6) return [0.6,0.8,0.5]\n    else if (ndvi<0.8) return [0.35,0.75,0.1]\n    else if (ndvi<1.0) return [0.2,0.5,0.1]\n    else if (ndvi>1.0) return [1.0,1.0,1.0]\n    else return [1.0,1.0,1.0];"
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
       "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C"
@@ -343,31 +420,27 @@
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S2L1C",
-      "upsampling": "BICUBIC",
       "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 20,
+      "maxCloudCoverage": 40.0,
       "temporal": false,
-      "previewMode": "PREVIEW"
+      "type": "S2L1C"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8/layers/FALSE_COLOR",
-    "id": "FALSE_COLOR",
-    "title": "False color (vegetation)",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S2-L1C__NDWI__EOXCOLORSCALE",
+    "id": "S2-L1C__NDWI__EOXCOLORSCALE",
+    "title": "S2 L1C NDWI EOxColorscale",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/dataproducts/6"
-        }
+        "evalScript": "ndwi = (B03-B08)/(B08+B03)\n\nif (ndwi<-1.0) return [1.0,1.0,1.0]\n    else if (ndwi<-0.6) return [1.0,1.0,1.0]\n\telse if (ndwi<-0.2) return [0.9,0.85,0.75]\n    else if (ndwi<0.0) return [0.6,0.5,0.2]\n    else if (ndwi<0.3) return [0.4,0.6,1.0]\n    else if (ndwi<0.6) return [0.1,0.4,1.0]\n    else if (ndwi<1.0) return [0.2,0.2,0.7]\n    else return [1.0,1.0,1.0];"
       }
     ],
     "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
       "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C"
@@ -377,31 +450,27 @@
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S2L1C",
-      "upsampling": "BICUBIC",
       "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 20,
+      "maxCloudCoverage": 40.0,
       "temporal": false,
-      "previewMode": "PREVIEW"
+      "type": "S2L1C"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8/layers/FALSE_COLOR_URBAN",
-    "id": "FALSE_COLOR_URBAN",
-    "title": "False color (urban)",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S2-L1C__TRUECOLOR__RGB",
+    "id": "S2-L1C__TRUECOLOR__RGB",
+    "title": "S2 L1C TrueColor RGB",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/dataproducts/420"
-        }
+        "evalScript": "// Sentinel-2 L1C EOX render\n// Setup values to max at 0.31 reflectance for all bands\n\n\nlet minVal = 0.01;\nlet maxVal = 0.31;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = [samples[0].B04, samples[0].B03, samples[0].B02];\n    return val.map((v, i) => viz.process(v, i));\n}\n\nfunction setup(ds) {\n    setInputComponents([ds.B02, ds.B03, ds.B04]);\n    setOutputComponentCount(3);\n}\n"
       }
     ],
     "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
       "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C"
@@ -411,229 +480,327 @@
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S2L1C",
-      "upsampling": "BICUBIC",
       "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 20,
+      "maxCloudCoverage": 40.0,
       "temporal": false,
-      "previewMode": "PREVIEW"
+      "type": "S2L1C"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8/layers/NDVI",
-    "id": "NDVI",
-    "title": "NDVI",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S2-L2A__ARI__SENTINEL-HUB__COLORSCALE",
+    "id": "S2-L2A__ARI__SENTINEL-HUB__COLORSCALE",
+    "title": "S2 L2A ARI Sentinel-Hub Colorscale",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/dataproducts/256"
-        }
+        "evalScript": "let minVal = 0;\nlet maxVal = 16;\n\nlet viz = ColorGradientVisualizer.createBlueRed(minVal, maxVal);\nfunction evaluatePixel(samples) {\n    let val = inverse(samples[0].B03) - inverse(samples[0].B05); \n    return viz.process(val);\n}\n\nfunction setup(ds) {\n    setInputComponents([ds.B03, ds.B05]);\n    setOutputComponentCount(3);\n}\n"
       }
     ],
     "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A"
     },
     "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/sources/1"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A/sources/2"
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S2L1C",
       "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 20,
+      "maxCloudCoverage": 15.0,
       "temporal": false,
-      "previewMode": "PREVIEW"
+      "type": "S2L2A"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8/layers/BATHYMETRIC",
-    "id": "BATHYMETRIC",
-    "title": "Bathymetric",
-    "description": "Based on bands 4,3,1",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S2-L2A__EVI2__SENTINEL-HUB__COLORSCALE",
+    "id": "S2-L2A__EVI2__SENTINEL-HUB__COLORSCALE",
+    "title": "S2 L2A EVI2 Sentinel-Hub Colorscale",
+    "description": "",
     "styles": [
       {
         "name": "default",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/dataproducts/284"
-        }
+        "description": "Default layer style",
+        "evalScript": "\nlet viz = ColorGradientVisualizer.createWhiteGreen();\n\nfunction evaluatePixel(samples) {\n    let val = 2.5 * (samples[0].B08 - samples[0].B04) / (samples[0].B08 + 2.4 * samples[0].B04 + 1);\n    return viz.process(val);\n}\n\nfunction setup(ds) {\n    setInputComponents([ds.B04, ds.B08]);\n    setOutputComponentCount(3);\n}\n"
       }
     ],
-    "orderHint": 2,
+    "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A"
     },
     "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/sources/1"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A/sources/2"
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S2L1C",
-      "upsampling": "BICUBIC",
       "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 20,
+      "maxCloudCoverage": 15.0,
       "temporal": false,
-      "previewMode": "PREVIEW"
+      "type": "S2L2A"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8/layers/GEOLOGY",
-    "id": "GEOLOGY",
-    "title": "Geology",
-    "description": "Based on bands 12,4,2",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S2-L2A__EVI__SENTINEL-HUB__COLORSCALE",
+    "id": "S2-L2A__EVI__SENTINEL-HUB__COLORSCALE",
+    "title": "S2 L2A EVI Sentinel-Hub Colorscale ",
+    "description": "",
     "styles": [
       {
         "name": "default",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/dataproducts/422"
-        }
+        "description": "Default layer style",
+        "evalScript": "\nlet viz = ColorGradientVisualizer.createWhiteGreen();\n\nfunction evaluatePixel(samples) {\n    let val = 2.5 * (samples[0].B08 - samples[0].B04) / (samples[0].B08 + 6 * samples[0].B04 - 7.5 * samples[0].B02 + 1);\n    return viz.process(val);\n}\n\nfunction setup(ds) {\n    setInputComponents([ds.B02, ds.B04, ds.B08]);\n    setOutputComponentCount(3);\n}\n"
       }
     ],
-    "orderHint": 5,
+    "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A"
     },
     "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/sources/1"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A/sources/2"
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S2L1C",
-      "upsampling": "BICUBIC",
       "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 20,
+      "maxCloudCoverage": 15.0,
       "temporal": false,
-      "previewMode": "PREVIEW"
+      "type": "S2L2A"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8/layers/MOISTURE_INDEX",
-    "id": "MOISTURE_INDEX",
-    "title": "Moisture Index",
-    "description": "Based on combination of bands (B8A - B11)/(B8A + B11)",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S2-L2A__MOISTURE__INDEX__SENTINEL-HUB__COLORSCALE",
+    "id": "S2-L2A__MOISTURE__INDEX__SENTINEL-HUB__COLORSCALE",
+    "title": "S2 L2A MOISTURE INDEX Sentinel-Hub Colorscale",
+    "description": "",
     "styles": [
       {
         "name": "default",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/dataproducts/425"
-        }
+        "description": "Default layer style",
+        "evalScript": "\nlet index = (B8A - B11)/(B8A + B11);\n\nreturn colorBlend(index, [-0.8, -0.24, -0.032, 0.032, 0.24, 0.8], [[0.5,0,0], [1,0,0], [1,1,0], [0,1,1], [0,0,1], [0,0,0.5]]);\n"
       }
     ],
-    "orderHint": 6,
+    "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A"
     },
     "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/sources/1"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A/sources/2"
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S2L1C",
-      "upsampling": "BICUBIC",
       "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 20,
+      "maxCloudCoverage": 15.0,
       "temporal": false,
-      "previewMode": "PREVIEW"
+      "type": "S2L2A"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8/layers/SWIR",
-    "id": "SWIR",
-    "title": "SWIR",
-    "description": "Based on bands 12,11,4",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S2-L2A__NDVI__EOXCOLORSCALE",
+    "id": "S2-L2A__NDVI__EOXCOLORSCALE",
+    "title": "S2 L2A NDVI EOxColorscale",
+    "description": "",
     "styles": [
       {
         "name": "default",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/dataproducts/426"
-        }
+        "description": "Default layer style",
+        "evalScript": "ndvi = (B08-B04)/(B08+B04)\n\nif (ndvi<-1.0) return [1.0,1.0,1.0]\n    else if (ndvi<-0.6) return [1.0,1.0,1.0]\n    else if (ndvi<-0.5) return [0.9,0.9,0.9]\n    else if (ndvi<-0.1) return [0.4,0.6,1.0]\n    else if (ndvi<0.2) return [0.9,0.85,0.75]\n    else if (ndvi<0.4) return [0.6,0.5,0.2]\n    else if (ndvi<0.6) return [0.6,0.8,0.5]\n    else if (ndvi<0.8) return [0.35,0.75,0.1]\n    else if (ndvi<1.0) return [0.2,0.5,0.1]\n    else if (ndvi>1.0) return [1.0,1.0,1.0]\n    else return [1.0,1.0,1.0];"
       }
     ],
-    "orderHint": 7,
+    "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A"
     },
     "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/sources/1"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A/sources/2"
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S2L1C",
-      "upsampling": "BICUBIC",
       "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 20,
+      "maxCloudCoverage": 15.0,
       "temporal": false,
-      "previewMode": "PREVIEW"
+      "type": "S2L2A"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8/layers/TRUE_COLOR",
-    "id": "TRUE_COLOR",
-    "title": "Natural color (true color)",
-    "description": "Based on bands 4,3,2",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S2-L2A__NDWI__EOXCOLORSCALE",
+    "id": "S2-L2A__NDWI__EOXCOLORSCALE",
+    "title": "S2 L2A NDWI EOxColorscale",
+    "description": "",
     "styles": [
       {
         "name": "default",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/dataproducts/84"
-        }
+        "description": "Default layer style",
+        "evalScript": "ndwi = (B03-B08)/(B08+B03)\n\nif (ndwi<-1.0) return [1.0,1.0,1.0]\n    else if (ndwi<-0.6) return [1.0,1.0,1.0]\n\telse if (ndwi<-0.2) return [0.9,0.85,0.75]\n    else if (ndwi<0.1) return [0.6,0.5,0.2]\n    else if (ndwi<0.3) return [0.4,0.6,1.0]\n    else if (ndwi<0.6) return [0.1,0.4,1.0]\n    else if (ndwi<1.0) return [0.2,0.2,0.7]\n    else return [1.0,1.0,1.0];"
       }
     ],
-    "orderHint": 8,
+    "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/859bbb22-c7b8-49e0-a241-faa13d5ea8a8"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A"
     },
     "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/sources/1"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A/sources/2"
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S2L1C",
-      "upsampling": "BICUBIC",
       "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 20,
+      "maxCloudCoverage": 15.0,
       "temporal": false,
-      "previewMode": "PREVIEW"
+      "type": "S2L2A"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B01",
-    "id": "S3OLCI-B01",
-    "title": "S3OLCI-B01",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S2-L2A__NIR-FALSECOLOR__RGB",
+    "id": "S2-L2A__NIR-FALSECOLOR__RGB",
+    "title": "S2 L2A NIR-FalseColor RGB",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/598"
-        }
+        "evalScript": "var red = B08-0.05*(1/(0.65-0.05));\nvar green = B04-0.01*(1/(0.3-0.01));\nvar blue = B03-0.01*(1/(0.3-0.01));\n\nreturn[red*2, 3.5*green, 4*blue];"
       }
     ],
     "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A/sources/2"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 15.0,
+      "temporal": false,
+      "type": "S2L2A"
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S2-L2A__SAVI__SENTINEL-HUB__COLORSCALE",
+    "id": "S2-L2A__SAVI__SENTINEL-HUB__COLORSCALE",
+    "title": "S2 L2A SAVI Sentinel-Hub Colorscale",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "evalScript": "let viz = ColorGradientVisualizer.createBlueRed();\n\nfunction evaluatePixel(samples) {\n    let val = 1.5 * (samples[0].B08 - samples[0].B04) / (samples[0].B08 + samples[0].B04 + 0.5);\n    return viz.process(val);\n}\n\nfunction setup(ds) {\n    setInputComponents([ds.B04, ds.B08]);\n    setOutputComponentCount(3);\n}\n"
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A/sources/2"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 15.0,
+      "temporal": false,
+      "type": "S2L2A"
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S2-L2A__SCL__ESA__CLASSIFICATION",
+    "id": "S2-L2A__SCL__ESA__CLASSIFICATION",
+    "title": "S2 L2A SCL ESA Classification",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "evalScript": " function RGBToColor (a, b, c){\n\treturn [a/255, b/255, c/255];\n}\n\nswitch (SCL) {\n  // No Data (Missing data) (black)    \n  case 0: return RGBToColor (0, 0, 0);\n    \n  // Saturated or defective pixel (red)   \n  case 1: return RGBToColor (255, 0, 0);\n\n  // Dark features / Shadows (very dark grey)\n  case 2: return RGBToColor (47,  47,  47);\n    \n  // Cloud shadows (dark brown)\n  case 3: return RGBToColor (100, 50, 0);\n    \n  // Vegetation (green)\n  case 4: return RGBToColor (0, 160, 0);\n    \n  // Not-vegetated (dark yellow)\n  case 5: return RGBToColor (255, 230, 90);\n    \n  // Water (dark and bright) (blue)\n  case 6: return RGBToColor (0, 0, 255);\n  \n  // Unclassified (dark grey)\n  case 7: return RGBToColor (128, 128, 128);\n  \n  // Cloud medium probability (grey)\n  case 8: return RGBToColor (192, 192, 192);\n    \n  // Cloud high probability (white)\n  case 9: return RGBToColor (255, 255, 255);\n  \n  // Thin cirrus (very bright blue)\n  case 10: return RGBToColor (100, 200, 255);\n    \n  // Snow or ice (very bright pink)\n  case 11: return RGBToColor (255, 150, 255);\n\n  default : return RGBToColor (0, 0, 0);  \n}"
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A/sources/2"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 15.0,
+      "temporal": false,
+      "type": "S2L2A"
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S2-L2A__TRUECOLOR__RGB",
+    "id": "S2-L2A__TRUECOLOR__RGB",
+    "title": "S2 L2A TrueColor RGB",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "evalScript": "\nlet minVal = 0.005;\nlet maxVal = 0.25;\n\nlet viz = new DefaultVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = [samples[0].B04, samples[0].B03, samples[0].B02];\n    return val.map((v, i) => viz.process(v, i));\n}\n\nfunction setup(ds) {\n    setInputComponents([ds.B02, ds.B03, ds.B04]);\n    setOutputComponentCount(3);\n}\n"
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A/sources/2"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 15.0,
+      "temporal": false,
+      "type": "S2L2A"
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S3-OLCI__NDVI__EOXCOLORSCALE",
+    "id": "S3-OLCI__NDVI__EOXCOLORSCALE",
+    "title": "S3 OLCI NDVI EOxColorscale",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "evalScript": "ndvi = (B17-B08)/(B08+B17)\n\nif (ndvi<-1.0) return [1.0,1.0,1.0]\n    else if (ndvi<-0.4) return [1.0,1.0,1.0]\n    else if (ndvi<-0.3) return [0.9,0.9,0.9]\n    else if (ndvi<-0.15) return [0.4,0.6,1.0]\n    else if (ndvi<0.2) return [0.9,0.85,0.75]\n    else if (ndvi<0.4) return [0.6,0.5,0.2]\n    else if (ndvi<0.6) return [0.6,0.8,0.5]\n    else if (ndvi<0.8) return [0.35,0.75,0.1]\n    else if (ndvi<1.0) return [0.2,0.5,0.1]\n    else if (ndvi>1.0) return [1.0,1.0,1.0]\n    else return [1.0,1.0,1.0];"
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
       "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
@@ -643,29 +810,27 @@
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S3OLCI",
       "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 50.0,
-      "temporal": false
+      "maxCloudCoverage": 100.0,
+      "temporal": false,
+      "type": "S3OLCI"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B02",
-    "id": "S3OLCI-B02",
-    "title": "S3OLCI-B02",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S3-OLCI__NDWI__EOXCOLORSCALE",
+    "id": "S3-OLCI__NDWI__EOXCOLORSCALE",
+    "title": "S3 OLCI NDWI EOxColorscale",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/599"
-        }
+        "evalScript": "ndwi = (B06-B17)/(B06+B17)\n\nif (ndwi<-1.0) return [1.0,1.0,1.0]\n    else if (ndwi<-0.6) return [1.0,1.0,1.0]\n\telse if (ndwi<-0.2) return [0.9,0.85,0.75]\n    else if (ndwi<0.0) return [0.6,0.5,0.2]\n    else if (ndwi<0.3) return [0.4,0.6,1.0]\n    else if (ndwi<0.6) return [0.1,0.4,1.0]\n    else if (ndwi<1.0) return [0.2,0.2,0.7]\n    else return [1.0,1.0,1.0];"
       }
     ],
     "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
       "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
@@ -675,29 +840,27 @@
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S3OLCI",
       "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 50.0,
-      "temporal": false
+      "maxCloudCoverage": 100.0,
+      "temporal": false,
+      "type": "S3OLCI"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B03",
-    "id": "S3OLCI-B03",
-    "title": "S3OLCI-B03",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S3-OLCI__NIR-FALSECOLOR__RGB",
+    "id": "S3-OLCI__NIR-FALSECOLOR__RGB",
+    "title": "S3 OLCI NIR-FalseColor RGB",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/600"
-        }
+        "evalScript": "var red = B17-0.05*(1/(0.65-0.05));\nvar green = B06-0.01*(1/(0.3-0.01));\nvar blue = B03-0.01*(1/(0.3-0.01));\n\nreturn[red*2, 3.5*green, 3.5*blue];"
       }
     ],
     "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
       "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
@@ -707,29 +870,27 @@
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S3OLCI",
       "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 50.0,
-      "temporal": false
+      "maxCloudCoverage": 100.0,
+      "temporal": false,
+      "type": "S3OLCI"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B04",
-    "id": "S3OLCI-B04",
-    "title": "S3OLCI-B04",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S3-OLCI__OTCI__SENTINEL-HUB__COLORSCALE",
+    "id": "S3-OLCI__OTCI__SENTINEL-HUB__COLORSCALE",
+    "title": "S3 OLCI OTCI Sentinel-Hub Colorscale",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/602"
-        }
+        "evalScript": "var val = (B12-B11)/(B11-B10);\n\nif (val<-1.0) return [0,0,0];\nelse if (val<0.6) return [0.75,0.75,0.75];\nelse if (val<0.8) return [0.86,0.86,0.86];\nelse if (val<1.0) return [1,1,0.88];\nelse if (val<1.05) return [1,0.98,0.8];\nelse if (val<1.1) return [0.93,0.91,0.71];\nelse if (val<1.15) return [0.87,0.85,0.61];\nelse if (val<1.2) return [0.8,0.78,0.51];\nelse if (val<1.25) return [0.74,0.72,0.42];\nelse if (val<1.3) return [0.69,0.76,0.38];\nelse if (val<1.35) return [0.64,0.8,0.35];\nelse if (val<1.4) return [0.57,0.75,0.32];\nelse if (val<1.5) return [0.5,0.7,0.28];\nelse if (val<1.6) return [0.44,0.64,0.25];\nelse if (val<1.7) return [0.38,0.59,0.21];\nelse if (val<1.8) return [0.31,0.54,0.18];\nelse if (val<1.9) return [0.25,0.49,0.14];\nelse if (val<2.0) return [0.19,0.43,0.11];\nelse if (val<2.1) return [0.13,0.38,0.07];\nelse if (val<2.2) return [0.06,0.33,0.04];\nelse return [0,0.27,0];\n"
       }
     ],
     "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
       "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
@@ -739,29 +900,27 @@
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S3OLCI",
       "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 50.0,
-      "temporal": false
+      "maxCloudCoverage": 100.0,
+      "temporal": false,
+      "type": "S3OLCI"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B05",
-    "id": "S3OLCI-B05",
-    "title": "S3OLCI-B05",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S3-OLCI__TRUECOLOR__RGB",
+    "id": "S3-OLCI__TRUECOLOR__RGB",
+    "title": "S3  OLCI TrueColor RGB",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/603"
-        }
+        "evalScript": "let minVal = 0.01;\nlet maxVal = 0.3;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = [samples[0].B08, samples[0].B06, samples[0].B04];\n    return val.map(v => viz.process(v));\n}\n\nfunction setup(ds) {\n    setInputComponents([ds.B08, ds.B06, ds.B04]);\n    setOutputComponentCount(3);\n}"
       }
     ],
     "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
       "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
@@ -771,616 +930,283 @@
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S3OLCI",
       "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 50.0,
-      "temporal": false
+      "maxCloudCoverage": 100.0,
+      "temporal": false,
+      "type": "S3OLCI"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B06",
-    "id": "S3OLCI-B06",
-    "title": "S3OLCI-B06",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S3-SLSTR__ACTIVE__FIRES-BAND__1__F1",
+    "id": "S3-SLSTR__ACTIVE__FIRES-BAND__1__F1",
+    "title": "S3 SLSTR Active Fires Band 1 (F1)",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/604"
-        }
+        "evalScript": "const blue_red = [\n  [273, 0xffffff],\n  [274, 0xfefce7],\n  [283, 0xFDE191],\n  [293, 0xf69855],\n  [303, 0xec6927],\n  [323, 0xaa2d1d],\n  [363, 0x650401],\n  [473, 0x3d0200]\n];\n\nconst viz = new ColorRampVisualizer(blue_red);\n\nfunction evaluatePixel(samples) {\n  let val = samples[0].F1;\n  return viz.process(val);\n}\n\nfunction setup(ds) {\n  setInputComponents([ds.F1]);\n  setOutputComponentCount(3);\n}"
       }
     ],
     "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3SLSTR"
     },
     "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3SLSTR/sources/9"
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S3OLCI",
-      "mosaickingOrder": "mostRecent",
+      "mosaickingOrder": "leastCC",
       "maxCloudCoverage": 50.0,
-      "temporal": false
+      "temporal": false,
+      "view": "NADIR",
+      "type": "S3SLSTR"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B07",
-    "id": "S3OLCI-B07",
-    "title": "S3OLCI-B07",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S3-SLSTR__ACTIVE__FIRES__BAND__2F2",
+    "id": "S3-SLSTR__ACTIVE__FIRES__BAND__2F2",
+    "title": "S3 SLSTR Active Fires Band 2 (F2)",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/605"
-        }
+        "evalScript": "const blue_red = [\n  [223, 0x003d99],\n  [253, 0x2e82ff],  \n  [263, 0x80b3ff],\n  [272, 0xe0edff],\n  [273, 0xffffff],\n  [274, 0xfefce7],\n  [283, 0xFDE191],\n  [293, 0xf69855],\n  [303, 0xec6927],\n  [323, 0xaa2d1d],\n  [363, 0x650401],\n  [373, 0x3d0200],\n];\n\nconst viz = new ColorRampVisualizer(blue_red);\n\nfunction evaluatePixel(samples) {\n  let val = samples[0].F2;\n  return viz.process(val);\n}\n\nfunction setup(ds) {\n  setInputComponents([ds.F2]);\n  setOutputComponentCount(3);\n}"
       }
     ],
     "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3SLSTR"
     },
     "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3SLSTR/sources/9"
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S3OLCI",
-      "mosaickingOrder": "mostRecent",
+      "mosaickingOrder": "leastCC",
       "maxCloudCoverage": 50.0,
-      "temporal": false
+      "temporal": false,
+      "view": "NADIR",
+      "type": "S3SLSTR"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B08",
-    "id": "S3OLCI-B08",
-    "title": "S3OLCI-B08",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S3-SLSTR__NIR-FALSECOLOR__RGB",
+    "id": "S3-SLSTR__NIR-FALSECOLOR__RGB",
+    "title": "S3 SLSTR NIR-FalseColor RGB",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/606"
-        }
+        "evalScript": "var red = S3-0.05*(1/(0.65-0.05));\nvar green = S2-0.01*(1/(0.3-0.01));\nvar blue = S1-0.01*(1/(0.3-0.01));\n\nreturn[red*2, 3.5*green, 3.5*blue];"
       }
     ],
     "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3SLSTR"
     },
     "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3SLSTR/sources/9"
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S3OLCI",
-      "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 50.0,
-      "temporal": false
+      "mosaickingOrder": "leastCC",
+      "maxCloudCoverage": 10.0,
+      "temporal": false,
+      "view": "NADIR",
+      "type": "S3SLSTR"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B09",
-    "id": "S3OLCI-B09",
-    "title": "S3OLCI-B09",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S5P-CH4__EOXCOLORSCALE",
+    "id": "S5P-CH4__EOXCOLORSCALE",
+    "title": "S5P CH4 EOxColorscale",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/607"
-        }
+        "evalScript": "// EOX Sentinel-5 CH4 Colorscale\n// ppb\n\nreturn colorBlend(CH4,\n [1600, 1650, 1750, 1850, 1950, 2000],                  \n[[0.0,0.0,0.5],\n[0.2,0.1,0.8],\n[0.0,0.8,0.8],\n[0.8,0.8,0.0],\n[0.8,0.0,0.0],\n[0.4,0.0,0.0]\n]);"
       }
     ],
     "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S5PL2"
     },
     "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S5PL2/sources/7"
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S3OLCI",
-      "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 50.0,
-      "temporal": false
+      "mosaickingOrder": "leastCC",
+      "maxCloudCoverage": 25.0,
+      "temporal": false,
+      "type": "S5PL2"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B10",
-    "id": "S3OLCI-B10",
-    "title": "S3OLCI-B10",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S5P-CO__EOXCOLORSCALE",
+    "id": "S5P-CO__EOXCOLORSCALE",
+    "title": "S5P CO EOxColorscale",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/608"
-        }
+        "evalScript": "// EOX Sentinel-5 CO Colorscale\n// mol/m^2\n\nreturn colorBlend(CO,\n [0.0, 0.0125, 0.0375, 0.0625, 0.0875, 0.01],                  \n[[0.0,0.0,0.5],\n[0.2,0.1,0.8],\n[0.0,0.8,0.8],\n[0.8,0.8,0.0],\n[0.8,0.0,0.0],\n[0.4,0.0,0.0]\n]);"
       }
     ],
     "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S5PL2"
     },
     "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S5PL2/sources/7"
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S3OLCI",
-      "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 50.0,
-      "temporal": false
+      "mosaickingOrder": "leastCC",
+      "maxCloudCoverage": 25.0,
+      "temporal": false,
+      "type": "S5PL2"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B11",
-    "id": "S3OLCI-B11",
-    "title": "S3OLCI-B11",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S5P-HCHO__EOXCOLORSCALE",
+    "id": "S5P-HCHO__EOXCOLORSCALE",
+    "title": "S5P HCHO EOxColorscale",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/609"
-        }
+        "evalScript": "// EOX Sentinel-5 HCHO Colorscale\n// mol/m^2\n\nreturn colorBlend(HCHO,\n [0.0, 0.000125, 0.000375, 0.000625, 0.000875, 0.001],                  \n[[0.0,0.0,0.5],\n[0.2,0.1,0.8],\n[0.0,0.8,0.8],\n[0.8,0.8,0.0],\n[0.8,0.0,0.0],\n[0.4,0.0,0.0]\n]);"
       }
     ],
     "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S5PL2"
     },
     "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S5PL2/sources/7"
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S3OLCI",
-      "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 50.0,
-      "temporal": false
+      "mosaickingOrder": "leastCC",
+      "maxCloudCoverage": 25.0,
+      "temporal": false,
+      "type": "S5PL2"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B12",
-    "id": "S3OLCI-B12",
-    "title": "S3OLCI-B12",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S5P-L2__NO2__EOXCOLORSCALE",
+    "id": "S5P-L2__NO2__EOXCOLORSCALE",
+    "title": "S5P L2 NO2 EOxColorscale",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/610"
-        }
+        "evalScript": "// EOX Sentinel-5 N02 Colorscale\n// mol/m^2\n\nreturn colorBlend(NO2,\n [0.0, 0.00002, 0.00004, 0.00006, 0.00008, 0.0001],                  \n[[0.0,0.0,0.5],\n[0.2,0.1,0.8],\n[0.0,0.8,0.8],\n[0.8,0.8,0.0],\n[0.8,0.0,0.0],\n[0.4,0.0,0.0]\n]);"
       }
     ],
     "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S5PL2"
     },
     "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S5PL2/sources/7"
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S3OLCI",
-      "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 50.0,
-      "temporal": false
+      "mosaickingOrder": "leastCC",
+      "maxCloudCoverage": 25.0,
+      "temporal": false,
+      "type": "S5PL2"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B13",
-    "id": "S3OLCI-B13",
-    "title": "S3OLCI-B13",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S5P-L2__S02__EOXCOLORSCALE",
+    "id": "S5P-L2__S02__EOXCOLORSCALE",
+    "title": "S5P L2 S02 EOxColorscale",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/611"
-        }
+        "evalScript": "// EOX Sentinel-5 S02 Colorscale\n// mol/m^2\n\nreturn colorBlend(SO2,\n [0.0, 0.00125, 0.00375, 0.00625, 0.00675, 0.01],                  \n[[0.0,0.0,0.5],\n[0.2,0.1,0.8],\n[0.0,0.8,0.8],\n[0.8,0.8,0.0],\n[0.8,0.0,0.0],\n[0.4,0.0,0.0]\n]);"
       }
     ],
     "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S5PL2"
     },
     "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S5PL2/sources/7"
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S3OLCI",
-      "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 50.0,
-      "temporal": false
+      "mosaickingOrder": "leastCC",
+      "maxCloudCoverage": 25.0,
+      "temporal": false,
+      "type": "S5PL2"
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B14",
-    "id": "S3OLCI-B14",
-    "title": "S3OLCI-B14",
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S5P-O3__EOXCOLORSCALE",
+    "id": "S5P-O3__EOXCOLORSCALE",
+    "title": "S5P O3 EOxColorscale",
     "description": "",
     "styles": [
       {
         "name": "default",
         "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/612"
-        }
+        "evalScript": "// EOX Sentinel-5 O3 Colorscale\n// mol/m^2\n\nreturn colorBlend(O3,\n [0.0, 0.045, 0.135, 0.225, 0.315, 0.36],                  \n[[0.0,0.0,0.5],\n[0.2,0.1,0.8],\n[0.0,0.8,0.8],\n[0.8,0.8,0.0],\n[0.8,0.0,0.0],\n[0.4,0.0,0.0]\n]);"
       }
     ],
     "orderHint": 0,
     "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
     },
     "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S5PL2"
     },
     "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S5PL2/sources/7"
     },
     "defaultStyleName": "default",
     "datasourceDefaults": {
-      "type": "S3OLCI",
-      "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 50.0,
-      "temporal": false
-    }
-  },
-  {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B15",
-    "id": "S3OLCI-B15",
-    "title": "S3OLCI-B15",
-    "description": "",
-    "styles": [
-      {
-        "name": "default",
-        "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/613"
-        }
-      }
-    ],
-    "orderHint": 0,
-    "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
-    },
-    "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
-    },
-    "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
-    },
-    "defaultStyleName": "default",
-    "datasourceDefaults": {
-      "type": "S3OLCI",
-      "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 50.0,
-      "temporal": false
-    }
-  },
-  {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B16",
-    "id": "S3OLCI-B16",
-    "title": "S3OLCI-B16",
-    "description": "",
-    "styles": [
-      {
-        "name": "default",
-        "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/614"
-        }
-      }
-    ],
-    "orderHint": 0,
-    "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
-    },
-    "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
-    },
-    "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
-    },
-    "defaultStyleName": "default",
-    "datasourceDefaults": {
-      "type": "S3OLCI",
-      "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 50.0,
-      "temporal": false
-    }
-  },
-  {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B17",
-    "id": "S3OLCI-B17",
-    "title": "S3OLCI-B17",
-    "description": "",
-    "styles": [
-      {
-        "name": "default",
-        "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/615"
-        }
-      }
-    ],
-    "orderHint": 0,
-    "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
-    },
-    "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
-    },
-    "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
-    },
-    "defaultStyleName": "default",
-    "datasourceDefaults": {
-      "type": "S3OLCI",
-      "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 50.0,
-      "temporal": false
-    }
-  },
-  {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B18",
-    "id": "S3OLCI-B18",
-    "title": "S3OLCI-B18",
-    "description": "",
-    "styles": [
-      {
-        "name": "default",
-        "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/616"
-        }
-      }
-    ],
-    "orderHint": 0,
-    "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
-    },
-    "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
-    },
-    "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
-    },
-    "defaultStyleName": "default",
-    "datasourceDefaults": {
-      "type": "S3OLCI",
-      "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 50.0,
-      "temporal": false
-    }
-  },
-  {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B19",
-    "id": "S3OLCI-B19",
-    "title": "S3OLCI-B19",
-    "description": "",
-    "styles": [
-      {
-        "name": "default",
-        "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/617"
-        }
-      }
-    ],
-    "orderHint": 0,
-    "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
-    },
-    "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
-    },
-    "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
-    },
-    "defaultStyleName": "default",
-    "datasourceDefaults": {
-      "type": "S3OLCI",
-      "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 50.0,
-      "temporal": false
-    }
-  },
-  {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B20",
-    "id": "S3OLCI-B20",
-    "title": "S3OLCI-B20",
-    "description": "",
-    "styles": [
-      {
-        "name": "default",
-        "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/618"
-        }
-      }
-    ],
-    "orderHint": 0,
-    "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
-    },
-    "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
-    },
-    "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
-    },
-    "defaultStyleName": "default",
-    "datasourceDefaults": {
-      "type": "S3OLCI",
-      "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 50.0,
-      "temporal": false
-    }
-  },
-  {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-B21",
-    "id": "S3OLCI-B21",
-    "title": "S3OLCI-B21",
-    "description": "",
-    "styles": [
-      {
-        "name": "default",
-        "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/619"
-        }
-      }
-    ],
-    "orderHint": 0,
-    "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
-    },
-    "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
-    },
-    "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
-    },
-    "defaultStyleName": "default",
-    "datasourceDefaults": {
-      "type": "S3OLCI",
-      "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 50.0,
-      "temporal": false
-    }
-  },
-  {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-OTCI",
-    "id": "S3OLCI-OTCI",
-    "title": "S3OLCI-OTCI",
-    "description": "",
-    "styles": [
-      {
-        "name": "default",
-        "description": "Default layer style",
-        "evalScript": "var OTCI = (B12-B11)/(B11-B10);\nreturn colorBlend   \n    (OTCI,\t            \n        [ 0, 1, 1.8, 2.5, 4, 4.5, 5], \n        [     \n            [0, 0, 0.5],\n            [0, 0.3, 0.8],\n            [1, 0.2, 0.2],\n            [1, 0.9, 0],\n            [0, 0.8, 0.1],\n            [0, 0.6,0.2],\n            [1, 1, 1],\n      ]);\n"
-      }
-    ],
-    "orderHint": 0,
-    "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
-    },
-    "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
-    },
-    "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
-    },
-    "defaultStyleName": "default",
-    "datasourceDefaults": {
-      "type": "S3OLCI",
-      "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 50.0,
-      "temporal": false
-    }
-  },
-  {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-TRISTIMULUS",
-    "id": "S3OLCI-TRISTIMULUS",
-    "title": "S3OLCI-Tristimulus",
-    "description": "",
-    "styles": [
-      {
-        "name": "default",
-        "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/597"
-        }
-      }
-    ],
-    "orderHint": 0,
-    "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
-    },
-    "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
-    },
-    "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
-    },
-    "defaultStyleName": "default",
-    "datasourceDefaults": {
-      "type": "S3OLCI",
-      "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 50.0,
-      "temporal": false
-    }
-  },
-  {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887/layers/S3OLCI-TRUE-COLOR",
-    "id": "S3OLCI-TRUE-COLOR",
-    "title": "S3OLCI-True color",
-    "description": "",
-    "styles": [
-      {
-        "name": "default",
-        "description": "Default layer style",
-        "dataProduct": {
-          "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/dataproducts/578"
-        }
-      }
-    ],
-    "orderHint": 0,
-    "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/f9fba262-c362-4a1f-a2c5-c1cf646cf887"
-    },
-    "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI"
-    },
-    "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI/sources/8"
-    },
-    "defaultStyleName": "default",
-    "datasourceDefaults": {
-      "type": "S3OLCI",
-      "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 50.0,
-      "temporal": false
+      "mosaickingOrder": "leastCC",
+      "maxCloudCoverage": 25.0,
+      "temporal": false,
+      "type": "S5PL2"
     }
   }
 ]
