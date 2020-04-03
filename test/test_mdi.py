@@ -53,7 +53,6 @@ class MdiTest(unittest.TestCase):
         session = requests_oauthlib.OAuth2Session(client=client)
 
         mdi = Mdi(
-            session=session,
             client_id=client_id,
             client_secret=client_secret
         )
@@ -113,7 +112,7 @@ class MdiTest(unittest.TestCase):
 
 
     def test_parse_request(self):
-        from edc_ogc.configapi import ConfigAPIMock
+        from edc_ogc.configapi import ConfigAPIDefaultLayers
         from edc_ogc.ogc.client import OGCClient, OGCRequest
         from edc_ogc.ogc.wms import WMS11GetMapDecoder, WMS13GetMapDecoder
 
@@ -126,17 +125,18 @@ class MdiTest(unittest.TestCase):
             assert decoder.bbox
             self.assertEqual('EPSG:4326', decoder.crs)
 
-        client = OGCClient(self.get_mdi(), ConfigAPIMock(None, None), 'None')
+        client_id = os.environ.get('SH_CLIENT_ID')
+        client_secret = os.environ.get('SH_CLIENT_SECRET')
+        client = OGCClient(ConfigAPIDefaultLayers(client_id, client_secret), 'None')
 
         # response, _ = client.dispatch(OGCRequest(
         #     method='GET',
         #     query='service=WMS&version=1.3.0&request=GetMap&layers=TRUE_COLOR&styles=&crs=EPSG:4326&bbox=46.580095,14.043549,46.652688,14.167831&width=512&height=512&format=image/png',
         # ))
 
-
         response, _ = client.dispatch(OGCRequest(
             method='GET',
-            query='service=WMS&version=1.3.0&request=GetMap&layers=TRUE_COLOR&styles=&crs=EPSG:3857&bbox=1500000,1500000,1600000,1600000&width=512&height=512&format=image/png',
+            query='service=WMS&version=1.3.0&request=GetMap&layers=S2-L1C__TRUECOLOR__RGB&styles=&crs=EPSG:3857&bbox=1500000,1500000,1600000,1600000&width=512&height=512&format=image/png',
             base_url='http://testserver.org/',
         ))
 
@@ -146,7 +146,7 @@ class MdiTest(unittest.TestCase):
 
         response, _ = client.dispatch(OGCRequest(
             method='GET',
-            query='service=WMS&version=1.1.0&request=GetMap&layers=AGRICULTURE&styles=&srs=EPSG:4326&bbox=14.043549,46.580095,14.167831,46.652688&width=512&height=512&format=image/png',
+            query='service=WMS&version=1.1.0&request=GetMap&layers=S2-L1C__NDVI__EOXCOLORSCALE&styles=&srs=EPSG:4326&bbox=14.043549,46.580095,14.167831,46.652688&width=512&height=512&format=image/png',
             base_url='http://testserver.org/',
         ))
 
