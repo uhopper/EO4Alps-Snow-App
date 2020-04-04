@@ -1,0 +1,13 @@
+[
+    {
+        "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/L8L1C/sources/6",
+        "id": 6,
+        "description": "Landsat 8 - Level-1",
+        "settings": {
+            "indexServiceUrl": "https://services-uswest2.sentinel-hub.com/index"
+        },
+        "dataset": {
+            "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/L8L1C"
+        }
+    }
+]

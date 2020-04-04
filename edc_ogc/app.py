@@ -3,15 +3,15 @@ import logging
 import logging.config
 
 
-from flask import Flask, request, Response, jsonify, send_from_directory
+from flask import Flask, request, Response, jsonify, send_from_directory, render_template
 import oauthlib.oauth2
 import requests_oauthlib
+from prometheus_flask_exporter import PrometheusMetrics
 
 from edc_ogc import VERSION
 from edc_ogc.ogc.client import OGCClient, OGCRequest
 from edc_ogc.configapi import ConfigAPIDefaultLayers, ConfigAPI
 from edc_ogc.mdi import Mdi, MdiError
-from prometheus_flask_exporter import PrometheusMetrics
 
 # -------------- App setup --------------
 app = Flask(__name__, static_url_path='/static')
@@ -121,10 +121,20 @@ def headers():
     return jsonify(dict(request.headers))
 
 
+@app.route('/favicon.ico')
+def favicon():
+    return app.send_static_file('favicon.ico')
+
+
 @app.route('/')
 def ows():
     if not request.query_string.decode('ascii'):
-        return app.send_static_file('index.html')
+        client = get_client()
+        datasets = client.config_client.get_datasets()
+        return render_template('index.html', datasets_and_layers=[
+            (dataset, client.config_client.get_layers(dataset))
+            for dataset in datasets
+        ])
     try:
         client = get_client()
         ogc_request = OGCRequest(
@@ -151,7 +161,12 @@ def ows():
 @app.route('/<instance_id>')
 def ows_instance(instance_id):
     if not request.query_string.decode('ascii'):
-        return app.send_static_file('index.html')
+        client = get_client(instance_id)
+        datasets = client.config_client.get_datasets()
+        return render_template('index.html', datasets_and_layers=[
+            (dataset, client.config_client.get_layers(dataset))
+            for dataset in datasets
+        ])
     try:
         client = get_client(instance_id)
         ogc_request = OGCRequest(

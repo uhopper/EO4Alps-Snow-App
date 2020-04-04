@@ -1,0 +1,13 @@
+[
+    {
+        "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD/sources/3",
+        "id": 3,
+        "description": "Sentinel S1 GRD",
+        "settings": {
+            "indexServiceUrl": "https://services.sentinel-hub.com/index"
+        },
+        "dataset": {
+            "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD"
+        }
+    }
+]

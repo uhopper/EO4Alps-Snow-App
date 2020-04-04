@@ -1,0 +1,13 @@
+[
+    {
+        "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/sources/1",
+        "id": 1,
+        "description": "Sentinel S2 - L1C",
+        "settings": {
+            "indexServiceUrl": "https://services.sentinel-hub.com/index"
+        },
+        "dataset": {
+            "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C"
+        }
+    }
+]

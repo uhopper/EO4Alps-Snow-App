@@ -20,6 +20,7 @@
   defaultbands: [DEM]
   extent: [-180, -90, 180, 90]
   # resolution:
+
 - id: L8L1C
   '@id': https://services.sentinel-hub.com/configuration/v1/datasets/L8L1C
   title: Landsat 8 - Level-1
@@ -30,6 +31,7 @@
   resolution: [1.3474729261651094e-04, 1.3474729261651094e-04]
   timeextent: [2013-02-11, null]
   api_endpoint: https://services-uswest2.sentinel-hub.com/api/v1
+
 - id: S1GRD
   '@id': https://services.sentinel-hub.com/configuration/v1/datasets/S1GRD
   title: Sentinel-1 GRD
@@ -38,6 +40,7 @@
   extent: [-180, -90, 180, 90]
   resolution: [8.983152841100729e-05, 8.983152841100729e-05]
   timeextent: [2014-04-03, null]
+
 - id: S2L1C
   '@id': https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C
   title: Sentinel-2 L1C
@@ -47,6 +50,7 @@
   extent: [-180, -90, 180, 90]
   resolution: [8.983152841100729e-05, 8.983152841100729e-05]
   timeextent: [2015-06-23, null]
+
 - id: S2L2A
   '@id': https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A
   title: Sentinel-2 L2A
@@ -56,6 +60,7 @@
   extent: [-180, -90, 180, 90]
   resolution: [8.983152841100729e-05, 8.983152841100729e-05]
   timeextent: [2015-06-23, null]
+
 - id: S3OLCI
   '@id': https://services.sentinel-hub.com/configuration/v1/datasets/S3OLCI
   mdi_url: https://creodias.sentinel-hub.com/api/v1/
@@ -66,6 +71,7 @@
   resolution: [0.002694945852330219, 0.002694945852330219]
   timeextent: [2016-02-16, null]
   api_endpoint: https://creodias.sentinel-hub.com/api/v1
+
 - id: S3SLSTR
   '@id': https://services.sentinel-hub.com/configuration/v1/datasets/S3SLSTR
   mdi_url: https://creodias.sentinel-hub.com/api/v1/
@@ -76,6 +82,7 @@
   resolution: [0.002694945852330219, 0.002694945852330219]
   timeextent: [2016-02-16, null]
   api_endpoint: https://creodias.sentinel-hub.com/api/v1
+
 - id: S5PL2
   '@id': https://services.sentinel-hub.com/configuration/v1/datasets/S5PL2
   mdi_url: https://creodias.sentinel-hub.com/api/v1/

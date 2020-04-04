@@ -1,0 +1,13 @@
+[
+    {
+        "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A/sources/2",
+        "id": 2,
+        "description": "Sentinel S2 - L2A",
+        "settings": {
+            "indexServiceUrl": "https://services.sentinel-hub.com/index"
+        },
+        "dataset": {
+            "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A"
+        }
+    }
+]

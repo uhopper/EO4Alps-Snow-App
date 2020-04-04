@@ -1,0 +1,13 @@
+[
+    {
+        "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3SLSTR/sources/9",
+        "id": 9,
+        "description": "Sentinel 3 - SLSTR",
+        "settings": {
+            "indexServiceUrl": "https://creodias.sentinel-hub.com/index"
+        },
+        "dataset": {
+            "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S3SLSTR"
+        }
+    }
+]

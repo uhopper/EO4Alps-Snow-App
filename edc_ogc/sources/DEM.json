@@ -1,0 +1,11 @@
+[
+    {
+        "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/DEM/sources/4",
+        "id": 4,
+        "description": "Mapzen DEM",
+        "settings": {},
+        "dataset": {
+            "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/DEM"
+        }
+    }
+]

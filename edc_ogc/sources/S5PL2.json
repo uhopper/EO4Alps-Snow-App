@@ -1,0 +1,13 @@
+[
+    {
+        "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S5PL2/sources/7",
+        "id": 7,
+        "description": "Sentinel 5P",
+        "settings": {
+            "indexServiceUrl": "https://creodias.sentinel-hub.com/index"
+        },
+        "dataset": {
+            "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S5PL2"
+        }
+    }
+]
