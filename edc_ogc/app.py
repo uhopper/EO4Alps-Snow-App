@@ -170,10 +170,13 @@ def ows_instance(instance_id):
     if not request.query_string.decode('ascii'):
         client = get_client(instance_id)
         datasets = client.config_client.get_datasets()
-        return render_template('index.html', datasets_and_layers=[
-            (dataset, client.config_client.get_layers(dataset))
-            for dataset in datasets
-        ])
+        return render_template('index.html',
+            instance_id=instance_id,
+            datasets_and_layers=[
+                (dataset, client.config_client.get_layers(dataset))
+                for dataset in datasets
+            ]
+        )
     try:
         client = get_client(instance_id)
         ogc_request = OGCRequest(

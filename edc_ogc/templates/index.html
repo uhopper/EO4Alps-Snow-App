@@ -25,6 +25,9 @@
   var selectedTimeDomainEnd = new Date(new Date(today).setUTCDate(today.getUTCDate() - 2));
 
   var whereAmI = "//" + window.location.hostname + ":" + window.location.port + "/";
+  {%- if instance_id %}
+  whereAmI += '{{instance_id}}';
+  {%- endif %}
   var config = {
     "settings": {
         "tutorial": "disabled",
@@ -127,7 +130,7 @@
               {%- endif %}
               "projection": "EPSG:4326",
               "urls": [
-                  whereAmI
+                whereAmI
               ],
               "extraDownloadIcon": true,
               "useMilliseconds": false,
