@@ -12,9 +12,9 @@ logger = logging.getLogger(__name__)
 
 class ApiBase:
     def __init__(self, client_id, client_secret, oauth2_url=DEFAULT_OAUTH2_URL, session=None):
-        self.oauth2_url = oauth2_url
         self.client_id = client_id
         self.client_secret = client_secret
+        self.oauth2_url = oauth2_url
         self.token = None
 
         if session is not None:

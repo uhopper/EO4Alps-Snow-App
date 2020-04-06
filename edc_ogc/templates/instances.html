@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+  <meta charset="UTF-8">
+  <link rel="icon"
+      type="image/x-icon"
+      href="static/favicon.ico" />
+  <title>EuroDataCube OGC demonstration client</title>
+</head>
+<body style="display: flex; flex-direction: column;">
+  <header id="header" style="width: 100%; flex: 0; display:flex; justify-content: space-between; align-items: center; background-color: #004170; color:white; padding: 20px 35px;">
+      <a href="//eurodatacube.com"><img src="//eox.at/wp-content/uploads/2019/10/EuroDataCube_logo.svg" alt="Euro Data Cube logo" style="height:50px;"/></a>
+      <h3 style="margin: 0;">EuroDataCube OGC demonstration client powered by <b><a style="color:white;text-decoration: none;" href="//github.com/eoxc/eoxc" target="_blank">EOxC</a></b></h3>
+  </header>
+  <div id="app" style="position:relative; width: 100%; flex: 1; margin: 0; padding:0;">
+    <ul>
+    {%- for instance in instances %}
+      <li><a href="{{instance.id}}">{{instance.name}}</a></li>
+    {%- endfor %}
+    </ul>
+  </div>
+</body>
+</html>

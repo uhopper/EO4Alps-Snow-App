@@ -13,19 +13,20 @@ from .mdi import get_mdi
 DEFAULT_API_URL = "https://services.sentinel-hub.com/configuration/v1"
 
 
-class ConfigAPIBase:
+class ConfigAPIBase(ApiBase):
     """ Base class for config APIs. Defines the interface and the `get_evalscript_and_defaults`
         method.
     """
-    def __init__(self, client_id, client_secret, datasets_path=None):
+    def __init__(self, client_id, client_secret, api_url, datasets_path=None):
+        super().__init__(client_id, client_secret)
+
         datasets_path = datasets_path or join(dirname(__file__), 'datasets.yaml')
         if urlparse(datasets_path).scheme in ('http', 'https'):
             self.datasets = yaml.load(requests.get(datasets_path).content)
         else:
             self.datasets = yaml.load(open(datasets_path))
 
-        self.client_id = client_id
-        self.client_secret = client_secret
+        self.api_url = api_url
 
     def get_mdi(self, dataset_name):
         dataset = self.get_dataset(dataset_name)
@@ -39,6 +40,11 @@ class ConfigAPIBase:
             if dataset['id'] == name:
                 return dataset
         raise Exception(f'No such dataset {name}')
+
+    def get_instances(self):
+        print(self.api_url)
+        url = f"{self.api_url}/wms/instances"
+        return self._get(url)
 
     def get_layers(self, dataset=None):
         raise NotImplementedError
@@ -144,18 +150,6 @@ class ConfigAPIBase:
         datasource_defaults = layer_config['datasourceDefaults']
         return evalscript, datasource_defaults
 
-
-class ConfigAPI(ApiBase, ConfigAPIBase):
-    """ Interface class for the actual configuration API. Performs requests to retrieve
-        the config objects.
-    """
-    def __init__(self, client_id, client_secret, instance_id, api_url=DEFAULT_API_URL):
-        ApiBase.__init__(self, client_id, client_secret)
-        ConfigAPIBase.__init__(self, client_id, client_secret)
-
-        self.instance_id = instance_id
-        self.api_url = api_url
-
     def _get(self, url):
         def get_inner(session):
             resp = session.get(url)
@@ -184,9 +178,26 @@ class ConfigAPI(ApiBase, ConfigAPIBase):
 
         return self.with_retry(get_inner)
 
+
+class ConfigAPI(ConfigAPIBase):
+    """ Interface class for the actual configuration API. Performs requests to retrieve
+        the config objects.
+    """
+    def __init__(self, client_id, client_secret, instance_id, api_url=DEFAULT_API_URL):
+        super().__init__(client_id, client_secret, api_url)
+        self.instance_id = instance_id
+
     def get_layers(self, dataset=None):
         url = f"{self.api_url}/wms/instances/{self.instance_id}/layers/"
-        return self._get(url)
+        layers = self._get(url)
+        if dataset:
+            return [
+                layer
+                for layer in layers
+                if layer['dataset']['@id'] == dataset['@id']
+            ]
+        return layers
+
 
     def get_layer(self, name):
         url = f"{self.api_url}/wms/instances/{self.instance_id}/layers/{name}"
@@ -204,9 +215,9 @@ class ConfigAPIDefaultLayers(ConfigAPIBase):
     """ Mocked configuration API interface. Uses static JSON definitions for
         layers and dataproducts.
     """
-    def __init__(self, client_id, client_secret, datasets_path=None,
-                 layers_path=None, dataproducts_path=None):
-        super().__init__(client_id, client_secret, datasets_path)
+    def __init__(self, client_id, client_secret, api_url=DEFAULT_API_URL,
+                 datasets_path=None, layers_path=None, dataproducts_path=None):
+        super().__init__(client_id, client_secret, api_url, datasets_path)
 
         layers_path = layers_path or join(dirname(__file__), 'layers.json')
         if urlparse(layers_path).scheme in ('http', 'https'):

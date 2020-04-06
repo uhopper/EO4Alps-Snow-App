@@ -126,6 +126,13 @@ def favicon():
     return app.send_static_file('favicon.ico')
 
 
+@app.route('/instances')
+def instances():
+    client = get_client()
+    instances = client.config_client.get_instances()
+    return render_template('instances.html', instances=instances)
+
+
 @app.route('/')
 def ows():
     if not request.query_string.decode('ascii'):
