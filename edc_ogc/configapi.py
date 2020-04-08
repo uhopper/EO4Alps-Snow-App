@@ -132,12 +132,16 @@ class ConfigAPIBase(ApiBase):
     def _get_evalscript_and_defaults_from_layer(self, layer_config, style_name):
         # use 'default' as default style name
         # fetch the config for that style name
-        style_name = style_name or 'default'
         for style_config in layer_config['styles']:
-            if style_config['name'] == style_name:
+            style_name_or_default = style_name or 'default'
+            if style_config['name'] == style_name_or_default:
                 break
         else:
-            raise Exception(f'No such style {style_name}')
+            # use the first style as the default style when only one is available
+            if style_name is None and len(layer_config['styles']) == 1:
+                style_config = layer_config['styles'][0]
+            else:
+                raise Exception(f'No such style {style_name}')
 
         # either the evalscript is directly embedded in the style config or
         # must be retrieved by the referenced dataproduct
