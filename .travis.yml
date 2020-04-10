@@ -19,3 +19,7 @@ deploy:
   script: bash -x travis_deploy.sh
   on:
     tags: true
+
+notifications:
+  slack:
+    secure: du94WuAkv4L8T0q/5n7xh7RgjtllJkXXM5OgduJtJJQtsLg1mWnYUcdxPID0pI6lC346k/H+ulB9Z43CpJ8kpeM+VfR4f1QHC7XJHQhHqbsLb1Qx1JCZmzhCCDzjwSAkrlNo4KD+yIZUWepH2gqgQlt8QETrGyhlhPsGp7pfG1cSmeSb3Iq1oDeGUCis2I+/6AnpqKBD1WgL5PbnMwJdjNzDxBJ5UeduwzSuSHDucTuupx/wlodirF7GiNklafXxAAaAPLDN3FPb+b55hVS1MCuZlPUV6s/oKDUbjx+ixVAXs0rhrn6O41ak2Jw21OVBRYzbIz2G33Q8lo5roP3ZRIAPE86S2fBAQCn4X/AxjpdCO5QbzR916PZPB4yEB0ulBCzxyefVfVFhxGvPhhI96IHV2NC9QSjAOgAke72S/8w/+TveutK93tEBxYYU1wyM83Fv0Dww+VG4ElC/6YT2SxViobmo+2dMXvFggHOUIH2ry7/Tq0JD+k/hNjYoMM0T8/ZeP6mUrnXxAmKANM0Z5LM7W/yHby64PxinJi5X/9zAPM0bmdBOXcXTQ6AbRIQSRoixvIteGfNvvJLYKoC93dDHFFO9RIaS6yV5t3DxazYxxvjLIxhPomEmpfr5+roUPJp+QU9bQUqLTMhkaBdox+zK36FnYtj7/e1Yb8piFic=
