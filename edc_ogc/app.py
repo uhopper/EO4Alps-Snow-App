@@ -170,12 +170,19 @@ def ows_instance(instance_id):
     if not request.query_string.decode('ascii'):
         client = get_client(instance_id)
         datasets = client.config_client.get_datasets()
+
+        # layers with custom sources, i.e BYOD
+        custom_layers = client.config_client.get_layers(
+            {'@id': "https://services.sentinel-hub.com/configuration/v1/datasets/CUSTOM"}
+        )
+
         return render_template('index.html',
             instance_id=instance_id,
             datasets_and_layers=[
                 (dataset, client.config_client.get_layers(dataset))
                 for dataset in datasets
-            ]
+            ],
+            custom_layers=custom_layers,
         )
     try:
         client = get_client(instance_id)

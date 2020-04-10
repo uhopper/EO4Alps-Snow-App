@@ -28,9 +28,16 @@ class ConfigAPIBase(ApiBase):
 
         self.api_url = api_url
 
-    def get_mdi(self, dataset_name):
-        dataset = self.get_dataset(dataset_name)
-        return get_mdi(dataset.get('api_endpoint'), self.client_id, self.client_secret)
+    def get_mdi(self, dataset_name=None):
+        if dataset_name is not None:
+            dataset = self.get_dataset(dataset_name)
+            return get_mdi(
+                dataset.get('api_endpoint'),
+                self.client_id,
+                self.client_secret
+            )
+        else:
+            return get_mdi(None, self.client_id, self.client_secret)
 
     def get_datasets(self):
         return self.datasets
@@ -42,7 +49,6 @@ class ConfigAPIBase(ApiBase):
         raise Exception(f'No such dataset {name}')
 
     def get_instances(self):
-        print(self.api_url)
         url = f"{self.api_url}/wms/instances"
         return self._get(url)
 

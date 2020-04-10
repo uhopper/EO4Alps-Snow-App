@@ -102,7 +102,10 @@ def dispatch_wms_get_map(config_client, wms_request):
         wms_request.layers[0], wms_request.styles if wms_request.styles else None,
         wms_request.dim_bands, wms_request.dim_wavelengths, wms_request.transparent
     )
-    dataset = config_client.get_dataset(datasource['type'])
+
+    dataset = None
+    if datasource['type'] != 'CUSTOM':
+        dataset = config_client.get_dataset(datasource['type'])
 
     width = wms_request.width  # TODO: decide whether to support sentinelhub resx too?
     height = wms_request.height  # TODO: decide whether to support sentinelhub resy too?
@@ -111,7 +114,10 @@ def dispatch_wms_get_map(config_client, wms_request):
         raise Exception(f'Format {wms_request.format} is not supported')
 
     # send a process request to the MDI
-    mdi_client = config_client.get_mdi(dataset['id'])
+    if datasource['type'] != 'CUSTOM':
+        mdi_client = config_client.get_mdi(dataset['id'])
+    else:
+        mdi_client = config_client.get_mdi()
 
     return mdi_client.process_image(
         sources=[datasource],

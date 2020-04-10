@@ -218,6 +218,83 @@
           },
       },
     {%- endfor %}
+    {%- for layer in custom_layers %}
+      {
+          "id": "{{layer.id}}",
+          "displayName": "{{layer.title}}",
+          "displayColor": "#56EC00",
+          "display": {
+              //default layer
+              "id": "{{layer.id}}",
+              "visible": false,
+              "protocol": "WMS",
+              "format": "image/png",
+              {%- if layer.timeextent %}
+              "timeRecords" : {
+                "start": new Date("{{layer.timeextent.0}}"),
+                "end": today,
+              },
+              {%- endif %}
+              "projection": "EPSG:4326",
+              "urls": [
+                whereAmI
+              ],
+              "extraDownloadIcon": true,
+              "useMilliseconds": false,
+              "tileSize": 512,
+              "discardZulu": true,
+              "version": "1.3.0",
+              "opacity": 0.9,
+              "minZoom": 4,
+              "options": [
+              {%- if layer.bands %}
+              {
+                  "name": "Band Combination (RGB)",
+                  "target": "display.extraParameters.dim_bands",
+                  "selectThree" : true,
+                  "replace": [{
+                    "target": "display.extraParameters.LAYERS",
+                    "value": "{{dataset.id}}"
+                  }],
+                  "values":[
+                  {%- for band in dataset.bands %}
+                    {"value": "{{band}}"},
+                  {%- endfor %}
+                  ],
+              },
+              {%- endif %}
+            ],
+          },
+          "fullResolution": {
+              "protocol": "WCS",
+              "id": "{{layer.id}}",
+              "url": whereAmI,
+              "maxSizeWarning": 1000000, // total size of product in MB
+              "maxBboxEdgeSize": 0.1,
+              "maxAllowedResolution": 0.002261, // ~250m in degrees on equator
+              "disableTimeSubsetting": true,
+              "axisNames": [
+                  'long',
+                  'lat'
+              ],
+              "fields": [
+              {%- for band in layer.bands %}
+                {"identifier": "{{band}}"},
+              {%- endfor %}
+              ],
+              "interpolations": [
+                  {
+                    "name": "Bilinear",
+                    "identifier": "http://www.opengis.net/def/interpolation/OGC/1/bilinear"
+                  },
+                  {
+                      "name": "Bicubic",
+                      "identifier": "http://www.opengis.net/def/interpolation/OGC/1/bicubic"
+                  }
+              ]
+          },
+      },
+    {%- endfor %}
     ],
     "overlayLayers": [
         {

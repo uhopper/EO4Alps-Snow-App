@@ -83,7 +83,9 @@ class Mdi(ApiBase):
         if not evalscript.startswith('//VERSION=3'):
             # evalscript = f'//VERSION=3\n{evalscript}'
             evalscript = self.with_retry(
-                self.translate_evalscript_to_v3, evalscript, sources[0]['type']
+                self.translate_evalscript_to_v3, evalscript,
+                sources[0]['type'],
+                sources[0].get('collectionId')
             )
 
         request_body = {
@@ -113,11 +115,12 @@ class Mdi(ApiBase):
         }
         return self.with_retry(self.send_process_request, request_body, format)
 
-    def translate_evalscript_to_v3(self, session, evalscript, dataset_type):
-        resp = session.post(
-            f'{self.api_url}/process/convertscript?datasetType={dataset_type}',
-            data=evalscript,
-        )
+    def translate_evalscript_to_v3(self, session, evalscript, dataset_type, collection_id=None):
+        url = f'{self.api_url}/process/convertscript?datasetType={dataset_type}'
+        if collection_id is not None:
+            url += f'&byocCollectionId={collection_id}'
+
+        resp = session.post(url, data=evalscript,)
 
         if not resp.ok:
             raise MdiError.from_response(resp)
