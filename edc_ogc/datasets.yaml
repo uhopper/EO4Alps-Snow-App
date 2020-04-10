@@ -93,5 +93,18 @@
   resolution: [0.002694945852330219, 0.002694945852330219] # TODO
   timeextent: [2016-02-16, null] # TODO
   api_endpoint: https://creodias.sentinel-hub.com/api/v1
+
+- id: MODIS
+  '@id': https://services.sentinel-hub.com/configuration/v1/datasets/MODIS
+
+  title: MODIS
+  bands: [B01, B02, B03, B04, B05, B06, B07]
+  wavelengths: [645, 858.5, 469, 555, 1240, 1640, 2130]
+  extent: [-180, -90, 180, 90]
+  defaultbands: [B01, B04, B03]
+  # resolution:
+  # timeextent:
+  api_endpoint: https://services-uswest2.sentinel-hub.com/api/v1
+
 # TODO: More
-# "PLANET_L1C" "MODIS" "S2GM" "PLEIADES" "CUSTOM"
+# "PLANET_L1C" "S2GM" "PLEIADES" "CUSTOM"
