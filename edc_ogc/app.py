@@ -15,6 +15,7 @@ from edc_ogc.mdi import Mdi, MdiError
 
 # -------------- App setup --------------
 app = Flask(__name__, static_url_path='/static')
+app.url_map.strict_slashes = False
 
 metrics = PrometheusMetrics(app)
 
