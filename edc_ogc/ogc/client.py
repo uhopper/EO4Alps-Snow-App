@@ -50,6 +50,8 @@ class OGCClient:
         elif service == 'WCS':
             return self.dispatch_wcs(decoder, request, ows_url)
 
+        raise Exception(f'Unsupported service {service}')
+
     def dispatch_wms(self, ows_decoder, request, ows_url):
         ows_request = ows_decoder.request
         version = ows_decoder.version
@@ -65,6 +67,8 @@ class OGCClient:
                 raise Exception(f'Version {version} not supported')
 
             return dispatch_wms_get_map(self.config_client, wms_request)
+
+        raise Exception(f'Unsupported request {ows_request}')
 
     def dispatch_wcs(self, ows_decoder, request, ows_url):
         return dispatch_wcs(ows_decoder, request, ows_url, self.config_client)
