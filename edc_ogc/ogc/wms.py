@@ -41,6 +41,14 @@ def dispatch_wms_get_capabilities(config_client, ows_url, version=None):
 
     # config, ows_url, srss, formats, info_formats, layer_descriptions
 
+    custom_layers = config_client.get_layers(
+        {'@id': "https://services.sentinel-hub.com/configuration/v1/datasets/CUSTOM"}
+    )
+
+    from logging import getLogger
+    import json
+    getLogger(__name__).debug(json.dumps(custom_layers, indent=2))
+
     return encoder.serialize(
         encoder.encode_capabilities(
             config=DummyConfig(),
@@ -69,6 +77,12 @@ def dispatch_wms_get_capabilities(config_client, ows_url, version=None):
                         ) for layer in config_client.get_layers(dataset)
                     ]
                 ) for dataset in config_client.get_datasets()
+            ] + [
+                LayerDescription(
+                    custom_layer['id'],
+                    custom_layer['title'] or custom_layer['id'],
+                    [],
+                ) for custom_layer in custom_layers
             ]
         )
     ), 'text/xml'
