@@ -92,6 +92,33 @@ def dispatch_wcs_get_capabilities(request, ows_url, config_client):
         decoder = WCS20GetCapabilitiesXMLDecoder(request.body)
 
     encoder = WCS20GetCapabilitiesXMLEncoderExtended(ows_url)
+    datasets = config_client.get_datasets()
+
+    untimed_datasets = [
+        dataset
+        for dataset in datasets
+        if 'timeextent' not in dataset
+    ]
+
+    timed_datasets = [
+        dataset
+        for dataset in datasets
+        if 'timeextent' in dataset
+    ]
+
+    coverages = [
+        Coverage(
+            dataset['id'],
+            EOMetadata(
+                None,
+                None,
+                None  # TODO: whole world?
+            ),
+            get_range_type_from_dataset(dataset),
+            *(get_grid(dataset) + ([], []))
+        )
+        for dataset in untimed_datasets
+    ]
 
     dataset_series_set = [
         DatasetSeries(
@@ -99,11 +126,14 @@ def dispatch_wcs_get_capabilities(request, ows_url, config_client):
             make_aware(datetime.combine(dataset['timeextent'][0], time.min), utc),
             make_aware(datetime.combine(dataset['timeextent'][1] or date.today(), time.min), utc),
         )
-        for dataset in config_client.get_datasets()
+        for dataset in timed_datasets
     ]
     return encoder.serialize(
         encoder.encode_capabilities(
-            decoder.sections, DummyConfig(), [], dataset_series_set
+            decoder.sections,
+            DummyConfig(),
+            coverages,
+            dataset_series_set
         )
     ), encoder.content_type
 
