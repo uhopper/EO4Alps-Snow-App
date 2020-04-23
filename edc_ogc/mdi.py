@@ -52,7 +52,8 @@ class Mdi(ApiBase):
 
         return resp.content
 
-    def create_data_input(self, datasource, time, upsample, downsample):
+    def create_data_input(self, datasource, time, upsample, downsample,
+                          max_cloud_coverage=None, mosaicking_order=None):
         data_filter = {}
         if time:
             from_, to = time
@@ -61,7 +62,12 @@ class Mdi(ApiBase):
                 'to': isoformat(to),
             }
 
-        if 'mosaickingOrder' in datasource:
+        if max_cloud_coverage is not None:
+            data_filter['maxCloudCoverage'] = max_cloud_coverage
+
+        if mosaicking_order is not None:
+            data_filter['mosaickingOrder'] = mosaicking_order
+        elif 'mosaickingOrder' in datasource:
             data_filter['mosaickingOrder'] = datasource['mosaickingOrder']
 
         if 'collectionId' in datasource:
@@ -77,7 +83,8 @@ class Mdi(ApiBase):
         }
 
     def process_image(self, sources, bbox, crs, width, height, format, evalscript,
-                      time=None, upsample=None, downsample=None):
+                      time=None, upsample=None, downsample=None,
+                      max_cloud_coverage=None, mosaicking_order=None):
 
         # prepend the version information if not already included
         if not evalscript.startswith('//VERSION=3'):
@@ -97,7 +104,10 @@ class Mdi(ApiBase):
                     },
                 },
                 'data': [
-                    self.create_data_input(source, time, upsample, downsample)
+                    self.create_data_input(
+                        source, time, upsample, downsample,
+                        max_cloud_coverage, mosaicking_order
+                    )
                     for source in sources
                 ]
             },

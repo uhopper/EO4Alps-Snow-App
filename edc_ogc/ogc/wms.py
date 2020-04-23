@@ -128,6 +128,8 @@ def dispatch_wms_get_map(config_client, wms_request):
         format=wms_request.format,
         evalscript=evalscript,
         time=wms_request.time,
+        max_cloud_coverage=wms_request.maxcc,
+        mosaicking_order=wms_request.order,
     ), wms_request.format
 
 
@@ -172,6 +174,9 @@ class WMSCommonGetMapDecoder(kvp.Decoder):
 
     dim_bands = kvp.Parameter(type=typelist(str, ","), num='?')
     dim_wavelengths = kvp.Parameter(type=typelist(str, ","), num='?')
+
+    maxcc = kvp.Parameter(type=float, num='?')
+    order = kvp.Parameter(type=str, num='?')
 
 
 class WMS11GetMapDecoder(WMSCommonGetMapDecoder):
