@@ -3,6 +3,7 @@ import os
 import logging
 from typing import List, Any, Dict, Tuple, Union, Sequence
 from time import time
+from datetime import timedelta
 
 import oauthlib.oauth2
 import requests_oauthlib
@@ -57,6 +58,10 @@ class Mdi(ApiBase):
         data_filter = {}
         if time:
             from_, to = time
+
+            if from_ == to:
+                to += timedelta(milliseconds=1)
+
             data_filter['timeRange'] = {
                 'from': isoformat(from_),
                 'to': isoformat(to),
