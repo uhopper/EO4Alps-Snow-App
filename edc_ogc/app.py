@@ -134,6 +134,13 @@ def instances():
     return render_template('instances.html', instances=instances)
 
 
+@app.route('/instances.json')
+def instances_json():
+    client = get_client()
+    instances = client.config_client.get_instances()
+    return jsonify(instances)
+
+
 @app.route('/')
 def ows():
     if not request.query_string.decode('ascii'):
