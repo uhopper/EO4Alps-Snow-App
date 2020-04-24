@@ -29,66 +29,6 @@
     }
   },
   {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/L2L1C__SWIR1",
-    "id": "L2L1C__SWIR1",
-    "title": "L2 L1C SWIR (12-8A-4)",
-    "description": "",
-    "styles": [
-      {
-        "name": "default",
-        "description": "Default layer style",
-        "evalScript": "\nlet minVal = 0.0;\nlet maxVal = 0.45;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = [samples[0].B12, samples[0].B8A, samples[0].B04];\n    return val.map(v => viz.process(v));\n}\n\nfunction setup(ds) {\n    setInputComponents([ds.B12, ds.B8A, ds.B04]);\n    setOutputComponentCount(3);\n}\n"
-      }
-    ],
-    "orderHint": 0,
-    "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
-    },
-    "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C"
-    },
-    "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/sources/1"
-    },
-    "defaultStyleName": "default",
-    "datasourceDefaults": {
-      "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 40.0,
-      "temporal": false,
-      "type": "S2L1C"
-    }
-  },
-  {
-    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/L2L2A__SWIR1",
-    "id": "L2L2A__SWIR1",
-    "title": "L2 L2A SWIR (12-8A-4)",
-    "description": "",
-    "styles": [
-      {
-        "name": "default",
-        "description": "Default layer style",
-        "evalScript": "\nlet minVal = 0.0;\nlet maxVal = 0.45;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = [samples[0].B12, samples[0].B8A, samples[0].B04];\n    return val.map(v => viz.process(v));\n}\n\nfunction setup(ds) {\n    setInputComponents([ds.B12, ds.B8A, ds.B04]);\n    setOutputComponentCount(3);\n}\n"
-      }
-    ],
-    "orderHint": 0,
-    "instance": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
-    },
-    "dataset": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A"
-    },
-    "datasetSource": {
-      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A/sources/2"
-    },
-    "defaultStyleName": "default",
-    "datasourceDefaults": {
-      "mosaickingOrder": "mostRecent",
-      "maxCloudCoverage": 15.0,
-      "temporal": false,
-      "type": "S2L2A"
-    }
-  },
-  {
     "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/L8L1C__NDVI",
     "id": "L8L1C__NDVI",
     "title": "L8 L1C NDVI",
@@ -1147,6 +1087,36 @@
     }
   },
   {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S2L1C__SWIR1",
+    "id": "S2L1C__SWIR1",
+    "title": "S2 L1C SWIR (12-8A-4)",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "evalScript": "\nlet minVal = 0.0;\nlet maxVal = 0.45;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = [samples[0].B12, samples[0].B8A, samples[0].B04];\n    return val.map(v => viz.process(v));\n}\n\nfunction setup(ds) {\n    setInputComponents([ds.B12, ds.B8A, ds.B04]);\n    setOutputComponentCount(3);\n}\n"
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L1C/sources/1"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 40.0,
+      "temporal": false,
+      "type": "S2L1C"
+    }
+  },
+  {
     "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S2L1C__SWIR2",
     "id": "S2L1C__SWIR2",
     "title": "S2 L1C SWIR 2 (2-11-12)",
@@ -1606,6 +1576,36 @@
         "name": "ESA Classification",
         "description": "ESA Classification",
         "evalScript": " function RGBToColor (a, b, c){\n\treturn [a/255, b/255, c/255];\n}\n\nswitch (SCL) {\n  // No Data (Missing data) (black)    \n  case 0: return RGBToColor (0, 0, 0);\n    \n  // Saturated or defective pixel (red)   \n  case 1: return RGBToColor (255, 0, 0);\n\n  // Dark features / Shadows (very dark grey)\n  case 2: return RGBToColor (47,  47,  47);\n    \n  // Cloud shadows (dark brown)\n  case 3: return RGBToColor (100, 50, 0);\n    \n  // Vegetation (green)\n  case 4: return RGBToColor (0, 160, 0);\n    \n  // Not-vegetated (dark yellow)\n  case 5: return RGBToColor (255, 230, 90);\n    \n  // Water (dark and bright) (blue)\n  case 6: return RGBToColor (0, 0, 255);\n  \n  // Unclassified (dark grey)\n  case 7: return RGBToColor (128, 128, 128);\n  \n  // Cloud medium probability (grey)\n  case 8: return RGBToColor (192, 192, 192);\n    \n  // Cloud high probability (white)\n  case 9: return RGBToColor (255, 255, 255);\n  \n  // Thin cirrus (very bright blue)\n  case 10: return RGBToColor (100, 200, 255);\n    \n  // Snow or ice (very bright pink)\n  case 11: return RGBToColor (255, 150, 255);\n\n  default : return RGBToColor (0, 0, 0);  \n}"
+      }
+    ],
+    "orderHint": 0,
+    "instance": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4"
+    },
+    "dataset": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A"
+    },
+    "datasetSource": {
+      "@id": "https://services.sentinel-hub.com/configuration/v1/datasets/S2L2A/sources/2"
+    },
+    "defaultStyleName": "default",
+    "datasourceDefaults": {
+      "mosaickingOrder": "mostRecent",
+      "maxCloudCoverage": 15.0,
+      "temporal": false,
+      "type": "S2L2A"
+    }
+  },
+  {
+    "@id": "https://services.sentinel-hub.com/configuration/v1/wms/instances/027a5d52-512f-4f59-bbfb-dfca115d74f4/layers/S2L2A__SWIR1",
+    "id": "S2L2A__SWIR1",
+    "title": "S2 L1C SWIR (12-8A-4)",
+    "description": "",
+    "styles": [
+      {
+        "name": "default",
+        "description": "Default layer style",
+        "evalScript": "\nlet minVal = 0.0;\nlet maxVal = 0.45;\n\nlet viz = new HighlightCompressVisualizer(minVal, maxVal);\n\nfunction evaluatePixel(samples) {\n    let val = [samples[0].B12, samples[0].B8A, samples[0].B04];\n    return val.map(v => viz.process(v));\n}\n\nfunction setup(ds) {\n    setInputComponents([ds.B12, ds.B8A, ds.B04]);\n    setOutputComponentCount(3);\n}\n"
       }
     ],
     "orderHint": 0,
