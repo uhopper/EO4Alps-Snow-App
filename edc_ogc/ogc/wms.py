@@ -39,15 +39,16 @@ def dispatch_wms_get_capabilities(config_client, ows_url, version=None):
             self.dimensions = dimensions or {}
             self.sub_layers = sub_layers or []
 
-    # config, ows_url, srss, formats, info_formats, layer_descriptions
+    byod_collections_and_layers = [
+        (byod_collection, config_client.get_byod_layers(byod_collection))
+        for byod_collection in config_client.get_byod_collections()
+    ]
 
-    custom_layers = config_client.get_layers(
-        {'@id': "https://services.sentinel-hub.com/configuration/v1/datasets/CUSTOM"}
-    )
-
-    from logging import getLogger
-    import json
-    getLogger(__name__).debug(json.dumps(custom_layers, indent=2))
+    byod_collections_and_layers = [
+        (byod_collection, layers)
+        for byod_collection, layers in byod_collections_and_layers
+        if byod_collection.get('additionalData', {}).get('bands') or layers
+    ]
 
     return encoder.serialize(
         encoder.encode_capabilities(
@@ -61,7 +62,7 @@ def dispatch_wms_get_capabilities(config_client, ows_url, version=None):
                     dataset['id'],
                     dataset['title'] or dataset['id'],
                     [],
-                    get_band_dimensions(dataset),
+                    get_dataset_band_dimensions(dataset),
                     [
                         LayerDescription(
                             layer['id'],
@@ -79,10 +80,18 @@ def dispatch_wms_get_capabilities(config_client, ows_url, version=None):
                 ) for dataset in config_client.get_datasets()
             ] + [
                 LayerDescription(
-                    custom_layer['id'],
-                    custom_layer['title'] or custom_layer['id'],
+                    byod_collection['id'],
+                    byod_collection['name'] or byod_collection['id'],
                     [],
-                ) for custom_layer in custom_layers
+                    get_byod_collection_band_dimensions(byod_collection),
+                    [
+                        LayerDescription(
+                            layer['id'],
+                            layer['description'] or layer['id'],
+                            [style['name'] for style in layer['styles']]
+                        ) for layer in layers
+                    ]
+                ) for byod_collection, layers in byod_collections_and_layers
             ]
         )
     ), 'text/xml'
@@ -147,7 +156,7 @@ def dispatch_wms_get_map(config_client, wms_request):
     ), wms_request.format
 
 
-def get_band_dimensions(dataset):
+def get_dataset_band_dimensions(dataset):
     dims = {}
     if 'bands' in dataset:
         dims['dim_bands'] = {
@@ -161,6 +170,16 @@ def get_band_dimensions(dataset):
         }
     return dims
 
+
+def get_byod_collection_band_dimensions(byod_collection):
+    dims = {}
+    additional_data = byod_collection.get('additionalData')
+    if additional_data and 'bands' in additional_data:
+        dims['dim_bands'] = {
+            'values': list(additional_data['bands'].keys()),
+            'multivalue': True,
+        }
+    return dims
 
 def parse_transparent(value):
     value = value.upper()

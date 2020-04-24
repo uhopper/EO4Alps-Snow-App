@@ -13,6 +13,7 @@ from .mdi import get_mdi
 DEFAULT_API_URL = "https://services.sentinel-hub.com/configuration/v1"
 
 
+
 class ConfigAPIBase(ApiBase):
     """ Base class for config APIs. Defines the interface and the `get_evalscript_and_defaults`
         method.
@@ -58,6 +59,25 @@ class ConfigAPIBase(ApiBase):
     def get_layer(self, name):
         raise NotImplementedError
 
+    def get_byod_collections(self):
+        url = "https://services.sentinel-hub.com/byoc/collections"
+        return self._get(url)['data']
+
+    def get_byod_collection(self, identifier):
+        byod_collections = self.get_byod_collections()
+        for byod_collection in byod_collections:
+            if byod_collection['id'] == identifier:
+                return byod_collection
+        raise Exception(f'No such collection {identifier}')
+
+    def get_byod_layers(self, byod_collection):
+        layers = self.get_layers()
+        collection_id = byod_collection['id']
+        return [
+            layer for layer in layers
+            if layer.get('datasourceDefaults', {}).get('collectionId') == collection_id
+        ]
+
     def get_dataproduct(self, dataset=None, identifier=None, url=None):
         raise NotImplementedError
 
@@ -70,6 +90,15 @@ class ConfigAPIBase(ApiBase):
         else:
             return self._get_evalscript_and_defaults_from_dataset(
                 dataset, bands, wavelengths, transparent, visual
+            )
+
+        try:
+            byod_collection = self.get_byod_collection(layer_name)
+        except:
+            pass
+        else:
+            return self._get_evalscript_and_defaults_from_byod_collection(
+                byod_collection, bands, transparent, visual
             )
 
         layer_config = self.get_layer(layer_name)
@@ -160,6 +189,52 @@ class ConfigAPIBase(ApiBase):
         datasource_defaults = layer_config['datasourceDefaults']
         return evalscript, datasource_defaults
 
+    def _get_evalscript_and_defaults_from_byod_collection(self, byod_collection, bands, transparent, visual):
+        additional_data = byod_collection['additionalData']
+        if bands:
+            for band in bands:
+                assert band in additional_data['bands']
+        else:
+            default_bands = list(additional_data['bands'].keys())
+            if len(default_bands) >= 3:
+                bands = default_bands[:3]
+            else:
+                bands = default_bands[:1] * 3
+
+        # TODO: stretch bands
+
+        bandlist = ', '.join(f'"{band}"' for band in bands)
+        if visual:
+            # this stretch is not enough
+            pixellist = ', '.join(f'2.5 * sample.{band}' for band in bands)
+        else:
+            pixellist = ', '.join(f'sample.{band}' for band in bands)
+
+        evalscript = textwrap.dedent(f"""//VERSION=3
+            function setup() {{
+                return {{
+                    input: [{bandlist}{', "dataMask"' if transparent else ''}],
+                    output: {{ bands: {4 if transparent else 3} }}
+                }};
+            }}
+
+            function evaluatePixel(sample) {{
+                return [{pixellist}{', sample.dataMask' if transparent else ''}];
+            }}
+        """)
+
+        defaults = {
+            "type": 'CUSTOM',
+            "upsampling": "BICUBIC",
+            "mosaickingOrder": "mostRecent",
+            # "maxCloudCoverage": 20,
+            # "temporal": False,
+            "previewMode": "PREVIEW",
+            "collectionId": byod_collection['id']
+        }
+
+        return evalscript, defaults
+
     def _get(self, url):
         def get_inner(session):
             resp = session.get(url)
@@ -208,7 +283,6 @@ class ConfigAPI(ConfigAPIBase):
             ]
         return layers
 
-
     def get_layer(self, name):
         url = f"{self.api_url}/wms/instances/{self.instance_id}/layers/{name}"
         return self._get(url)
@@ -256,6 +330,9 @@ class ConfigAPIDefaultLayers(ConfigAPIBase):
                 return layer
 
         raise Exception(f'No such layer {name}')
+
+    def get_byod_collections(self):
+        return []
 
     def get_dataproduct(self, dataset=None, identifier=None, url=None):
         for dataproduct in self.dataproducts:

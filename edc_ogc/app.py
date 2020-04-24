@@ -179,18 +179,22 @@ def ows_instance(instance_id):
         client = get_client(instance_id)
         datasets = client.config_client.get_datasets()
 
-        # layers with custom sources, i.e BYOD
-        custom_layers = client.config_client.get_layers(
-            {'@id': "https://services.sentinel-hub.com/configuration/v1/datasets/CUSTOM"}
-        )
-
+        byod_collections_and_layers = [
+            (byod_collection, client.config_client.get_byod_layers(byod_collection))
+            for byod_collection in client.config_client.get_byod_collections()
+        ]
+        byod_collections_and_layers = [
+            (byod_collection, layers)
+            for byod_collection, layers in byod_collections_and_layers
+            if byod_collection.get('additionalData', {}).get('bands') or layers
+        ]
         return render_template('index.html',
             instance_id=instance_id,
             datasets_and_layers=[
                 (dataset, client.config_client.get_layers(dataset))
                 for dataset in datasets
             ],
-            custom_layers=custom_layers,
+            byod_collections_and_layers=byod_collections_and_layers,
         )
     try:
         client = get_client(instance_id)

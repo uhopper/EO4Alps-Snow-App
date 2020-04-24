@@ -218,23 +218,18 @@
           },
       },
     {%- endfor %}
-    {%- for layer in custom_layers %}
-      {
-          "id": "{{layer.id}}",
-          "displayName": "{{layer.title}}",
+
+    {%- for byod_collection, layers in byod_collections_and_layers %}
+        {
+          "id": "{{byod_collection.id}}",
+          "displayName": "{{byod_collection.name}}",
           "displayColor": "#56EC00",
           "display": {
               //default layer
-              "id": "{{layer.id}}",
+              "id": "{{byod_collection.id}}",
               "visible": false,
               "protocol": "WMS",
               "format": "image/png",
-              {%- if layer.timeextent %}
-              "timeRecords" : {
-                "start": new Date("{{layer.timeextent.0}}"),
-                "end": today,
-              },
-              {%- endif %}
               "projection": "EPSG:4326",
               "urls": [
                 whereAmI
@@ -247,17 +242,31 @@
               "opacity": 0.9,
               "minZoom": 4,
               "options": [
-              {%- if layer.bands %}
+              {%- if layers %}
+              {
+                  "name": "Predefined display style",
+                  "target": "display.extraParameters.LAYERS",
+                  "values": [
+                  {%- for layer in layers %}
+                  {
+                      "label": "{{layer.title}}",
+                      "value": "{{layer.id}}",
+                  },
+                  {%- endfor %}
+                  ],
+              },
+              {%- endif %}
+              {%- if 'additionalData' in byod_collection and byod_collection.additionalData.bands %}
               {
                   "name": "Band Combination (RGB)",
                   "target": "display.extraParameters.dim_bands",
                   "selectThree" : true,
                   "replace": [{
                     "target": "display.extraParameters.LAYERS",
-                    "value": "{{dataset.id}}"
+                    "value": "{{byod_collection.id}}"
                   }],
                   "values":[
-                  {%- for band in dataset.bands %}
+                  {%- for band in byod_collection.additionalData.bands.keys() %}
                     {"value": "{{band}}"},
                   {%- endfor %}
                   ],
@@ -267,7 +276,7 @@
           },
           "fullResolution": {
               "protocol": "WCS",
-              "id": "{{layer.id}}",
+              "id": "{{byod_collection.id}}",
               "url": whereAmI,
               "maxSizeWarning": 1000000, // total size of product in MB
               "maxBboxEdgeSize": 0.1,
@@ -278,9 +287,11 @@
                   'lat'
               ],
               "fields": [
-              {%- for band in layer.bands %}
+              {%- if 'additionalData' in byod_collection and byod_collection.additionalData.bands %}
+              {%- for band in byod_collection.additionalData.bands.keys() %}
                 {"identifier": "{{band}}"},
               {%- endfor %}
+              {%- endif %}
               ],
               "interpolations": [
                   {
