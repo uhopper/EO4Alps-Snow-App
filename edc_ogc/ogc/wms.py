@@ -66,7 +66,7 @@ def dispatch_wms_get_capabilities(config_client, ows_url, version=None):
                     [
                         LayerDescription(
                             layer['id'],
-                            layer['description'] or layer['id'],
+                            layer['title'] or layer['id'],
                             [style['name'] for style in layer['styles']], {
                                 'time': {
                                     'min': dataset['timeextent'][0].isoformat(),
@@ -87,7 +87,7 @@ def dispatch_wms_get_capabilities(config_client, ows_url, version=None):
                     [
                         LayerDescription(
                             layer['id'],
-                            layer['description'] or layer['id'],
+                            layer['title'] or layer['id'],
                             [style['name'] for style in layer['styles']]
                         ) for layer in layers
                     ]
