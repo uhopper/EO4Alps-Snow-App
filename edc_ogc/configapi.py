@@ -145,7 +145,10 @@ class ConfigAPIBase(ApiBase):
             function setup() {{
                 return {{
                     input: [{bandlist}{', "dataMask"' if transparent else ''}],
-                    output: {{ bands: {len(bands) + 1 if transparent else len(bands)} }}
+                    output: {{
+                        bands: {len(bands) + 1 if transparent else len(bands)},
+                        sampleType: "{'AUTO' if visual else dataset.get('sample_type', 'UINT16')}"
+                    }}
                 }};
             }}
 
