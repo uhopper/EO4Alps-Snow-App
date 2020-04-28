@@ -140,11 +140,12 @@ class ConfigAPIBase(ApiBase):
         else:
             pixellist = ', '.join(f'sample.{band}' for band in bands)
 
-        evalscript = textwrap.dedent(f"""//VERSION=3
+        evalscript = textwrap.dedent(f"""\
+            //VERSION=3
             function setup() {{
                 return {{
                     input: [{bandlist}{', "dataMask"' if transparent else ''}],
-                    output: {{ bands: {4 if transparent else 3} }}
+                    output: {{ bands: {len(bands) + 1 if transparent else len(bands)} }}
                 }};
             }}
 
