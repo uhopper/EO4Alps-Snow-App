@@ -6,6 +6,9 @@ env:
 services:
   - docker
 
+before_install:
+  export PACKAGE_VERSION=`awk -F'[=&]' '{print $2}' < . edc_ogc/__init__.py  | tr -d '"'`
+
 install:
   - docker pull "$REGISTRY_IMAGE:latest" || true
   - docker build --cache-from "$REGISTRY_IMAGE:latest" -t "$REGISTRY_IMAGE:tmp_build" -t "$REGISTRY_IMAGE:test" .
@@ -16,9 +19,15 @@ script:
 
 deploy:
   provider: script
-  script: bash -x travis_deploy.sh
+  script: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker tag "$REGISTRY_IMAGE:tmp_build" "$REGISTRY_IMAGE:$PACKAGE_VERSION" && docker push "$REGISTRY_IMAGE:$PACKAGE_VERSION"
   on:
     tags: true
+
+deploy:
+  provider: script
+  script: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker tag "$REGISTRY_IMAGE:tmp_build" "$REGISTRY_IMAGE:latest" && docker push "$REGISTRY_IMAGE:latest"
+  on:
+    branch: master
 
 notifications:
   slack:
