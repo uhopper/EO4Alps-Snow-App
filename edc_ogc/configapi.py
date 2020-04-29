@@ -214,11 +214,29 @@ class ConfigAPIBase(ApiBase):
         else:
             pixellist = ', '.join(f'sample.{band}' for band in bands)
 
-        evalscript = textwrap.dedent(f"""//VERSION=3
+        if visual:
+            sample_type = 'AUTO'
+        else:
+            bit_depth = max([
+                additional_data['bands'][band].get('bitDepth', 8)
+                for band in bands
+            ])
+            if bit_depth <= 8:
+                sample_type = 'UINT8'
+            elif bit_depth <= 16:
+                sample_type = 'UINT16'
+            else:
+                sample_type = 'FLOAT32'
+
+        evalscript = textwrap.dedent(f"""\
+            //VERSION=3
             function setup() {{
                 return {{
                     input: [{bandlist}{', "dataMask"' if transparent else ''}],
-                    output: {{ bands: {4 if transparent else 3} }}
+                    output: {{
+                        bands: {len(bands) + 1 if transparent else len(bands)},
+                        sampleType: "{sample_type}"
+                    }}
                 }};
             }}
 
