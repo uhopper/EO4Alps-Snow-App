@@ -134,7 +134,7 @@ class ConfigAPIBase(ApiBase):
         elif 'defaultbands' in dataset:
             bands = dataset['defaultbands']
 
-        bandlist = ', '.join(f'"{band}"' for band in bands)
+        bandlist = ', '.join(f'"{band}"' for band in set(bands))
         if visual:
             pixellist = ', '.join(f'2.5 * sample.{band}' for band in bands)
         else:
@@ -207,7 +207,7 @@ class ConfigAPIBase(ApiBase):
 
         # TODO: stretch bands
 
-        bandlist = ', '.join(f'"{band}"' for band in bands)
+        bandlist = ', '.join(f'"{band}"' for band in set(bands))
         if visual:
             # this stretch is not enough
             pixellist = ', '.join(f'2.5 * sample.{band}' for band in bands)
