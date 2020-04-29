@@ -18,16 +18,15 @@ script:
   - docker run -it -e SH_CLIENT_ID="$SH_CLIENT_ID" -e SH_CLIENT_SECRET="$SH_CLIENT_SECRET" eurodatacube/ogc-edc-test
 
 deploy:
-  provider: script
-  script: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker tag "$REGISTRY_IMAGE:tmp_build" "$REGISTRY_IMAGE:$PACKAGE_VERSION" && docker push "$REGISTRY_IMAGE:$PACKAGE_VERSION"
-  on:
-    tags: true
+  - provider: script
+    script: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker tag "$REGISTRY_IMAGE:tmp_build" "$REGISTRY_IMAGE:$PACKAGE_VERSION" && docker push "$REGISTRY_IMAGE:$PACKAGE_VERSION"
+    on:
+      tags: true
 
-deploy:
-  provider: script
-  script: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker tag "$REGISTRY_IMAGE:tmp_build" "$REGISTRY_IMAGE:latest" && docker push "$REGISTRY_IMAGE:latest"
-  on:
-    branch: master
+  - provider: script
+    script: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && docker tag "$REGISTRY_IMAGE:tmp_build" "$REGISTRY_IMAGE:latest" && docker push "$REGISTRY_IMAGE:latest"
+    on:
+      branch: master
 
 notifications:
   slack:
