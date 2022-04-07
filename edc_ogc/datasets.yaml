@@ -11,9 +11,9 @@
   timeextent: [2020-10-01, null]
   api_endpoint: https://creodias.sentinel-hub.com/api/v1
   sample_type: FLOAT32
-  evalscript:
-    mask: edc_ogc/evalscripts/hs_mask.js
-    raw: edc_ogc/evalscripts/hs_raw.js
+#  evalscript:
+#    mask: edc_ogc/evalscripts/hs_mask.js
+#    raw: edc_ogc/evalscripts/hs_raw.js
 
 
 - id: SWE
@@ -27,9 +27,9 @@
   timeextent: [2020-10-01, null]
   api_endpoint: https://creodias.sentinel-hub.com/api/v1
   sample_type: FLOAT32
-  evalscript:
-    mask: edc_ogc/evalscripts/swe_mask.js
-    raw: edc_ogc/evalscripts/swe_raw.js
+#  evalscript:
+#    mask: edc_ogc/evalscripts/swe_mask.js
+#    raw: edc_ogc/evalscripts/swe_raw.js
 
 
 - id: S2L2A
@@ -42,3 +42,4 @@
   resolution: [8.983152841100729e-05, 8.983152841100729e-05]
   timeextent: [2015-06-23, null]
   sample_type: UINT16
+

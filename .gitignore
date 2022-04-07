@@ -4,3 +4,5 @@ __pcache__/
 .pytest_cache/
 .idea/
 venv/
+test/*.png
+test/out.xml

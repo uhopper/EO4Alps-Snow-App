@@ -131,23 +131,12 @@ class MdiTest(unittest.TestCase):
 
         response, _ = client.dispatch(OGCRequest(
             method='GET',
-            query='service=WMS&version=1.3.0&request=GetMap&layers=S2L1C__TRUECOLOR&styles=&crs=EPSG:3857&bbox=1500000,1500000,1600000,1600000&width=512&height=512&format=image/png',
+            query='SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&LAYERS=SWE&time=2021-01-22T21%3A13%3A46%2F2021-01-26T10%3A40%3A40&WIDTH=512&HEIGHT=512&CRS=EPSG%3A4326&BBOX=46.1,11.7,46.3,11.8',
             base_url='http://testserver.org/',
         ))
 
         with open('out.png', 'wb') as f:
             f.write(response)
-
-
-        response, _ = client.dispatch(OGCRequest(
-            method='GET',
-            query='service=WMS&version=1.1.0&request=GetMap&layers=S2L1C__NDVI&styles=&srs=EPSG:4326&bbox=14.043549,46.580095,14.167831,46.652688&width=512&height=512&format=image/png',
-            base_url='http://testserver.org/',
-        ))
-
-        with open('out2.png', 'wb') as f:
-            f.write(response)
-
 
         response, _ = client.dispatch(OGCRequest(
             method='GET',
