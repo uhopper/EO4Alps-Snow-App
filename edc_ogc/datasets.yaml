@@ -11,9 +11,9 @@
   timeextent: [2020-10-01, null]
   api_endpoint: https://creodias.sentinel-hub.com/api/v1
   sample_type: FLOAT32
-#  evalscript:
-#    mask: edc_ogc/evalscripts/hs_mask.js
-#    raw: edc_ogc/evalscripts/hs_raw.js
+  evalscript:
+    mask: edc_ogc/evalscripts/hs_mask.js
+    raw: edc_ogc/evalscripts/hs_raw.js
 
 
 - id: SWE
@@ -27,6 +27,22 @@
   timeextent: [2020-10-01, null]
   api_endpoint: https://creodias.sentinel-hub.com/api/v1
   sample_type: FLOAT32
+  evalscript:
+    mask: edc_ogc/evalscripts/swe_mask.js
+    raw: edc_ogc/evalscripts/swe_raw.js
+
+
+- id: SNOW-CLASSIFICATION-MAP
+  '@id': https://services.sentinel-hub.com/configuration/v1/datasets/CUSTOM
+  title: SNOW-CLASSIFICATION-MAP
+  custom: byoc-e92310e2-1b7e-4bc0-a9e4-27399a6c81ac
+  bands: ["s2snow", "dataMask"]
+  defaultbands: ['s2snow']
+  extent: [-10, 30, 20, 60]
+  resolution: [0.0005, 0.0005] # [1.3474729261651094e-04, 1.3474729261651094e-04]
+  timeextent: [2020-10-01, null]
+  api_endpoint: https://creodias.sentinel-hub.com/api/v1
+  sample_type: BYTE
 #  evalscript:
 #    mask: edc_ogc/evalscripts/swe_mask.js
 #    raw: edc_ogc/evalscripts/swe_raw.js
