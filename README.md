@@ -1,9 +1,7 @@
-# OGC layer on top of Euro Data Cube (ogc-edc)
+# EO4Alps-Snow OGC layer on top of Euro Data Cube
 
 OGC layer including [EOxC browser](https://github.com/eoxc/eoxc) connected to Euro Data Cube's Sentinel-Hub service.
 
-## Live Demo
-[**Demonstrator deployed on EOxHub**](https://ogc-0652eab6-e5d0-11e9-a359-2a2ae2dbcce4.edc.hub.eox.at)
 
 ## Development
 
@@ -15,7 +13,8 @@ $ cd ogc-edc
 
 $ export SH_CLIENT_ID=<oauth_clientid>
 $ export SH_CLIENT_SECRET=<oauth_clientsecret>
-$ pip install requirements.txt
+$ pip install -r requirements.txt
+$ pip install --global-option=build_ext --global-option="-I/usr/include/gdal" GDAL==`gdal-config --version` 
 ```
 
 ### Test

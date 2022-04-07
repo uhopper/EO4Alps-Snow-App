@@ -98,9 +98,8 @@ def get_client(instance_id=None):
                 dataproducts_path=dataproducts_path
             )
         else:
-            config_api = ConfigAPI(
-                client_id, client_secret, instance_id
-            )
+            print('Istance ID:', instance_id)
+            config_api = ConfigAPI(client_id, client_secret, instance_id)
 
         CLIENTS[instance_id] = OGCClient(
             config_api,
@@ -175,13 +174,18 @@ def ows():
 
 @app.route('/<instance_id>')
 def ows_instance(instance_id):
+    print(request.query_string.decode('ascii'))
     if not request.query_string.decode('ascii'):
+        print("*"*100)
+        print("loading page")
         client = get_client(instance_id)
         datasets = client.config_client.get_datasets()
 
+        byod_coll = client.config_client.get_byod_collections()
+
         byod_collections_and_layers = [
             (byod_collection, client.config_client.get_byod_layers(byod_collection))
-            for byod_collection in client.config_client.get_byod_collections()
+            for byod_collection in byod_coll
         ]
         byod_collections_and_layers = [
             (byod_collection, layers)
@@ -197,13 +201,17 @@ def ows_instance(instance_id):
             byod_collections_and_layers=byod_collections_and_layers,
         )
     try:
+        print("-"*100)
+        print("request...")
         client = get_client(instance_id)
+        # request.base_url = "https://www.waterjade.com/eo4alps-snow/browser/a5ecbf50-44d6-41d7-83ea-efbbd7a03a32"
         ogc_request = OGCRequest(
             base_url=request.base_url,
             method=request.method,
             query=request.query_string.decode('ascii'),
             headers=request.headers,
         )
+        print(ogc_request)
         result = client.dispatch(ogc_request)
         if len(result) == 2:
             response, mimetype = result
@@ -217,3 +225,7 @@ def ows_instance(instance_id):
     except Exception as e:
         logger.exception(e)
         return Response(response=f'an error occured: {e}', status=400)
+
+
+if __name__ == '__main__':
+    app.run(debug=True)

@@ -453,8 +453,26 @@ def dispatch_wcs_get_coverage(request, config_client):
     # get the evalscript for the given layer name and style and get the
     # defaults for the datasource
     evalscript, datasource = config_client.get_evalscript_and_defaults(
-        dataset_name, None, bands, None, False, visual=False,
+        dataset_name, None, bands, None, False, visual=False, raw=True
     )
+
+    # evalscript = """//VERSION=3\n\n
+    # function setup() {
+    #   return {
+    #     input: [{
+    #         bands: ["Snowdepth"]
+    #     }],
+    #     output: {
+    #         bands: 1,
+    #         sampleType: SampleType.FLOAT32
+    #     },
+    #   }
+    # }
+    # \n
+    # function evaluatePixel(sample) {
+    #     return [sample.Snowdepth];
+    # }
+    # """
 
     frmt = decoder.format or 'image/tiff'
     if frmt not in SUPPORTED_FORMATS:
@@ -462,6 +480,9 @@ def dispatch_wcs_get_coverage(request, config_client):
 
     # send a process request to the MDI
     mdi_client = config_client.get_mdi(dataset_name)
+
+    if dataset.get('custom') is not None:
+        datasource['type'] = dataset['custom']
 
     return mdi_client.process_image(
         sources=[datasource],
@@ -696,6 +717,9 @@ def parse_interpolation(raw):
         raise Exception(
             "Interpolation method '%s' is not supported." % raw
         )
+
+    if value.upper() == "NEAREST-NEIGHBOUR":
+        return "NEAREST"
     return value.upper()
 
 class WCS20GetCoverageKVPDecoder(kvp.Decoder):

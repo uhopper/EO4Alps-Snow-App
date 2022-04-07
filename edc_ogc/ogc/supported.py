@@ -16,7 +16,7 @@ SUPPORTED_FORMATS = [
 SUPPORTED_FORMATS_SET = set(SUPPORTED_FORMATS)
 
 SUPPORTED_INTERPOLATIONS = [
-    "nearest", "bilinear", "bicubic",
+    "nearest-neighbour", "bilinear", "bicubic",
 ]
 
 SUPPORTED_INTERPOLATIONS_SET = set(SUPPORTED_INTERPOLATIONS)

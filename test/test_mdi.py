@@ -1,16 +1,11 @@
-import json
 import os
-import time
 import unittest
 import logging
-from typing import Dict
 
 import oauthlib.oauth2
 import requests_oauthlib
 
 from edc_ogc.mdi import Mdi
-from edc_ogc.configapi import ConfigAPI
-from edc_ogc.ogc.wms import dispatch_wms_get_map
 
 HAS_SH_CREDENTIALS = 'SH_CLIENT_ID' in os.environ and 'SH_CLIENT_SECRET' in os.environ
 REQUIRE_SH_CREDENTIALS = 'requires SH credentials'
@@ -44,7 +39,8 @@ class ConfigClientMock:
 
 class MdiTest(unittest.TestCase):
 
-    def get_mdi(self) -> Mdi:
+    @staticmethod
+    def get_mdi() -> Mdi:
         client_id = os.environ.get('SH_CLIENT_ID')
         client_secret = os.environ.get('SH_CLIENT_SECRET')
         # instance_id = os.environ.get("SH_INSTANCE_ID")
@@ -106,10 +102,9 @@ class MdiTest(unittest.TestCase):
     #         )
 
     def test_capabilities(self):
-        from edc_ogc.ogc.wms import dispatch_wms_get_capabilities
-
+        # from edc_ogc.ogc.wms import dispatch_wms_get_capabilities
         #dispatch_wms_get_capabilities(None, None)
-
+        pass
 
     def test_parse_request(self):
         from edc_ogc.configapi import ConfigAPIDefaultLayers

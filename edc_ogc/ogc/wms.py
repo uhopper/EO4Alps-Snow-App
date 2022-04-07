@@ -125,6 +125,7 @@ def dispatch_wms_get_map(config_client, wms_request):
         wms_request.layers[0], wms_request.styles if wms_request.styles else None,
         wms_request.dim_bands, wms_request.dim_wavelengths, wms_request.transparent
     )
+    print(datasource)
 
     dataset = None
     if datasource['type'] != 'CUSTOM':
@@ -141,6 +142,9 @@ def dispatch_wms_get_map(config_client, wms_request):
         mdi_client = config_client.get_mdi(dataset['id'])
     else:
         mdi_client = config_client.get_mdi()
+
+    if dataset.get('custom') is not None:
+        datasource['type'] = dataset['custom']
 
     return mdi_client.process_image(
         sources=[datasource],

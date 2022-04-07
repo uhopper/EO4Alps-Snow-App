@@ -1,4 +1,5 @@
 import json
+import os
 from os.path import dirname, join
 import textwrap
 from urllib.parse import urlparse
@@ -82,14 +83,14 @@ class ConfigAPIBase(ApiBase):
         raise NotImplementedError
 
     def get_evalscript_and_defaults(self, layer_name, style_name=None,
-                                    bands=None, wavelengths=None, transparent=False, visual=True):
+                                    bands=None, wavelengths=None, transparent=False, visual=True, raw=False):
         try:
             dataset = self.get_dataset(layer_name)
         except:
             pass
         else:
             return self._get_evalscript_and_defaults_from_dataset(
-                dataset, bands, wavelengths, transparent, visual
+                dataset, bands, wavelengths, transparent, visual, raw
             )
 
         try:
@@ -104,7 +105,40 @@ class ConfigAPIBase(ApiBase):
         layer_config = self.get_layer(layer_name)
         return self._get_evalscript_and_defaults_from_layer(layer_config, style_name)
 
-    def _get_evalscript_and_defaults_from_dataset(self, dataset, bands, wavelengths, transparent, visual):
+    def _get_evalscript_and_defaults_from_dataset(self, dataset, bands, wavelengths, transparent, visual, raw):
+
+        defaults = {
+            "type": dataset['id'],
+            "upsampling": "BICUBIC",
+            "mosaickingOrder": "mostRecent",
+            "maxCloudCoverage": 20,
+            "temporal": False,
+            "previewMode": "PREVIEW"
+        }
+
+
+
+        evalscript = None
+        if 'evalscript' in dataset:
+            if raw:
+                evsfile = dataset['evalscript'].get('raw')
+            else:
+                evsfile = dataset['evalscript'].get('mask')
+
+            if os.path.exists(evsfile) and evsfile is not None:
+                evalscript = ''
+                with open(evsfile) as f:
+                    for line in f.readlines():
+                        evalscript += line
+                return evalscript, defaults
+
+        try:
+            lyr = self.get_layer(dataset['id'])
+            evalscript = lyr['styles'][0]['evalScript']
+            return evalscript, defaults
+        except:
+            pass
+
         if wavelengths:
             if "wavelengths" not in dataset:
                 raise Exception(
@@ -157,14 +191,7 @@ class ConfigAPIBase(ApiBase):
             }}
         """)
 
-        defaults = {
-            "type": dataset['id'],
-            "upsampling": "BICUBIC",
-            "mosaickingOrder": "mostRecent",
-            "maxCloudCoverage": 20,
-            "temporal": False,
-            "previewMode": "PREVIEW"
-        }
+
 
         return evalscript, defaults
 

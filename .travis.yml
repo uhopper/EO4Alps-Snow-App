@@ -1,7 +1,7 @@
 language: python
 
 env:
-  REGISTRY_IMAGE: eurodatacube/ogc-edc
+  REGISTRY_IMAGE: eurodatacube/eo4alps-snow
 
 services:
   - docker
@@ -12,10 +12,10 @@ before_install:
 install:
   - docker pull "$REGISTRY_IMAGE:latest" || true
   - docker build --cache-from "$REGISTRY_IMAGE:latest" -t "$REGISTRY_IMAGE:tmp_build" -t "$REGISTRY_IMAGE:test" .
-  - docker build -t eurodatacube/ogc-edc-test -f ./Dockerfile.test .
+  - docker build -t eurodatacube/eo4alps-snow-test -f ./Dockerfile.test .
 
 script:
-  - docker run -it -e SH_CLIENT_ID="$SH_CLIENT_ID" -e SH_CLIENT_SECRET="$SH_CLIENT_SECRET" eurodatacube/ogc-edc-test
+  - docker run -it -e SH_CLIENT_ID="$SH_CLIENT_ID" -e SH_CLIENT_SECRET="$SH_CLIENT_SECRET" eurodatacube/eo4alps-snow-test
 
 deploy:
   - provider: script

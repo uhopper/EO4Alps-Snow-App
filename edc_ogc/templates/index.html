@@ -9,11 +9,19 @@
   <title>EuroDataCube OGC demonstration client</title>
 </head>
 <body style="display: flex; flex-direction: column;">
-  <header id="header" style="width: 100%; flex: 0; display:flex; justify-content: space-between; align-items: center; background-color: #004170; color:white; padding: 8px 24px;">
+  <header id="header" style="width: 100%; flex: 0; display:flex; justify-content: space-between; align-items: center; background-color: #17a0c5; color:white; padding: 8px 24px;">
+
       <a href="//eurodatacube.com"><img src="static/EuroDataCube_logo.svg" alt="Euro Data Cube logo" style="height:50px;"/></a>
-      <a href="./instances"></a>
-      <h4 style="margin: 0;"><a style="color:white;text-decoration: none;" href="./instances">&rarr; SELECT YOUR INSTANCE</a></h3>
-      <h4 style="margin: 0;">Euro Data Cube OGC demonstration client powered by <b><a style="color:white;text-decoration: none;" href="//github.com/eoxc/eoxc" target="_blank">EOxC</a></b></h3>
+      <h3 style="margin: 0;">
+          <img src="static/snow_white.svg" alt="Snow icon" style="height:36px;"/>
+          <b><a style="color:white;text-decoration: none;" href="https://www.waterjade.com/eo4alps-snow/" target="_blank">EO4Alps-Snow</a></b>
+      </h3>
+      <a href="https://www.esa.int"><img src="static/ESAlogo_white.svg" alt="European Space Agency logo" style="height:48px;"/></a>
+      <a href="https://www.waterjade.com/en/mobygis-en"><img src="static/mobygis_white.svg" alt="MobyGIS logo" style="height:50px;"/></a>
+      <a href="https://www.sinergise.com"><img src="static/SinergiseLogo_white.svg" alt="Sinergise logo" style="height:48px;"/></a>
+      <a href="https://www.eurac.edu"><img src="static/eurac-logo_white.svg" alt="Eurac research logo" style="height:42px;"/></a>
+<!--      <a href="./instances"></a>-->
+<!--      <h4 style="margin: 0;"><a style="color:white;text-decoration: none;" href="./instances">&rarr; SELECT YOUR INSTANCE</a></h3>-->
   </header>
   <div id="app" style="position:relative; width: 100%; flex: 1; margin: 0; padding:0;"></div>
   <script src="static/code-de.bundle.js"></script>
@@ -60,7 +68,7 @@
         "rightPanelOpen": false,
         "leftPanelOpen": true,
         "leftPanelTabIndex": 1,
-        "center": [11.39, 47.26],
+        "center": [11.1, 46.1],
         "zoom": 11,
         "maxZoom": 14,
         "filterSettings": {
@@ -71,10 +79,10 @@
     },
     "baseLayers": [
         {
-            "id": "terrain-light",
-            "displayName": "EOX Terrain-Light",
+            "id": "terrain",
+            "displayName": "EOX Terrain",
             "display": {
-                "id": "terrain-light",
+                "id": "terrain",
                 "visible": true,
                 "protocol": "WMTS",
                 "urls": [
@@ -134,12 +142,18 @@
               "urls": [
                 whereAmI
               ],
-              "extraDownloadIcon": true,
+              {%- if dataset.title == 'Sentinel-2 L2A' %}
+                "extraDownloadIcon": false,
+              {%- endif %}
+              {%- if dataset.title != 'Sentinel-2 L2A' %}
+                "extraDownloadIcon": true,
+              {%- endif %}
+              // "extraDownloadIcon": true,
               "useMilliseconds": false,
               "tileSize": 512,
               "discardZulu": true,
               "version": "1.3.0",
-              "opacity": 0.9,
+              "opacity": 0.8,
               "minZoom": 4,
               "options": [
               {%- if layers %}
@@ -156,22 +170,22 @@
                   ],
               },
               {%- endif %}
-              {%- if dataset.bands %}
-              {
-                  "name": "Band Combination (RGB)",
-                  "target": "display.extraParameters.dim_bands",
-                  "selectThree" : true,
-                  "replace": [{
-                    "target": "display.extraParameters.LAYERS",
-                    "value": "{{dataset.id}}"
-                  }],
-                  "values":[
-                  {%- for band in dataset.bands %}
-                    {"value": "{{band}}"},
-                  {%- endfor %}
-                  ],
-              },
-              {%- endif %}
+//              {%- if dataset.bands %}
+//              {
+//                  "name": "Band Combination (RGB)",
+//                  "target": "display.extraParameters.dim_bands",
+//                  "selectThree" : true,
+//                  "replace": [{
+//                    "target": "display.extraParameters.LAYERS",
+//                    "value": "{{dataset.id}}"
+//                  }],
+//                  "values":[
+//                  {%- for band in dataset.bands %}
+//                    {"value": "{{band}}"},
+//                  {%- endfor %}
+//                  ],
+//              },
+//              {%- endif %}
               {%- if dataset.wavelengths %}
               {
                   "name": "Wavelength Combination (RGB)",
@@ -195,7 +209,7 @@
               "id": "{{dataset.id}}",
               "url": whereAmI,
               "maxSizeWarning": 1000000, // total size of product in MB
-              "maxBboxEdgeSize": 0.1,
+              "maxBboxEdgeSize": 0.2,
               "maxAllowedResolution": 0.002261, // ~250m in degrees on equator
               "disableTimeSubsetting": true,
               "axisNames": [
@@ -208,6 +222,10 @@
               {%- endfor %}
               ],
               "interpolations": [
+                  {
+                    "name": "Nearest",
+                    "identifier": "http://www.opengis.net/def/interpolation/OGC/1/nearest-neighbour"
+                  },
                   {
                     "name": "Bilinear",
                     "identifier": "http://www.opengis.net/def/interpolation/OGC/1/bilinear"
