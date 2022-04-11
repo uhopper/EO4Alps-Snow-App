@@ -1,0 +1,7 @@
+{
+  "type": "browserify",
+  "entryPoint": 1,
+  "knownPaths": {},
+  "moduleAst": ["body", 0, "expression", "argument", "arguments", 0]
+}
+
