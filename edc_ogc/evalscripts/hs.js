@@ -1,6 +1,5 @@
 //VERSION=3
 
-// js file
 function setup() {
   return {
     input: ["Snowdepth", "dataMask"],
@@ -57,8 +56,8 @@ function evaluatePixel(samples, scenes) {
         else if (tile.Snowdepth > 20){
           return [1,1,0.68,tile.dataMask]
         }
-        else if (tile.Snowdepth > 0){
-          return [1,1,1,tile.dataMask]
+        else if (tile.Snowdepth > 1){
+          return [1,1,1,0.5]
         }
         else{
         return [0,0,0,0]
