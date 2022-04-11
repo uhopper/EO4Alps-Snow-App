@@ -116,21 +116,24 @@ class ConfigAPIBase(ApiBase):
             "previewMode": "PREVIEW"
         }
 
-
+        prefix = 'edc_ogc'
+        if os.path.basename(os.getcwd()) == 'edc_ogc':
+            prefix = '.'
 
         evalscript = None
         if 'evalscript' in dataset:
             if raw:
-                evsfile = dataset['evalscript'].get('raw')
+                evsfile = f"{prefix}/{dataset['evalscript'].get('raw')}"
             else:
-                evsfile = dataset['evalscript'].get('mask')
+                evsfile = f"{prefix}/{dataset['evalscript'].get('mask')}"
 
-            if os.path.exists(evsfile) and evsfile is not None:
-                evalscript = ''
-                with open(evsfile) as f:
-                    for line in f.readlines():
-                        evalscript += line
-                return evalscript, defaults
+            if evsfile is not None:
+                if os.path.exists(evsfile):
+                    evalscript = ''
+                    with open(evsfile) as f:
+                        for line in f.readlines():
+                            evalscript += line
+                    return evalscript, defaults
 
         try:
             lyr = self.get_layer(dataset['id'])

@@ -34,13 +34,17 @@ class OGCClient:
 
         ows_url = os.environ.get('OWS_URL')
 
+
         scheme = request.headers.get('X-Forwarded-Scheme')
         host = request.headers.get('X-Forwarded-Host')
         uri = request.headers.get('X-Original-Uri')
-        if scheme and host and uri:
-            ows_url = f'{scheme}://{host}{uri}'
-        else:
-            ows_url = request.base_url
+
+        if ows_url is None:
+            if scheme and host and uri:
+                ows_url = f'{scheme}://{host}{uri}'
+            else:
+                ows_url = request.base_url
+
 
         service = decoder.service
 

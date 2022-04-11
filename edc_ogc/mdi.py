@@ -36,7 +36,6 @@ class Mdi(ApiBase):
         self.api_url = api_url
 
     def send_process_request(self, session, request: Dict, accept_header: str) -> Tuple[str, Any]:
-        print('/\\'*100)
         logger.debug(f'--- Sending process request to {self.api_url} {json.dumps(request)}')
         start = time()
 
@@ -48,7 +47,7 @@ class Mdi(ApiBase):
                 'cache-control': 'no-cache'
             }
         )
-        print(resp)
+
         logger.info(f'Process request took {time() - start} seconds to complete')
 
         if not resp.ok:

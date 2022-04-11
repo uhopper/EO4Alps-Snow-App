@@ -125,7 +125,6 @@ def dispatch_wms_get_map(config_client, wms_request):
         wms_request.layers[0], wms_request.styles if wms_request.styles else None,
         wms_request.dim_bands, wms_request.dim_wavelengths, wms_request.transparent
     )
-    print(datasource)
 
     dataset = None
     if datasource['type'] != 'CUSTOM':
