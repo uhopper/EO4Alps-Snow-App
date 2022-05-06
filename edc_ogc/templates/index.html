@@ -40,10 +40,10 @@
   {%- endif %}
   var config = {
     "settings": {
-        "tutorial": "disabled",
-        "uploadEnabled": false,
-        "downloadEnabled": false,
-        "searchEnabled": false,
+        "tutorial": "always",
+        "uploadEnabled": true,
+        "downloadEnabled": true,
+        "searchEnabled": true,
         "language": "en",
         "timeDomain": [
             "2014-04-03T00:00:00Z",
@@ -209,7 +209,7 @@
               "id": "{{dataset.id}}",
               "url": whereAmI,
               "maxSizeWarning": 1000000, // total size of product in MB
-              "maxBboxEdgeSize": 0.2,
+              "maxBboxEdgeSize": 0.5,
               "maxAllowedResolution": 0.002261, // ~250m in degrees on equator
               "disableTimeSubsetting": true,
               "axisNames": [
