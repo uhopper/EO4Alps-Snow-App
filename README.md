@@ -9,6 +9,7 @@ OGC layer including [EOxC browser](https://github.com/eoxc/eoxc) connected to Eu
 
 ```
 $ git clone https://github.com/eurodatacube/ogc-edc.git
+$ sudo apt-get install wkhtmltopdf  # wkhtmltopdf is an utility to convert HTML to PDF using Webkit
 $ cd ogc-edc
 
 $ export SH_CLIENT_ID=<oauth_clientid>
