@@ -1,13 +1,8 @@
-import io
 import os
 import logging
 import logging.config
 
-import numpy as np
-import pandas as pd
-import pdfkit as pdf
-
-from flask import Flask, request, Response, jsonify, send_from_directory, render_template, send_file
+from flask import Flask, request, Response, jsonify, send_from_directory, render_template
 import oauthlib.oauth2
 import requests_oauthlib
 from prometheus_flask_exporter import PrometheusMetrics
@@ -17,7 +12,11 @@ from edc_ogc.ogc.client import OGCClient, OGCRequest
 from edc_ogc.configapi import ConfigAPIDefaultLayers, ConfigAPI
 from edc_ogc.mdi import Mdi, MdiError
 
+from pdf_generator import generate_pdf
+
+
 # -------------- App setup --------------
+
 app = Flask(__name__, static_url_path='/static')
 app.url_map.strict_slashes = False
 
@@ -145,39 +144,27 @@ def instances_json():
 @app.route('/download')
 def download():
 
-    data = [
+    print(request.args)
+    print(request.json)
+
+    test_data = [
         {
             "a": 1,
             "b": 2,
-            "c": [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, ],
-            "d": [4, 4, 4, 4, 4, 4, 4, 4, 4, ]
+            "c": 3,
+            "d": 4
         },
         {
             "a": 5,
-            "b": [6, 6, 6, 6, 6, 6, 6, 6, 6, 6],
-            "c": [7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7],
+            "b": 6,
+            "c": 7,
             "d": 8
         }
     ]
 
-    table_headers = [header.title() for header in data[0]]
+    test_generated_image = "static/test_generated_image.png"
 
-    # extract table data from input data
-    table_values = [str(v) for d in data for k, v in d.items()]
-
-    # convert input data to HTML
-    a = np.array(table_values)
-    df = pd.DataFrame(a.reshape(-1, len(table_headers)), columns=table_headers)  # this is required to match your column numbers
-    html_string = df.to_html(index=False)  # removing the index while writing to html
-
-    pdfkit_sample = pdf.from_string(html_string)
-
-    return send_file(
-        io.BytesIO(pdfkit_sample),
-        mimetype='application/pdf',
-        as_attachment=True,
-        attachment_filename='download.pdf'
-    )
+    return generate_pdf(test_data, test_generated_image)
 
 @app.route('/')
 def ows():
