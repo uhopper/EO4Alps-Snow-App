@@ -1,6 +1,8 @@
+import csv
 import os
 import logging
 import logging.config
+from io import BytesIO
 
 from flask import Flask, request, Response, jsonify, send_from_directory, render_template
 import oauthlib.oauth2
@@ -143,26 +145,19 @@ def instances_json():
 
 @app.route('/download')
 def download():
+    data_reader = csv.DictReader(open("static/2022-02-28_stats_grassSWE_ampezzo.csv"))
+    test_data = []
+    for data in data_reader:
+        data.pop("zone")
+        data.pop("non_null_cells")
+        data.pop("null_cells")
+        data.pop("mean_of_abs")
+        data.pop("variance")
+        data.pop("sum_abs")
+        test_data.append(data)
 
-    print(request.args)
-    print(request.json)
-
-    test_data = [
-        {
-            "a": 1,
-            "b": 2,
-            "c": 3,
-            "d": 4
-        },
-        {
-            "a": 5,
-            "b": 6,
-            "c": 7,
-            "d": 8
-        }
-    ]
-
-    test_generated_image = "static/test_generated_image.png"
+    with open("static/2022-02-28_ampezzo.jpg", "rb") as image_file:
+        test_generated_image = BytesIO(image_file.read())
 
     return generate_pdf(test_data, test_generated_image)
 

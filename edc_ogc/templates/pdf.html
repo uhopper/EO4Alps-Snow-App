@@ -6,6 +6,22 @@
 </head>
 <body>
 
+    <h1>Report di Snow Water Equivalent (SWE)</h1>
+
+    <div>
+        {{ mobygis_logo|safe }}
+    </div>
+
+    <div>
+        {{ waterjade_logo|safe }}
+    </div>
+
+    <h3>Inquadramento</h3>
+    <img src="data:;base64,{{ test_image }}" height="1000"/>
+
+    <p style="page-break-after: always;">&nbsp;</p>
+
+    <h3>Statistiche del bacino</h3>
     <div>
         <table>
             <thead>
@@ -26,10 +42,6 @@
             </tbody>
         </table>
     </div>
-
-    <br>
-
-    <img src='data:;base64,{{ test_image }}'/>
 
 </body>
 </html>
